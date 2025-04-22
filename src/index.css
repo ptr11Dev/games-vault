@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #111827;
+  --color-primary-lighter: #1f2937;
+  --color-primary-darker: #0b0f19;
+
+  --color-accent: #6366f1;
+  --color-accent-lighter: #818cf8;
+  --color-accent-darker: #4f46e5;
+
+  --color-text-primary: #f3f4f6;
+  --color-text-secondary: #9ca3af;
+
+  --color-border: #374151;
+}
+
+@layer base {
+  html {
+    @apply bg-primary text-text-primary antialiased;
+  }
+
+  body {
+    @apply min-h-screen;
+  }
+
+  * {
+    @apply box-border;
+  }
+}
+
+/* Custom utilities for card flip effect */
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective {
+  perspective: 1000px;
+}
