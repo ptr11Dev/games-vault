@@ -49,19 +49,3 @@ export type UserWithGames = {
   userId: string;
   games: UserGame[];
 };
-
-/* 
-  co wzialem z api?
-
-  id
-  slug
-  name
-  released
-  tba
-  background_image
-  rating - rawg_rating
-  ratings_count - rawg_ratings_count
-  metacritic
-  updated
-  parent_platforms, ale jako platforms: elt.map(platform => platform.platform.slug)
-*/
