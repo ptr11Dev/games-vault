@@ -5,9 +5,9 @@
     "name": "Grand Theft Auto V",
     "released": "2013-09-17",
     "tba": false,
-    "background_image": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg",
-    "rating": 4.47,
-    "ratings_count": 7076,
+    "backgroundImage": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg",
+    "rawgRating": 4.47,
+    "rawgRatings_count": 7076,
     "metacritic": 92,
     "updated": "2025-04-19T20:16:47",
     "platforms": ["pc", "playstation", "xbox"]
@@ -18,9 +18,9 @@
     "name": "The Witcher 3: Wild Hunt",
     "released": "2015-05-18",
     "tba": false,
-    "background_image": "https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg",
-    "rating": 4.64,
-    "ratings_count": 6866,
+    "backgroundImage": "https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg",
+    "rawgRating": 4.64,
+    "rawgRatingCount": 6866,
     "metacritic": 92,
     "updated": "2025-04-18T17:56:02",
     "platforms": ["pc", "playstation", "xbox", "mac", "nintendo"]
@@ -31,11 +31,24 @@
     "name": "Red Dead Redemption 2",
     "released": "2018-10-26",
     "tba": false,
-    "background_image": "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg",
-    "rating": 4.59,
-    "ratings_count": 5216,
+    "backgroundImage": "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg",
+    "rawgRating": 4.59,
+    "rawgRatingCount": 5216,
     "metacritic": 96,
     "updated": "2025-04-18T01:59:31",
     "platforms": ["pc", "playstation", "xbox"]
+  },
+  {
+    "id": 4062,
+    "slug": "bioshock-infinite",
+    "name": "BioShock Infinite",
+    "released": "2013-03-26",
+    "tba": false,
+    "backgroundImage": "https://media.rawg.io/media/games/fc1/fc1307a2774506b5bd65d7e8424664a7.jpg",
+    "rawgRating": 4.38,
+    "rawgRatingsCount": 4102,
+    "metacritic": 94,
+    "updated": "2025-04-18T18:17:48",
+    "platforms": ["pc", "playstation", "xbox", "linux", "nintendo"]
   }
 ]

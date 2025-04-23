@@ -7,13 +7,6 @@ type GameUserStatus =
   | 'platinum'
   | 'abandoned';
 
-export type GameRAWG = {
-  id: number;
-  name: string;
-  background_image: string;
-  metacritic: number;
-};
-
 export type Platforms = 'pc' | 'playstation' | 'xbox' | 'mac' | 'nintendo';
 
 export type GameAPI = {
@@ -22,9 +15,9 @@ export type GameAPI = {
   name: string;
   released: string;
   tba: boolean;
-  background_image: string;
-  rating: number;
-  ratings_count: number;
+  backgroundImage: string;
+  rawgRating: number;
+  rawgRatingsCount: number;
   metacritic: number;
   updated: string;
   platforms: string[];

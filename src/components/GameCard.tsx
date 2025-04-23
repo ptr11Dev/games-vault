@@ -32,7 +32,7 @@ const GameCard = ({ game }: GameCardProps) => {
         <div
           className="absolute h-full w-full overflow-hidden rounded-xl backface-hidden"
           style={{
-            backgroundImage: `url(${game.background_image})`,
+            backgroundImage: `url(${game.backgroundImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
