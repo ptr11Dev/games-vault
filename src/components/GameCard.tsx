@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { Game } from '@/types';
+import { UserGame } from '@/types';
 
 type GameCardProps = {
-  game: Game;
+  game: UserGame;
 };
 
 const GameCard = ({ game }: GameCardProps) => {

@@ -1,6 +1,8 @@
 APIs:
+https://api.rawg.io/docs/?format=openapi
 
 - currently used: https://rawg.io/apidocs
+- https://api.rawg.io/docs/
 - to check in the future: https://www.freetogame.com/api-doc
 - to check in the future: https://www.igdb.com/api
 
