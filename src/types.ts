@@ -1,13 +1,18 @@
 type GameUserStatus =
-  | 'default'
   | 'wishlisted'
   | 'purchased'
-  | 'in-progress'
   | 'completed'
   | 'platinum'
   | 'abandoned';
 
-export type Platforms = 'pc' | 'playstation' | 'xbox' | 'mac' | 'nintendo';
+export type AvailablePlatforms =
+  | 'pc'
+  | 'playstation'
+  | 'xbox'
+  | 'mac'
+  | 'nintendo'
+  | 'linux'
+  | 'android';
 
 export type GameAPI = {
   id: number;
@@ -18,9 +23,9 @@ export type GameAPI = {
   backgroundImage: string;
   rawgRating: number;
   rawgRatingsCount: number;
-  metacritic: number;
+  metacritic: number | null;
   updated: string;
-  platforms: string[];
+  platforms: AvailablePlatforms[];
 };
 
 export type UserGames = {

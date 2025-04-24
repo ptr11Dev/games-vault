@@ -14,7 +14,7 @@
       "updated": "2025-04-19T20:16:47",
       "platforms": ["pc", "playstation", "xbox"],
 
-      "userStatus": "in-progress",
+      "userStatus": "completed",
       "createdAt": "2025-04-21T10:15:00.000Z",
       "updatedAt": "2025-04-21T10:15:00.000Z"
     },
@@ -48,6 +48,40 @@
       "metacritic": 96,
       "updated": "2025-04-18T01:59:31",
       "platforms": ["pc", "playstation", "xbox"],
+
+      "userStatus": "abandoned",
+      "createdAt": "2025-04-22T08:00:00.000Z",
+      "updatedAt": "2025-04-22T08:00:00.000Z"
+    },
+    {
+      "id": 983210,
+      "slug": "clair-obscur-expedition-33",
+      "name": "Clair Obscur: Expedition 33",
+      "released": "2025-04-24",
+      "tba": false,
+      "backgroundImage": "https://media.rawg.io/media/games/466/4667f17fdee9ebbcea2049e54f8e2b96.jpg",
+      "rawgRating": 0,
+      "rawgRatingsCount": 1,
+      "metacritic": null,
+      "updated": "2025-03-24T03:09:44",
+      "platforms": ["pc", "playstation", "xbox"],
+
+      "userStatus": "purchased",
+      "createdAt": "2025-04-22T08:00:00.000Z",
+      "updatedAt": "2025-04-22T08:00:00.000Z"
+    },
+    {
+      "id": 662318,
+      "slug": "wolverine-2022",
+      "name": "Marvel's Wolverine",
+      "released": null,
+      "tba": true,
+      "backgroundImage": "https://media.rawg.io/media/screenshots/b2e/b2e232b291a77ec285978aa4ef80ea85.jpg",
+      "rawgRating": 0,
+      "rawgRatingsCount": 0,
+      "metacritic": null,
+      "updated": "2021-09-13T09:33:56",
+      "platforms": ["playstation"],
 
       "userStatus": "wishlisted",
       "createdAt": "2025-04-22T08:00:00.000Z",

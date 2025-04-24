@@ -2,7 +2,7 @@ export type RAWGGame = {
   id: number;
   slug: string;
   name: string;
-  released: string;
+  released: string | null;
   tba: boolean;
   background_image: string;
   rating: number;
@@ -12,7 +12,7 @@ export type RAWGGame = {
   reviews_text_count: number;
   added: number;
   added_by_status: Record<string, number>;
-  metacritic: number;
+  metacritic: number | null;
   playtime: number;
   suggestions_count: number;
   updated: string;

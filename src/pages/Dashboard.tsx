@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import GameCard from '@/components/GameCard';
+import GameCard from '@/components/GameCard/GameCard';
 import { UserGame } from '@/types';
 
 // Import the JSON data directly
@@ -12,10 +12,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     // apiClient
-    //   .get<{ count: number; results: Game[] }>('/games')
+    //   .get<{ count: number; results: RAWGGame[] }>('/games/wolverine-2022')
     //   .then((res) => {
     //     console.log('Fetched games:', res.data);
-    //     setGames(res.data.results);
+    //     // setGames(res.data.results);
     //   })
     //   .catch((err) => console.error('Failed to fetch games:', err));
     // Use the data from the imported JSON file instead of making an API call

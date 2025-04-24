@@ -3,7 +3,7 @@
     "id": "a1b2c3d4-1111-2222-3333-xyz123abc000",
     "userId": "38f45f50-604a-4e46-9a5a-a885e9cd2c1e",
     "gameId": 3498,
-    "userStatus": "in-progress",
+    "userStatus": "completed",
     "createdAt": "2025-04-21T10:15:00.000Z",
     "updatedAt": "2025-04-21T10:15:00.000Z"
   },
@@ -19,6 +19,22 @@
     "id": "i9j0k1l2-7777-8888-9999-xyz123abc002",
     "userId": "38f45f50-604a-4e46-9a5a-a885e9cd2c1e",
     "gameId": 28,
+    "userStatus": "abandoned",
+    "createdAt": "2025-04-22T08:00:00.000Z",
+    "updatedAt": "2025-04-22T08:00:00.000Z"
+  },
+  {
+    "id": "i9j0k1l2-7777-8888-9999-xyz123abc003",
+    "userId": "38f45f50-604a-4e46-9a5a-a885e9cd2c1e",
+    "gameId": 983210,
+    "userStatus": "purchased",
+    "createdAt": "2025-04-22T08:00:00.000Z",
+    "updatedAt": "2025-04-22T08:00:00.000Z"
+  },
+  {
+    "id": "i9j0k1l2-7777-8888-9999-xyz123abc004",
+    "userId": "38f45f50-604a-4e46-9a5a-a885e9cd2c1e",
+    "gameId": 662318,
     "userStatus": "wishlisted",
     "createdAt": "2025-04-22T08:00:00.000Z",
     "updatedAt": "2025-04-22T08:00:00.000Z"

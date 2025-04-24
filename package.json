@@ -19,6 +19,7 @@
     "@tanstack/react-query-devtools": "^5.69.0",
     "axios": "^1.8.4",
     "babel-plugin-react-compiler": "^19.0.0-beta-aeaed83-20250323",
+    "lucide-react": "^0.503.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
