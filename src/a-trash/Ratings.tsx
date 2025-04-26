@@ -1,4 +1,4 @@
-import MetascoreBadge from './MetascoreBadge';
+import MetascoreBadge from '../components/GameCard/components/MetascoreBadge';
 import RawgRatingBadge from './RawgRatingBadge';
 
 type RatingsProps = {

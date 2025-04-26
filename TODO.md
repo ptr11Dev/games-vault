@@ -64,3 +64,6 @@ https://rawg.io/@kaczmar11/apikey
   - userStatus
   - createdAt
   - updatedAt
+
+--- ogarnac zmiany configu z pliku tailwind.config.js na css
+tailwindscss.com/blog/tailwindcss-v4

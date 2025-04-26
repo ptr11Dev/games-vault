@@ -2,9 +2,6 @@ import { Calendar } from 'lucide-react';
 
 import { UserGame } from '@/types';
 
-import Platforms from './Platforms';
-import Ratings from './Ratings';
-
 type BackSideProps = {
   game: UserGame;
 };
@@ -14,12 +11,9 @@ const BackSide = ({ game }: BackSideProps) => {
 
   return (
     <div className="relative flex h-full w-full rotate-y-180 flex-col rounded-xl bg-gray-800 p-3 text-white backface-hidden">
-      <Platforms platforms={game.platforms} />
-
       <div className="flex h-full flex-col justify-between">
         <div className="flex flex-col gap-y-3">
           <h3 className="text-center text-xl font-bold">{game.name}</h3>
-          <Ratings metascore={game.metacritic} rawgScore={game.rawgRating} />
         </div>
 
         <div className="flex items-center justify-center text-sm text-gray-300">
