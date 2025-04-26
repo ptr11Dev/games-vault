@@ -65,5 +65,7 @@ https://rawg.io/@kaczmar11/apikey
   - createdAt
   - updatedAt
 
+  5. Raz na jakiś czas (dziennie? tygodniowo?) aktualizowane są dane z RAWG co do wszystkich gier, które są w bazie
+
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
