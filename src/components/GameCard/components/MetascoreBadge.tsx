@@ -13,7 +13,7 @@ const getMetascoreColor = (score: number): string => {
 const MetascoreBadge = ({ score }: MetascoreBadgeProps) => {
   if (score === null || score === undefined) {
     return (
-      <div className="ml-auto flex h-8 w-8 items-center justify-center rounded border border-gray-500 bg-white text-lg font-bold text-black shadow">
+      <div className="z-50 ml-auto flex h-8 w-8 items-center justify-center rounded border border-gray-500 bg-white text-lg font-bold text-black shadow">
         tba
       </div>
     );
@@ -21,7 +21,7 @@ const MetascoreBadge = ({ score }: MetascoreBadgeProps) => {
 
   return (
     <div
-      className={`ml-auto flex h-8 w-8 items-center justify-center rounded text-lg font-bold text-black shadow ${getMetascoreColor(
+      className={`z-50 ml-auto flex h-8 w-8 items-center justify-center rounded text-lg font-bold text-black shadow ${getMetascoreColor(
         score,
       )}`}
       title={`Metascore: ${score}`}
