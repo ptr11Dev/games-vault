@@ -17,14 +17,14 @@ export type GameAPI = {
   id: number;
   slug: string;
   name: string;
-  released: string;
+  released: string | null;
   tba: boolean;
-  backgroundImage: string;
-  rawgRating: number;
-  rawgRatingsCount: number;
+  background_image: string | null;
+  rawg_rating: number;
+  rawg_ratings_count: number;
   metacritic: number | null;
   updated: string;
-  platforms: AvailablePlatforms[];
+  platforms: AvailablePlatforms[] | null;
 };
 
 export type UserGames = {

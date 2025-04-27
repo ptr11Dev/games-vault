@@ -39,7 +39,6 @@ const AuthForm = () => {
         },
       }}
       providers={['google']}
-      redirectTo={`${window.location.origin}/dashboard`}
     />
   );
 };

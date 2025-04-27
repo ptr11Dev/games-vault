@@ -1,5 +1,5 @@
 import { RAWGGame } from '@/RAWGtypes';
-import { GameAPI } from '@/types';
+import { AvailablePlatforms, GameAPI } from '@/types';
 
 export const convertRAWGGameToAPI = (game: RAWGGame): GameAPI => {
   return {
@@ -8,11 +8,14 @@ export const convertRAWGGameToAPI = (game: RAWGGame): GameAPI => {
     name: game.name,
     released: game.released,
     tba: game.tba,
-    backgroundImage: game.background_image,
-    rawgRating: game.rating,
-    rawgRatingsCount: game.ratings_count,
-    metacritic: game.metacritic,
+    background_image: game.background_image ?? null,
+    rawg_rating: game.rating,
+    rawg_ratings_count: game.ratings_count,
+    metacritic: game.metacritic ?? null,
     updated: game.updated,
-    platforms: game.parent_platforms.map((platform) => platform.platform.slug),
+    platforms:
+      game.parent_platforms?.map(
+        (platform) => platform.platform.slug as AvailablePlatforms,
+      ) ?? null,
   };
 };

@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 
-import { Session } from '@supabase/supabase-js';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useUserQuery } from './hooks/useUserQuery';
-
-type AppContextType = {
-  session: Session | null;
-};
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
 
 const App = () => {
   const navigate = useNavigate();
@@ -16,20 +13,18 @@ const App = () => {
   console.log('User:', data?.session.user.id);
 
   useEffect(() => {
-    if (!isLoading && (isError || !data)) {
+    if (!isLoading && isError) {
       navigate('/');
     }
-  }, [isError, data, isLoading, navigate]);
+  }, [isError, isLoading, navigate]);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  return (
-    <Outlet
-      context={{ session: data?.session ?? null } satisfies AppContextType}
-    />
-  );
+  const session = data?.session ?? null;
+
+  return session ? <Dashboard /> : <Login />;
 };
 
 export default App;

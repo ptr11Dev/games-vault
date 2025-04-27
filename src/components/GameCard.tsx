@@ -1,7 +1,7 @@
 import { useGamesStore } from '@/store/store';
 import { UserGame } from '@/types';
 
-import MetascoreBadge from './components/MetascoreBadge';
+import MetascoreBadge from './MetascoreBadge';
 
 type GameCardProps = {
   game: UserGame;
