@@ -1,4 +1,8 @@
-type GameUserStatus = 'wishlisted' | 'completed' | 'platinum' | 'abandoned';
+export type GameUserStatus =
+  | 'wishlisted'
+  | 'completed'
+  | 'platinum'
+  | 'abandoned';
 
 export type AvailablePlatforms =
   | 'pc'

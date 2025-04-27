@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import GameCard from '@/components/GameCard/GameCard';
-import { UserGame } from '@/types';
+import { useGamesStore } from '@/store/store';
 
 // Import the JSON data directly
 // import rawgResponse from '../examples/rawgResponse.json';
-import userGamesWithDetailsAPI from '../examples/userGamesWithDetailsAPI.json';
 
 const Dashboard = () => {
-  const [games, setGames] = useState<UserGame[]>([]);
+  const games = useGamesStore((state) => state.games);
 
   useEffect(() => {
     // apiClient
@@ -21,8 +20,6 @@ const Dashboard = () => {
     // Use the data from the imported JSON file instead of making an API call
     // setGames(rawgResponse.results);
     // console.log('Loaded games from local JSON file:', rawgResponse.results);
-
-    setGames(userGamesWithDetailsAPI.games as UserGame[]);
   }, []);
 
   return (

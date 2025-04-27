@@ -1,3 +1,4 @@
+import { useGamesStore } from '@/store/store';
 import { UserGame } from '@/types';
 
 import MetascoreBadge from './components/MetascoreBadge';
@@ -29,14 +30,24 @@ const statusStyle: Record<
 };
 
 const GameCard = ({ game }: GameCardProps) => {
+  const updateGameStatus = useGamesStore((state) => state.updateGameStatus);
+
   const isReleased = new Date(game.released) <= new Date() && !game.tba;
 
   const handleCompleteClick = () => {
-    console.log(`Complete clicked for ${game.name}`);
+    if (game.userStatus === 'wishlisted' || game.userStatus === 'abandoned') {
+      updateGameStatus(game.id, 'completed');
+    }
+
+    if (game.userStatus === 'completed') {
+      updateGameStatus(game.id, 'platinum');
+    }
   };
 
   const handleAbandonClick = () => {
-    console.log(`Abandon clicked for ${game.name}`);
+    if (game.userStatus === 'wishlisted') {
+      updateGameStatus(game.id, 'abandoned');
+    }
   };
 
   return (
@@ -60,16 +71,20 @@ const GameCard = ({ game }: GameCardProps) => {
       </div>
 
       {/* Green Right Action (Complete) */}
-      <div
-        onClick={handleCompleteClick}
-        className="absolute top-0 right-0 z-50 flex h-full w-0 translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-green-500/80 transition-all duration-300 group-hover:w-16 group-hover:translate-x-0 group-hover:opacity-100"
-      />
+      {game.userStatus !== 'platinum' && (
+        <div
+          onClick={handleCompleteClick}
+          className="absolute top-0 right-0 z-50 flex h-full w-0 translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-green-500/80 transition-all duration-300 group-hover:w-16 group-hover:translate-x-0 group-hover:opacity-100"
+        />
+      )}
 
       {/* Red Left Action (Abandon) */}
-      <div
-        onClick={handleAbandonClick}
-        className="absolute top-0 left-0 z-50 flex h-full w-0 -translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-red-500/80 transition-all duration-300 group-hover:w-16 group-hover:translate-x-0 group-hover:opacity-100"
-      />
+      {game.userStatus === 'wishlisted' && (
+        <div
+          onClick={handleAbandonClick}
+          className="absolute top-0 left-0 z-50 flex h-full w-0 -translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-red-500/80 transition-all duration-300 group-hover:w-16 group-hover:translate-x-0 group-hover:opacity-100"
+        />
+      )}
 
       {/* Top Bar */}
       <div className="flex justify-between p-2">
