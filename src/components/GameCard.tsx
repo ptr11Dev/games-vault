@@ -32,15 +32,12 @@ const statusStyle: Record<
 const GameCard = ({ game }: GameCardProps) => {
   const updateGameStatus = useGamesStore((state) => state.updateGameStatus);
 
-  const isReleased = new Date(game.released) <= new Date() && !game.tba;
+  const isReleased =
+    new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
 
   const handleCompleteClick = () => {
     if (game.userStatus === 'wishlisted' || game.userStatus === 'abandoned') {
       updateGameStatus(game.id, 'completed');
-    }
-
-    if (game.userStatus === 'completed') {
-      updateGameStatus(game.id, 'platinum');
     }
   };
 
@@ -54,15 +51,12 @@ const GameCard = ({ game }: GameCardProps) => {
     <div className="group relative flex h-[200px] w-[300px] cursor-pointer flex-col justify-around overflow-hidden rounded-xl">
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* Background image */}
         <div
           className={`absolute inset-0 bg-cover bg-center transition duration-500 ${statusStyle[game.userStatus]?.img}`}
           style={{
-            backgroundImage: `url(${game.backgroundImage})`,
+            backgroundImage: `url(${game.background_image})`,
           }}
         />
-
-        {/* Background overlay */}
         {statusStyle[game.userStatus]?.overlay && (
           <div
             className={`absolute inset-0 z-10 transition duration-500 ${statusStyle[game.userStatus].overlay}`}
@@ -112,13 +106,11 @@ const GameCard = ({ game }: GameCardProps) => {
         )}
         {(game.userStatus === 'completed' ||
           game.userStatus === 'platinum') && (
-          <>
-            <div className="absolute top-1/2 right-[-25%] left-[-25%] -translate-y-1/2 rotate-[30deg] bg-green-600/80 py-2 text-center shadow-lg">
-              <p className="text-sm font-semibold tracking-wider text-white uppercase">
-                Completed
-              </p>
-            </div>
-          </>
+          <div className="absolute top-1/2 right-[-25%] left-[-25%] -translate-y-1/2 rotate-[30deg] bg-green-600/80 py-2 text-center shadow-lg">
+            <p className="text-sm font-semibold tracking-wider text-white uppercase">
+              Completed
+            </p>
+          </div>
         )}
       </div>
 
