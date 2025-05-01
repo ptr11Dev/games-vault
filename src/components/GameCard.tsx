@@ -10,25 +10,18 @@ type GameCardProps = {
   game: UserGame;
 };
 
-const statusStyle: Record<
-  UserGame['userStatus'],
-  { img: string; overlay: string }
-> = {
+const statusStyle: Record<UserGame['userStatus'], { overlay: string }> = {
   platinum: {
-    img: 'grayscale',
-    overlay: 'bg-black/40',
+    overlay: 'bg-black/60',
   },
   completed: {
-    img: 'grayscale',
-    overlay: 'bg-black/40',
+    overlay: 'bg-black/60',
   },
   wishlisted: {
-    img: '',
     overlay: '',
   },
   abandoned: {
-    img: 'grayscale',
-    overlay: 'bg-black/40',
+    overlay: 'bg-black/60',
   },
 };
 
@@ -40,9 +33,14 @@ const GameCard = ({ game }: GameCardProps) => {
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
 
   const handleCompleteClick = () => {
-    if (game.userStatus === 'wishlisted' || game.userStatus === 'abandoned') {
+    if (game.userStatus === 'wishlisted') {
       updateGameStatus(game.id, 'completed');
       setBurned(true);
+    } else if (game.userStatus === 'abandoned') {
+      updateGameStatus(game.id, 'wishlisted');
+      setBurned(false);
+    } else if (game.userStatus === 'completed') {
+      updateGameStatus(game.id, 'platinum');
     }
   };
 
@@ -58,7 +56,7 @@ const GameCard = ({ game }: GameCardProps) => {
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
-          className={`absolute inset-0 bg-cover bg-center transition duration-3000 ${statusStyle[game.userStatus]?.img}`}
+          className="absolute inset-0 bg-cover bg-center transition duration-3000"
           style={{ backgroundImage: `url(${game.background_image})` }}
         />
         {statusStyle[game.userStatus]?.overlay && !burned && (
@@ -77,7 +75,7 @@ const GameCard = ({ game }: GameCardProps) => {
       {game.userStatus !== 'platinum' && (
         <div
           onClick={handleCompleteClick}
-          className="absolute top-0 right-0 z-50 flex h-full w-0 translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-green-500/80 transition-all duration-300 group-hover:w-16 group-hover:translate-x-0 group-hover:opacity-100"
+          className="absolute top-0 right-0 z-50 flex h-full w-0 translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-green-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
         />
       )}
 
@@ -85,7 +83,7 @@ const GameCard = ({ game }: GameCardProps) => {
       {game.userStatus === 'wishlisted' && (
         <div
           onClick={handleAbandonClick}
-          className="absolute top-0 left-0 z-50 flex h-full w-0 -translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-red-500/80 transition-all duration-300 group-hover:w-16 group-hover:translate-x-0 group-hover:opacity-100"
+          className="absolute top-0 left-0 z-50 flex h-full w-0 -translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-red-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
         />
       )}
 
