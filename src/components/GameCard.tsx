@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import { BurnCanvas } from '@/effects/BurnCardEffect';
 import { useGamesStore } from '@/store/store';
 import { UserGame } from '@/types';
 
@@ -31,6 +34,7 @@ const statusStyle: Record<
 
 const GameCard = ({ game }: GameCardProps) => {
   const updateGameStatus = useGamesStore((state) => state.updateGameStatus);
+  const [burned, setBurned] = useState(false);
 
   const isReleased =
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
@@ -38,12 +42,14 @@ const GameCard = ({ game }: GameCardProps) => {
   const handleCompleteClick = () => {
     if (game.userStatus === 'wishlisted' || game.userStatus === 'abandoned') {
       updateGameStatus(game.id, 'completed');
+      setBurned(true);
     }
   };
 
   const handleAbandonClick = () => {
     if (game.userStatus === 'wishlisted') {
       updateGameStatus(game.id, 'abandoned');
+      setBurned(true);
     }
   };
 
@@ -52,15 +58,18 @@ const GameCard = ({ game }: GameCardProps) => {
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
-          className={`absolute inset-0 bg-cover bg-center transition duration-500 ${statusStyle[game.userStatus]?.img}`}
-          style={{
-            backgroundImage: `url(${game.background_image})`,
-          }}
+          className={`absolute inset-0 bg-cover bg-center transition duration-3000 ${statusStyle[game.userStatus]?.img}`}
+          style={{ backgroundImage: `url(${game.background_image})` }}
         />
-        {statusStyle[game.userStatus]?.overlay && (
+        {statusStyle[game.userStatus]?.overlay && !burned && (
           <div
-            className={`absolute inset-0 z-10 transition duration-500 ${statusStyle[game.userStatus].overlay}`}
+            className={`absolute inset-0 z-10 transition duration-3000 ${statusStyle[game.userStatus].overlay}`}
           />
+        )}
+        {burned && (
+          <div className="absolute inset-0 z-20 bg-transparent">
+            <BurnCanvas trigger={burned} />
+          </div>
         )}
       </div>
 
