@@ -4,6 +4,15 @@ import { shaderMaterial } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { extend } from '@react-three/fiber';
 
+// === Config ===
+const BURN_CONFIG = {
+  durationSeconds: 1,
+  maxOpacity: 0.6,
+  color: { r: 0.0, g: 0.0, b: 0.0 },
+  noiseScale: 10.0,
+  noiseSpeed: 3,
+};
+
 const BurnMaterial = shaderMaterial(
   {
     uTime: 0,
@@ -21,7 +30,6 @@ const BurnMaterial = shaderMaterial(
     uniform float uTime;
     uniform float uProgress;
 
-    // Simple 2D noise function (value noise approximation)
     float hash(vec2 p) {
       return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
     }
@@ -40,10 +48,10 @@ const BurnMaterial = shaderMaterial(
 
     void main() {
       float dist = length(vUv - 0.5);
-      float noisy = noise(vUv * 10.0 + uTime * 0.5);
+      float noisy = noise(vUv * ${BURN_CONFIG.noiseScale.toFixed(1)} + uTime * ${BURN_CONFIG.noiseSpeed.toFixed(1)});
       float mask = smoothstep(uProgress * 0.8, uProgress, dist + noisy * 0.1);
-      float alpha = (1.0 - mask) * 0.8;
-      gl_FragColor = vec4(0.0, 0.0, 0.0, alpha);
+      float alpha = (1.0 - mask) * ${BURN_CONFIG.maxOpacity.toFixed(1)};
+      gl_FragColor = vec4(${BURN_CONFIG.color.r.toFixed(1)}, ${BURN_CONFIG.color.g.toFixed(1)}, ${BURN_CONFIG.color.b.toFixed(1)}, alpha);
     }
   `,
 );
@@ -66,13 +74,13 @@ declare module '@react-three/fiber' {
 
 const BurnCard = ({ trigger }: { trigger: boolean }) => {
   const materialRef = useRef<InstanceType<typeof BurnMaterial>>(null!);
-
   const [progress, setProgress] = useState(0);
 
   useFrame((_, delta) => {
     if (materialRef.current) {
       if (trigger && progress < 1) {
-        const newProgress = Math.min(progress + delta * 0.5, 1);
+        const speed = 1 / BURN_CONFIG.durationSeconds;
+        const newProgress = Math.min(progress + delta * speed, 1);
         setProgress(newProgress);
         materialRef.current.uProgress = newProgress;
       }
