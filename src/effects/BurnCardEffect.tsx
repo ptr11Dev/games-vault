@@ -73,16 +73,22 @@ declare module '@react-three/fiber' {
 }
 
 const BurnCard = ({ trigger }: { trigger: boolean }) => {
-  const materialRef = useRef<InstanceType<typeof BurnMaterial>>(null!);
-  const [progress, setProgress] = useState(0);
+  const materialRef = useRef<InstanceType<typeof BurnMaterial> | null>(null);
+  const progressRef = useRef(0);
+  const [, setRenderTrigger] = useState(0);
 
   useFrame((_, delta) => {
     if (materialRef.current) {
-      if (trigger && progress < 1) {
+      if (trigger && progressRef.current < 1) {
         const speed = 1 / BURN_CONFIG.durationSeconds;
-        const newProgress = Math.min(progress + delta * speed, 1);
-        setProgress(newProgress);
+        const newProgress = Math.min(progressRef.current + delta * speed, 1);
+        progressRef.current = newProgress;
         materialRef.current.uProgress = newProgress;
+
+        // Trigger a re-render only when necessary
+        if (Math.abs(newProgress - progressRef.current) > 0.01) {
+          setRenderTrigger((prev) => prev + 1);
+        }
       }
       materialRef.current.uTime += delta;
     }
