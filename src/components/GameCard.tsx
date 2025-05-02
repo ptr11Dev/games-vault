@@ -55,10 +55,14 @@ const GameCard = ({ game }: GameCardProps) => {
           className="absolute inset-0 bg-cover bg-center transition duration-3000"
           style={{ backgroundImage: `url(${game.background_image})` }}
         />
-        {effectType && (
+        {effectType ? (
           <div className="absolute inset-0 z-20 bg-transparent">
             <BurnCanvas type={effectType} />
           </div>
+        ) : (
+          game.userStatus !== 'wishlisted' && (
+            <div className="absolute inset-0 z-10 bg-black/60 transition duration-1000 group-hover:bg-transparent" />
+          )
         )}
       </div>
 
@@ -108,7 +112,7 @@ const GameCard = ({ game }: GameCardProps) => {
             (game.userStatus === 'completed' ||
               game.userStatus === 'platinum') &&
             showBadge === 'completed'
-              ? 'opacity-100'
+              ? 'opacity-100 group-hover:opacity-40'
               : 'opacity-0'
           }`}
           style={{
@@ -121,7 +125,7 @@ const GameCard = ({ game }: GameCardProps) => {
           <div
             className={`absolute inset-0 bottom-8 z-30 flex items-center justify-center transition-opacity duration-1000 ${
               game.userStatus === 'platinum' && showBadge === 'platinum'
-                ? 'opacity-100'
+                ? 'opacity-100 group-hover:opacity-40'
                 : 'opacity-0'
             }`}
           >
