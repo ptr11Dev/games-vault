@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BurnCanvas } from '@/effects/BurnCardEffect';
 import { useGamesStore } from '@/store/store';
-import { UserGame } from '@/types';
+import { GameUserStatus, UserGame } from '@/types';
 
 import MetascoreBadge from './MetascoreBadge';
 
@@ -15,6 +15,12 @@ const GameCard = ({ game }: GameCardProps) => {
   const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(
     game.userStatus === 'abandoned' ? 'burn' : null,
   );
+  const [showBadge, setShowBadge] = useState<GameUserStatus | 'none'>('none');
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowBadge(game.userStatus), 100);
+    return () => clearTimeout(timer);
+  }, [game.userStatus]);
 
   const isReleased =
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
@@ -22,11 +28,14 @@ const GameCard = ({ game }: GameCardProps) => {
   const handleCompleteClick = () => {
     if (game.userStatus === 'wishlisted') {
       updateGameStatus(game.id, 'completed');
+      setShowBadge('completed');
     } else if (game.userStatus === 'abandoned') {
       updateGameStatus(game.id, 'wishlisted');
       setEffectType('unburn');
+      setShowBadge('none');
     } else if (game.userStatus === 'completed') {
       updateGameStatus(game.id, 'platinum');
+      setShowBadge('platinum');
     }
   };
 
@@ -34,6 +43,7 @@ const GameCard = ({ game }: GameCardProps) => {
     if (game.userStatus === 'wishlisted') {
       updateGameStatus(game.id, 'abandoned');
       setEffectType('burn');
+      setShowBadge('abandoned');
     }
   };
 
@@ -80,26 +90,56 @@ const GameCard = ({ game }: GameCardProps) => {
 
       {/* Center - Big statuses */}
       <div className="relative flex h-full items-center justify-center">
-        {game.userStatus === 'abandoned' && (
-          <p className="absolute top-1/2 right-[-25%] left-[-25%] z-10 -translate-y-1/2 rotate-[30deg] bg-red-600/80 py-2 text-center text-sm font-semibold tracking-wider text-white">
-            ABANDONED
-          </p>
-        )}
-        {game.userStatus === 'platinum' && (
-          <img
-            src="/ps-trophy.png"
-            alt="PlayStation platinum trophy icon"
-            className="z-30 h-24"
-          />
-        )}
-        {(game.userStatus === 'completed' ||
-          game.userStatus === 'platinum') && (
-          <div className="absolute top-1/2 right-[-25%] left-[-25%] -translate-y-1/2 rotate-[30deg] bg-green-600/80 py-2 text-center shadow-lg">
-            <p className="text-sm font-semibold tracking-wider text-white uppercase">
-              Completed
-            </p>
+        <span
+          className={`absolute top-4 right-4 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-opacity duration-1000 ${
+            game.userStatus === 'abandoned' && showBadge === 'abandoned'
+              ? 'opacity-100'
+              : 'opacity-0'
+          }`}
+          style={{
+            fontFamily: '"Staatliches", sans-serif',
+          }}
+        >
+          ABANDONED
+        </span>
+
+        <span
+          className={`absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-opacity duration-1000 ${
+            (game.userStatus === 'completed' ||
+              game.userStatus === 'platinum') &&
+            showBadge === 'completed'
+              ? 'opacity-100'
+              : 'opacity-0'
+          }`}
+          style={{
+            fontFamily: '"Staatliches", sans-serif',
+          }}
+        >
+          COMPLETED
+        </span>
+        {
+          <div
+            className={`absolute inset-0 bottom-8 z-30 flex items-center justify-center transition-opacity duration-1000 ${
+              game.userStatus === 'platinum' && showBadge === 'platinum'
+                ? 'opacity-100'
+                : 'opacity-0'
+            }`}
+          >
+            <div className="relative">
+              <img
+                src="/ps-trophy.png"
+                alt="Platinum Trophy"
+                className="h-24 drop-shadow-[0_0_12px_rgba(173,216,230,0.6)]"
+              />
+              <span
+                className="shine-wrapper absolute bottom-[-1.5rem] left-1/2 -translate-x-1/2 rounded bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-1.5 text-sm font-bold tracking-[8px] text-white uppercase shadow-md ring-1 ring-white/30"
+                style={{ fontFamily: '"Staatliches", sans-serif' }}
+              >
+                Platinum
+              </span>
+            </div>
           </div>
-        )}
+        }
       </div>
 
       {/* Bottom - Title */}
