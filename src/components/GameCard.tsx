@@ -10,24 +10,11 @@ type GameCardProps = {
   game: UserGame;
 };
 
-const statusStyle: Record<UserGame['userStatus'], { overlay: string }> = {
-  platinum: {
-    overlay: 'bg-black/60',
-  },
-  completed: {
-    overlay: 'bg-black/60',
-  },
-  wishlisted: {
-    overlay: '',
-  },
-  abandoned: {
-    overlay: 'bg-black/60',
-  },
-};
-
 const GameCard = ({ game }: GameCardProps) => {
   const updateGameStatus = useGamesStore((state) => state.updateGameStatus);
-  const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(null);
+  const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(
+    game.userStatus === 'abandoned' ? 'burn' : null,
+  );
 
   const isReleased =
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
@@ -58,11 +45,6 @@ const GameCard = ({ game }: GameCardProps) => {
           className="absolute inset-0 bg-cover bg-center transition duration-3000"
           style={{ backgroundImage: `url(${game.background_image})` }}
         />
-        {statusStyle[game.userStatus]?.overlay && !effectType && (
-          <div
-            className={`absolute inset-0 z-10 transition duration-3000 ${statusStyle[game.userStatus].overlay}`}
-          />
-        )}
         {effectType && (
           <div className="absolute inset-0 z-20 bg-transparent">
             <BurnCanvas type={effectType} />
