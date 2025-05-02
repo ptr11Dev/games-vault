@@ -1,4 +1,4 @@
-import { JSX, useRef, useState } from 'react';
+import { JSX, useRef } from 'react';
 
 import { shaderMaterial } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
@@ -72,26 +72,24 @@ declare module '@react-three/fiber' {
   }
 }
 
-const BurnCard = ({ trigger }: { trigger: boolean }) => {
-  const materialRef = useRef<InstanceType<typeof BurnMaterial> | null>(null);
+const BurnCard = ({ direction }: { direction: 'burn' | 'unburn' | null }) => {
+  const materialRef = useRef<InstanceType<typeof BurnMaterial>>(null!);
   const progressRef = useRef(0);
-  const [, setRenderTrigger] = useState(0);
 
   useFrame((_, delta) => {
-    if (materialRef.current) {
-      if (trigger && progressRef.current < 1) {
-        const speed = 1 / BURN_CONFIG.durationSeconds;
-        const newProgress = Math.min(progressRef.current + delta * speed, 1);
-        progressRef.current = newProgress;
-        materialRef.current.uProgress = newProgress;
+    if (!materialRef.current || !direction) return;
 
-        // Trigger a re-render only when necessary
-        if (Math.abs(newProgress - progressRef.current) > 0.01) {
-          setRenderTrigger((prev) => prev + 1);
-        }
-      }
-      materialRef.current.uTime += delta;
-    }
+    const speed = delta / BURN_CONFIG.durationSeconds;
+    let next =
+      direction === 'burn'
+        ? progressRef.current + speed
+        : progressRef.current - speed;
+
+    next = Math.min(Math.max(next, 0), 1);
+    progressRef.current = next;
+
+    materialRef.current.uProgress = next;
+    materialRef.current.uTime += delta;
   });
 
   return (
@@ -102,22 +100,13 @@ const BurnCard = ({ trigger }: { trigger: boolean }) => {
   );
 };
 
-export const BurnCanvas = ({ trigger }: { trigger: boolean }) => {
-  return (
-    <Canvas
-      orthographic
-      camera={{ zoom: 100, position: [0, 0, 10] }}
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'transparent',
-      }}
-      gl={{
-        alpha: true,
-        preserveDrawingBuffer: true,
-      }}
-    >
-      <BurnCard trigger={trigger} />
-    </Canvas>
-  );
-};
+export const BurnCanvas = ({ type }: { type: 'burn' | 'unburn' | null }) => (
+  <Canvas
+    orthographic
+    camera={{ zoom: 100, position: [0, 0, 10] }}
+    style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
+    gl={{ alpha: true, preserveDrawingBuffer: true }}
+  >
+    <BurnCard direction={type} />
+  </Canvas>
+);

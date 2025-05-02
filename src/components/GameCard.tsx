@@ -27,7 +27,7 @@ const statusStyle: Record<UserGame['userStatus'], { overlay: string }> = {
 
 const GameCard = ({ game }: GameCardProps) => {
   const updateGameStatus = useGamesStore((state) => state.updateGameStatus);
-  const [burned, setBurned] = useState(false);
+  const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(null);
 
   const isReleased =
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
@@ -35,10 +35,9 @@ const GameCard = ({ game }: GameCardProps) => {
   const handleCompleteClick = () => {
     if (game.userStatus === 'wishlisted') {
       updateGameStatus(game.id, 'completed');
-      setBurned(true);
     } else if (game.userStatus === 'abandoned') {
       updateGameStatus(game.id, 'wishlisted');
-      setBurned(false);
+      setEffectType('unburn');
     } else if (game.userStatus === 'completed') {
       updateGameStatus(game.id, 'platinum');
     }
@@ -47,7 +46,7 @@ const GameCard = ({ game }: GameCardProps) => {
   const handleAbandonClick = () => {
     if (game.userStatus === 'wishlisted') {
       updateGameStatus(game.id, 'abandoned');
-      setBurned(true);
+      setEffectType('burn');
     }
   };
 
@@ -59,14 +58,14 @@ const GameCard = ({ game }: GameCardProps) => {
           className="absolute inset-0 bg-cover bg-center transition duration-3000"
           style={{ backgroundImage: `url(${game.background_image})` }}
         />
-        {statusStyle[game.userStatus]?.overlay && !burned && (
+        {statusStyle[game.userStatus]?.overlay && !effectType && (
           <div
             className={`absolute inset-0 z-10 transition duration-3000 ${statusStyle[game.userStatus].overlay}`}
           />
         )}
-        {burned && (
+        {effectType && (
           <div className="absolute inset-0 z-20 bg-transparent">
-            <BurnCanvas trigger={burned} />
+            <BurnCanvas type={effectType} />
           </div>
         )}
       </div>
