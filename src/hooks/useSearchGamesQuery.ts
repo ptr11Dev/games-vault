@@ -1,14 +1,14 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { RAWGGame } from '@/RAWGtypes';
-import { GameAPI } from '@/types';
-import { convertRAWGGameToAPI } from '@/utils/convertRAWGGameToAPI';
+import { RawgGame } from '@/RawgTypes';
+import { GameApi } from '@/types';
+import { convertRawgGameToApi } from '@/utils/convertRawgGameToApi';
 
 export const useSearchGamesQuery = (search: string) => {
   // const { mutate: addRawgBackup } = useAddConvertedGamesMutation();
 
-  return useQuery<GameAPI[]>({
+  return useQuery<GameApi[]>({
     queryKey: ['games', search],
     queryFn: async () => {
       if (!search) return [];
@@ -21,8 +21,8 @@ export const useSearchGamesQuery = (search: string) => {
         },
       });
 
-      const convertedData = (data.results as RAWGGame[]).map((game) =>
-        convertRAWGGameToAPI(game),
+      const convertedData = (data.results as RawgGame[]).map((game) =>
+        convertRawgGameToApi(game),
       );
 
       console.log('convertedData', convertedData);

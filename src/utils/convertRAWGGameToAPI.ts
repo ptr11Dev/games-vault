@@ -1,7 +1,7 @@
-import { RAWGGame } from '@/RAWGtypes';
-import { AvailablePlatforms, GameAPI } from '@/types';
+import { RawgGame } from '@/RawgTypes';
+import { AvailablePlatforms, GameApi } from '@/types';
 
-export const convertRAWGGameToAPI = (game: RAWGGame): GameAPI => {
+export const convertRawgGameToApi = (game: RawgGame): GameApi => {
   return {
     id: game.id,
     slug: game.slug,

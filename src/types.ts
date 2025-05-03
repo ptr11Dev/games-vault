@@ -13,7 +13,7 @@ export type AvailablePlatforms =
   | 'linux'
   | 'android';
 
-export type GameAPI = {
+export type GameApi = {
   id: number;
   slug: string;
   name: string;
@@ -36,7 +36,7 @@ export type UserGames = {
   updatedAt: string;
 };
 
-export type UserGame = GameAPI & {
+export type UserGame = GameApi & {
   userStatus: GameUserStatus;
   createdAt: string;
   updatedAt: string;

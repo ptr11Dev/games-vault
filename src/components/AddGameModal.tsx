@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useSearchGamesQuery } from '@/hooks/useSearchGamesQuery';
 
+import CloseIcon from '../icons/close.svg?react';
 import GameCardMini from './GameCardMini';
 
 type AddGameModalProps = {
@@ -20,12 +21,11 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
       <div className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-lg bg-gray-900 p-6 text-white">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-bold">Search Game</h2>
-          {/* TODO zamien to na jakis ladny svg */}
           <button
             onClick={onClose}
             className="cursor-pointer text-gray-400 hover:text-white"
           >
-            X
+            <CloseIcon />
           </button>
         </div>
 

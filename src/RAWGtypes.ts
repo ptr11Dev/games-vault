@@ -1,4 +1,4 @@
-export type RAWGGame = {
+export type RawgGame = {
   id: number;
   slug: string;
   name: string;
@@ -54,7 +54,7 @@ export type RAWGGame = {
   description_top?: string;
   background_image_tags?: Tag[];
   clip?: Clip | null;
-  series?: RAWGGame[];
+  series?: RawgGame[];
   user_game?: unknown;
   reviews_count?: number | null;
   community_rating?: number | null;

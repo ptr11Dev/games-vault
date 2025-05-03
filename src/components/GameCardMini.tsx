@@ -1,7 +1,7 @@
-import { GameAPI } from '@/types';
+import { GameApi } from '@/types';
 
 type GameCardMiniProps = {
-  game: GameAPI;
+  game: GameApi;
   onAddClick: () => void;
 };
 
