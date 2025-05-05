@@ -3,16 +3,18 @@ import { devtools } from 'zustand/middleware';
 
 import { GameUserStatus, UserGame } from '@/types';
 
-import userGamesWithDetailsAPI from '../examples/userGamesWithDetailsAPI.json';
-
 type GamesStore = {
   games: UserGame[];
+
+  updateGames: (games: UserGame[]) => void;
   updateGameStatus: (gameId: number, newStatus: GameUserStatus) => void;
 };
 
 export const useGamesStore = create<GamesStore>()(
   devtools((set) => ({
-    games: userGamesWithDetailsAPI.games,
+    games: [],
+
+    updateGames: (games) => set({ games }),
     updateGameStatus: (gameId, newStatus) =>
       set((state) => ({
         games: state.games.map((game) =>

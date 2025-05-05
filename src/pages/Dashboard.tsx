@@ -1,9 +1,25 @@
+import { useEffect } from 'react';
+
 import AddGameButton from '@/components/AddGameButton';
 import GameCard from '@/components/GameCard';
+import { useUserGamesQuery } from '@/hooks/useUserGamesQuery';
+import { useUserQuery } from '@/hooks/useUserQuery';
 import { useGamesStore } from '@/store/store';
 
 const Dashboard = () => {
   const games = useGamesStore((state) => state.games);
+  const updateGames = useGamesStore((state) => state.updateGames);
+
+  // TODO ogarnac usera do store'a
+  const { data: user } = useUserQuery();
+
+  const { data: userGames } = useUserGamesQuery(user?.session.user.id ?? null);
+
+  useEffect(() => {
+    if (userGames) {
+      updateGames(userGames);
+    }
+  }, [userGames, updateGames]);
 
   return (
     <>
