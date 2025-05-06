@@ -53,10 +53,10 @@ export const Filters = ({
     setName('');
     setMetacriticMin('');
     setSort('status');
-    setDirection('asc');
+    setDirection('desc');
     onChange({
       sort: 'status',
-      direction: 'asc',
+      direction: 'desc',
     });
   };
 
@@ -119,13 +119,13 @@ export const Filters = ({
 
       <button
         onClick={handleApply}
-        className="bg-accent hover:bg-accent-lighter rounded-md px-6 py-2 font-semibold text-white transition"
+        className="bg-accent hover:bg-accent-lighter cursor-pointer rounded-md px-6 py-2 font-semibold text-white transition"
       >
         Apply Filters
       </button>
       <button
         onClick={handleReset}
-        className="bg-border hover:bg-border/80 rounded-md px-6 py-2 font-semibold text-white transition"
+        className="bg-border hover:bg-border/80 cursor-pointer rounded-md px-6 py-2 font-semibold text-white transition"
       >
         Reset Filters
       </button>

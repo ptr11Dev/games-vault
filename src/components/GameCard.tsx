@@ -89,20 +89,6 @@ const GameCard = ({ game }: GameCardProps) => {
 
   return (
     <div className="group relative flex h-[200px] w-[300px] cursor-pointer flex-col justify-around overflow-hidden rounded-xl">
-      <div className="absolute top-1 left-1/2 z-20 flex translate-x-[-50%] gap-4">
-        <button
-          onClick={handleReset}
-          className="cursor-pointer rounded-full bg-white/20 p-2 transition-all hover:bg-white/40"
-        >
-          <RotateCcw className="h-5 w-5 text-white" />
-        </button>
-        <button
-          onClick={handleDelete}
-          className="cursor-pointer rounded-full bg-white/20 p-2 transition-all hover:bg-white/40"
-        >
-          <CircleX className="h-5 w-5 text-red-500" />
-        </button>
-      </div>
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
@@ -127,7 +113,7 @@ const GameCard = ({ game }: GameCardProps) => {
       {game.userStatus !== 'platinum' && (
         <div
           onClick={handleCompleteClick}
-          className="absolute top-0 right-0 z-50 flex h-full w-0 translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-green-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
+          className="absolute top-1/2 right-0 z-50 flex h-1/2 w-0 translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-l-full bg-green-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
         />
       )}
 
@@ -135,7 +121,7 @@ const GameCard = ({ game }: GameCardProps) => {
       {game.userStatus === 'wishlisted' && (
         <div
           onClick={handleAbandonClick}
-          className="absolute top-0 left-0 z-50 flex h-full w-0 -translate-x-5 cursor-pointer items-center justify-center overflow-hidden bg-red-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
+          className="absolute top-1/2 left-0 z-50 flex h-1/2 w-0 -translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-r-full bg-red-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
         />
       )}
 
@@ -204,9 +190,21 @@ const GameCard = ({ game }: GameCardProps) => {
       </div>
 
       {/* Bottom - Title */}
-      <p className="w-full bg-black/70 p-2 text-sm font-bold text-white">
-        {game.name}
-      </p>
+      <div className="flex w-full items-center justify-between gap-3 bg-black/70 p-2">
+        <p className="text-sm font-bold text-white">{game.name}</p>
+        <button
+          onClick={handleReset}
+          className="ml-auto cursor-pointer rounded-full p-1 transition-all duration-300 hover:bg-white/40"
+        >
+          <RotateCcw className="h-4 w-4 text-white" />
+        </button>
+        <button
+          onClick={handleDelete}
+          className="cursor-pointer rounded-full p-1 transition-all duration-300 hover:bg-white/40"
+        >
+          <CircleX className="h-4 w-4 text-red-500" />
+        </button>
+      </div>
     </div>
   );
 };
