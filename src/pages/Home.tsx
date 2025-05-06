@@ -6,6 +6,10 @@ import { useUserGamesQuery } from '@/hooks/useUserGamesQuery';
 import { supabase } from '@/lib/supabase';
 import { useUserStore } from '@/store/userStore';
 
+// TODO - sortowanie po statusie
+// TODO - filtrowanie po statusie
+// TODO - dodac mozliwosc wyrzucenia gry z biblioteki
+
 const Home = () => {
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);

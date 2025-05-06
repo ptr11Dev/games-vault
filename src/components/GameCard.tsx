@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { RotateCcw } from 'lucide-react';
+import { CircleX, RotateCcw } from 'lucide-react';
 
 import { BurnCanvas } from '@/effects/BurnCardEffect';
+import { useRemoveUserGameMutation } from '@/hooks/useRemoveUserGameMutation';
 import { useUpdateUserGameStatusMutation } from '@/hooks/useUpdateUserGameStatusMutation';
 import { useUserStore } from '@/store/userStore';
 import { GameUserStatus, UserGame } from '@/types';
@@ -13,8 +14,6 @@ type GameCardProps = {
   game: UserGame;
 };
 
-// TODO - dodac mozliwosc wyrzucenia gry z biblioteki
-
 const GameCard = ({ game }: GameCardProps) => {
   const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(
     game.userStatus === 'abandoned' ? 'burn' : null,
@@ -23,6 +22,7 @@ const GameCard = ({ game }: GameCardProps) => {
   const user = useUserStore((state) => state.user);
 
   const { mutate: updateStatus } = useUpdateUserGameStatusMutation();
+  const { mutate: removeUserGame } = useRemoveUserGameMutation();
 
   useEffect(() => {
     const timer = setTimeout(() => setShowBadge(game.userStatus), 100);
@@ -80,14 +80,29 @@ const GameCard = ({ game }: GameCardProps) => {
     });
   };
 
+  const handleDelete = () => {
+    removeUserGame({
+      userId: user!.id,
+      gameId: game.id,
+    });
+  };
+
   return (
     <div className="group relative flex h-[200px] w-[300px] cursor-pointer flex-col justify-around overflow-hidden rounded-xl">
-      <button
-        onClick={handleReset}
-        className="absolute top-1 left-1/2 z-20 translate-x-[-50%] cursor-pointer rounded-full bg-white/20 p-2 transition-all hover:bg-white/40"
-      >
-        <RotateCcw className="h-5 w-5 text-white" />
-      </button>
+      <div className="absolute top-1 left-1/2 z-20 flex translate-x-[-50%] gap-4">
+        <button
+          onClick={handleReset}
+          className="cursor-pointer rounded-full bg-white/20 p-2 transition-all hover:bg-white/40"
+        >
+          <RotateCcw className="h-5 w-5 text-white" />
+        </button>
+        <button
+          onClick={handleDelete}
+          className="cursor-pointer rounded-full bg-white/20 p-2 transition-all hover:bg-white/40"
+        >
+          <CircleX className="h-5 w-5 text-red-500" />
+        </button>
+      </div>
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
@@ -189,7 +204,7 @@ const GameCard = ({ game }: GameCardProps) => {
       </div>
 
       {/* Bottom - Title */}
-      <p className="w-full truncate bg-black/70 p-2 text-sm font-bold text-white">
+      <p className="w-full bg-black/70 p-2 text-sm font-bold text-white">
         {game.name}
       </p>
     </div>
