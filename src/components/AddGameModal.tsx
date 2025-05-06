@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { CircleX } from 'lucide-react';
 
 import { useAddUserGameMutation } from '@/hooks/useAddUserGameMutation';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useSearchGamesQuery } from '@/hooks/useSearchGamesQuery';
+import { useUserGamesQuery } from '@/hooks/useUserGamesQuery';
 import { useUserStore } from '@/store/userStore';
 import { GameApi } from '@/types';
 
@@ -18,14 +20,17 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 600);
   const user = useUserStore((state) => state.user);
+  const modalRef = useClickOutside(onClose);
 
-  const { data: searchGames, isLoading } = useSearchGamesQuery(debouncedSearch);
-
+  const { data: searchedGames, isLoading } =
+    useSearchGamesQuery(debouncedSearch);
+  const { data: userGames } = useUserGamesQuery(user!.id);
   const { mutate: addUserGame } = useAddUserGameMutation();
-  // TODO jezeli zapytanie sie uda to trzeba zablokowac button, ze gra juz jest dodana
+
+  const isGameInLibrary = (game: GameApi) =>
+    userGames?.some((userGame) => userGame.id === game.id) ?? false;
 
   const handleAdd = (game: GameApi) => {
-    // TODO trzeba invalidowac zustand store
     addUserGame({
       ...game,
       userId: user?.id ?? '',
@@ -34,7 +39,10 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-      <div className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-lg bg-gray-900 p-6 text-white">
+      <div
+        ref={modalRef}
+        className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-lg bg-gray-900 p-6 text-white"
+      >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-bold">Search Game</h2>
           <button
@@ -58,11 +66,12 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
         )}
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {searchGames?.map((game) => (
+          {searchedGames?.map((game) => (
             <GameCardMini
               key={game.id}
               game={game}
               onAddClick={() => handleAdd(game)}
+              isGameInLibrary={isGameInLibrary(game)}
             />
           ))}
         </div>
