@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import { RotateCcw } from 'lucide-react';
+
 import { BurnCanvas } from '@/effects/BurnCardEffect';
 import { useUpdateUserGameStatusMutation } from '@/hooks/useUpdateUserGameStatusMutation';
-import { useUserQuery } from '@/hooks/useUserQuery';
 import { useUserStore } from '@/store/userStore';
 import { GameUserStatus, UserGame } from '@/types';
 
@@ -13,7 +14,6 @@ type GameCardProps = {
 };
 
 // TODO - dodac mozliwosc wyrzucenia gry z biblioteki
-// TODO - dodac mozliwosc zmiany statusu gry w API
 
 const GameCard = ({ game }: GameCardProps) => {
   const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(
@@ -21,11 +21,6 @@ const GameCard = ({ game }: GameCardProps) => {
   );
   const [showBadge, setShowBadge] = useState<GameUserStatus | 'none'>('none');
   const user = useUserStore((state) => state.user);
-
-  // TODO ogarnac usera do store'a
-  const { data: userInstance } = useUserQuery();
-
-  console.log('user in gameccard', { user, userInstance });
 
   const { mutate: updateStatus } = useUpdateUserGameStatusMutation();
 
@@ -41,7 +36,7 @@ const GameCard = ({ game }: GameCardProps) => {
     if (game.userStatus === 'wishlisted') {
       setShowBadge('completed');
       updateStatus({
-        userId: userInstance?.session.user.id ?? '',
+        userId: user?.id ?? '',
         gameId: game.id,
         userStatus: 'completed',
       });
@@ -49,14 +44,14 @@ const GameCard = ({ game }: GameCardProps) => {
       setEffectType('unburn');
       setShowBadge('none');
       updateStatus({
-        userId: userInstance?.session.user.id ?? '',
+        userId: user?.id ?? '',
         gameId: game.id,
         userStatus: 'wishlisted',
       });
     } else if (game.userStatus === 'completed') {
       setShowBadge('platinum');
       updateStatus({
-        userId: userInstance?.session.user.id ?? '',
+        userId: user?.id ?? '',
         gameId: game.id,
         userStatus: 'platinum',
       });
@@ -68,15 +63,31 @@ const GameCard = ({ game }: GameCardProps) => {
       setEffectType('burn');
       setShowBadge('abandoned');
       updateStatus({
-        userId: userInstance?.session.user.id ?? '',
+        userId: user?.id ?? '',
         gameId: game.id,
         userStatus: 'abandoned',
       });
     }
   };
 
+  const handleReset = () => {
+    setEffectType('unburn');
+    setShowBadge('none');
+    updateStatus({
+      userId: user?.id ?? '',
+      gameId: game.id,
+      userStatus: 'wishlisted',
+    });
+  };
+
   return (
     <div className="group relative flex h-[200px] w-[300px] cursor-pointer flex-col justify-around overflow-hidden rounded-xl">
+      <button
+        onClick={handleReset}
+        className="absolute top-1 left-1/2 z-20 translate-x-[-50%] cursor-pointer rounded-full bg-white/20 p-2 transition-all hover:bg-white/40"
+      >
+        <RotateCcw className="h-5 w-5 text-white" />
+      </button>
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
