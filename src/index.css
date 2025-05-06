@@ -50,15 +50,16 @@
 @layer utilities {
   @keyframes shine {
     0% {
-      transform: translateX(-100%);
+      transform: translateX(-100%) translateZ(0);
     }
     100% {
-      transform: translateX(300%);
+      transform: translateX(300%) translateZ(0);
     }
   }
 
   .shine-wrapper {
     overflow: hidden;
+    will-change: transform;
   }
 
   .shine-wrapper::before {
@@ -75,5 +76,7 @@
       transparent 100%
     );
     animation: shine 2s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
   }
 }

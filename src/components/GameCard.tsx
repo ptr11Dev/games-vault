@@ -91,16 +91,19 @@ const GameCard = ({ game }: GameCardProps) => {
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center transition duration-3000"
-          style={{ backgroundImage: `url(${game.background_image})` }}
+          className="absolute inset-0 bg-cover bg-center will-change-transform"
+          style={{
+            backgroundImage: `url(${game.background_image})`,
+            transform: 'translateZ(0)',
+          }}
         />
         {effectType ? (
-          <div className="absolute inset-0 z-20 bg-transparent">
+          <div className="absolute inset-0 z-20 bg-transparent will-change-transform">
             <BurnCanvas type={effectType} />
           </div>
         ) : (
           game.userStatus !== 'wishlisted' && (
-            <div className="absolute inset-0 z-10 bg-black/60 transition duration-1000 group-hover:bg-transparent" />
+            <div className="absolute inset-0 z-10 bg-black/60 transition-[background] duration-1000 will-change-transform group-hover:bg-transparent" />
           )
         )}
       </div>

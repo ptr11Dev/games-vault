@@ -6,11 +6,11 @@ import { extend } from '@react-three/fiber';
 
 // === Config ===
 const BURN_CONFIG = {
-  durationSeconds: 1,
+  durationSeconds: 1.5,
   maxOpacity: 0.6,
   color: { r: 0.0, g: 0.0, b: 0.0 },
-  noiseScale: 10.0,
-  noiseSpeed: 3,
+  noiseScale: 5.0,
+  noiseSpeed: 2,
 };
 
 const BurnMaterial = shaderMaterial(
@@ -75,9 +75,16 @@ declare module '@react-three/fiber' {
 const BurnCard = ({ direction }: { direction: 'burn' | 'unburn' | null }) => {
   const materialRef = useRef<InstanceType<typeof BurnMaterial>>(null!);
   const progressRef = useRef(0);
+  const lastTimeRef = useRef(0);
 
   useFrame((_, delta) => {
     if (!materialRef.current || !direction) return;
+
+    const currentTime = performance.now();
+    if (currentTime - lastTimeRef.current < 16) {
+      return;
+    }
+    lastTimeRef.current = currentTime;
 
     const speed = delta / BURN_CONFIG.durationSeconds;
     let next =
@@ -89,13 +96,13 @@ const BurnCard = ({ direction }: { direction: 'burn' | 'unburn' | null }) => {
     progressRef.current = next;
 
     materialRef.current.uProgress = next;
-    materialRef.current.uTime += delta;
+    materialRef.current.uTime += delta * 0.5;
   });
 
   return (
     <mesh>
       <planeGeometry args={[3, 2]} />
-      <burnMaterial ref={materialRef} uTime={0} uProgress={0} />
+      <burnMaterial ref={materialRef} uTime={0} uProgress={0} transparent />
     </mesh>
   );
 };
@@ -106,6 +113,7 @@ export const BurnCanvas = ({ type }: { type: 'burn' | 'unburn' | null }) => (
     camera={{ zoom: 100, position: [0, 0, 10] }}
     style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
     gl={{ alpha: true, preserveDrawingBuffer: true }}
+    // frameloop="demand" // TODO - check it when there are optimizations issues
   >
     <BurnCard direction={type} />
   </Canvas>
