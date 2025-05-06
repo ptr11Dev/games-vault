@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { BurnCanvas } from '@/effects/BurnCardEffect';
-import { useGamesStore } from '@/store/store';
+import { useUpdateUserGameStatusMutation } from '@/hooks/useUpdateUserGameStatusMutation';
+import { useUserQuery } from '@/hooks/useUserQuery';
+import { useUserStore } from '@/store/userStore';
 import { GameUserStatus, UserGame } from '@/types';
 
 import MetascoreBadge from './MetascoreBadge';
@@ -10,12 +12,22 @@ type GameCardProps = {
   game: UserGame;
 };
 
+// TODO - dodac mozliwosc wyrzucenia gry z biblioteki
+// TODO - dodac mozliwosc zmiany statusu gry w API
+
 const GameCard = ({ game }: GameCardProps) => {
-  const updateGameStatus = useGamesStore((state) => state.updateGameStatus);
   const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(
     game.userStatus === 'abandoned' ? 'burn' : null,
   );
   const [showBadge, setShowBadge] = useState<GameUserStatus | 'none'>('none');
+  const user = useUserStore((state) => state.user);
+
+  // TODO ogarnac usera do store'a
+  const { data: userInstance } = useUserQuery();
+
+  console.log('user in gameccard', { user, userInstance });
+
+  const { mutate: updateStatus } = useUpdateUserGameStatusMutation();
 
   useEffect(() => {
     const timer = setTimeout(() => setShowBadge(game.userStatus), 100);
@@ -27,23 +39,39 @@ const GameCard = ({ game }: GameCardProps) => {
 
   const handleCompleteClick = () => {
     if (game.userStatus === 'wishlisted') {
-      updateGameStatus(game.id, 'completed');
       setShowBadge('completed');
+      updateStatus({
+        userId: userInstance?.session.user.id ?? '',
+        gameId: game.id,
+        userStatus: 'completed',
+      });
     } else if (game.userStatus === 'abandoned') {
-      updateGameStatus(game.id, 'wishlisted');
       setEffectType('unburn');
       setShowBadge('none');
+      updateStatus({
+        userId: userInstance?.session.user.id ?? '',
+        gameId: game.id,
+        userStatus: 'wishlisted',
+      });
     } else if (game.userStatus === 'completed') {
-      updateGameStatus(game.id, 'platinum');
       setShowBadge('platinum');
+      updateStatus({
+        userId: userInstance?.session.user.id ?? '',
+        gameId: game.id,
+        userStatus: 'platinum',
+      });
     }
   };
 
   const handleAbandonClick = () => {
     if (game.userStatus === 'wishlisted') {
-      updateGameStatus(game.id, 'abandoned');
       setEffectType('burn');
       setShowBadge('abandoned');
+      updateStatus({
+        userId: userInstance?.session.user.id ?? '',
+        gameId: game.id,
+        userStatus: 'abandoned',
+      });
     }
   };
 

@@ -1,30 +1,31 @@
 import { useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
 import { useUserQuery } from './hooks/useUserQuery';
-import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
 import Login from './pages/Login';
+import { useUserStore } from './store/userStore';
 
 const App = () => {
-  const navigate = useNavigate();
-  const { data, isError, isLoading } = useUserQuery();
-
-  console.log('User:', data?.session.user.id);
+  const { data: userInstance, isLoading } = useUserQuery();
+  const setUser = useUserStore((state) => state.setUser);
+  const setSession = useUserStore((state) => state.setSession);
+  const session = useUserStore((state) => state.session);
 
   useEffect(() => {
-    if (!isLoading && isError) {
-      navigate('/');
+    if (userInstance?.session) {
+      setUser(userInstance.session.user);
+      setSession(userInstance.session);
+    } else {
+      setUser(null);
+      setSession(null);
     }
-  }, [isError, isLoading, navigate]);
+  }, [userInstance, setUser, setSession]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading user info...</div>;
   }
 
-  const session = data?.session ?? null;
-
-  return session ? <Dashboard /> : <Login />;
+  return session ? <Home /> : <Login />;
 };
 
 export default App;

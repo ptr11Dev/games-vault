@@ -1,9 +1,13 @@
 import { useState } from 'react';
 
+import { CircleX } from 'lucide-react';
+
+import { useAddUserGameMutation } from '@/hooks/useAddUserGameMutation';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useSearchGamesQuery } from '@/hooks/useSearchGamesQuery';
+import { useUserStore } from '@/store/userStore';
+import { GameApi } from '@/types';
 
-import CloseIcon from '../icons/close.svg?react';
 import GameCardMini from './GameCardMini';
 
 type AddGameModalProps = {
@@ -13,8 +17,20 @@ type AddGameModalProps = {
 const AddGameModal = ({ onClose }: AddGameModalProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 600);
+  const user = useUserStore((state) => state.user);
 
-  const { data: games, isLoading } = useSearchGamesQuery(debouncedSearch);
+  const { data: searchGames, isLoading } = useSearchGamesQuery(debouncedSearch);
+
+  const { mutate: addUserGame } = useAddUserGameMutation();
+  // TODO jezeli zapytanie sie uda to trzeba zablokowac button, ze gra juz jest dodana
+
+  const handleAdd = (game: GameApi) => {
+    // TODO trzeba invalidowac zustand store
+    addUserGame({
+      ...game,
+      userId: user?.id ?? '',
+    });
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
@@ -25,7 +41,7 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
             onClick={onClose}
             className="cursor-pointer text-gray-400 hover:text-white"
           >
-            <CloseIcon />
+            <CircleX />
           </button>
         </div>
 
@@ -38,15 +54,15 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
         />
 
         {isLoading && (
-          <div className="text-center text-gray-300">Loading...</div>
+          <div className="text-center text-gray-300">Loading games...</div>
         )}
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {games?.map((game) => (
+          {searchGames?.map((game) => (
             <GameCardMini
               key={game.id}
               game={game}
-              onAddClick={() => console.log('Add game', game)}
+              onAddClick={() => handleAdd(game)}
             />
           ))}
         </div>
