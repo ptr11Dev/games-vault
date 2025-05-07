@@ -88,7 +88,7 @@ const GameCard = ({ game }: GameCardProps) => {
   };
 
   return (
-    <div className="group relative flex h-[200px] w-[300px] cursor-pointer flex-col justify-around overflow-hidden rounded-xl">
+    <div className="group relative flex h-[200px] w-[300px] flex-col justify-around overflow-hidden rounded-xl">
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
