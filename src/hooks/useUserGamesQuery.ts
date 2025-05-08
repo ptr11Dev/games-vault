@@ -13,22 +13,15 @@ export type UserGamesFilters = {
 
 export const useUserGamesQuery = (
   userId: string | null,
-  filters: UserGamesFilters = {},
+  searchParams: URLSearchParams,
 ) => {
   return useQuery<UserGame[]>({
-    queryKey: ['userGames', userId, filters],
+    queryKey: ['userGames', userId, Object.fromEntries(searchParams)],
     queryFn: async () => {
       if (!userId) return [];
-      const searchParams = new URLSearchParams();
-      if (filters.status) searchParams.set('status', filters.status);
-      if (filters.name) searchParams.set('name', filters.name);
-      if (filters.metacriticMin)
-        searchParams.set('metacriticMin', filters.metacriticMin.toString());
-      if (filters.sort) searchParams.set('sort', filters.sort);
-      if (filters.direction) searchParams.set('direction', filters.direction);
-
-      const queryString = searchParams.toString();
-      const url = `/user-games/${userId}${queryString ? `?${queryString}` : ''}`;
+      const url = `/user-games/${userId}${
+        searchParams.toString() ? `?${searchParams.toString()}` : ''
+      }`;
 
       const { data } = await axiosInstance.get(url);
       return data;

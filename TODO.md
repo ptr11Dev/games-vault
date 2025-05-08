@@ -23,20 +23,19 @@ https://rawg.io/@kaczmar11/apikey
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
 
-1. lepiej ogarnac stylowanie karty z gra
-2. ogarnac jakie gry gralem na PS i dodac do biblioteki
-3. przejrzec kod fe
-4. podzielic kod fe
-5. napisac testy be
-6. napisac testy fe
-7. dodac gdzies checkbox 'pokazuj' statusy (chodzi o te wielkie badge) - np. jak wyfiltruje sobie platyny to moge widziec ladnie plakaty, a nie same badge
-8. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
-9. ogarnac obsluge bledow i isloading
-10. ogarnac wysylanie zapytania do api po zmianie karty
-11. hostowac backend
-12. hostowac frontend
-13. poprawic optymalizacje
-14. ogarnac domyslne sortowanie, zeby bylo w grupach, tj. jak mam sortowanie po wszystkich statusach ascending, to w kazdej z grup wyswietla sie to w sensowny sposob, a nie, ze jest pierdolnik troche TBA, pozniej po premierze, pozniej znowu TBA etc
-15. ogarnac jakiegos scrappera na metacritic
-16. dodac status 'playing' oznaczajacy, ze cos jest obecnie ogrywane i taka gra ma byc wtedy na samej gorze listy po wyfiltrowaniu
-17. przeniesc informacje z filtrow do url i tam je przechowywac
+1. ogarnac jakie gry gralem na PS i dodac do biblioteki
+2. dodac gdzies checkbox 'pokazuj' statusy (chodzi o te wielkie badge) - np. jak wyfiltruje sobie platyny to moge widziec ladnie plakaty, a nie same badge
+3. ogarnac obsluge bledow i isloading
+4. ogarnac wysylanie zapytania do api po zmianie karty
+5. ogarnac domyslne sortowanie, zeby bylo w grupach, tj. jak mam sortowanie po wszystkich statusach ascending, to w kazdej z grup wyswietla sie to w sensowny sposob, a nie, ze jest pierdolnik troche TBA, pozniej po premierze, pozniej znowu TBA etc
+6. ogarnac jakiegos scrappera na metacritic
+7. dodac status 'playing' oznaczajacy, ze cos jest obecnie ogrywane i taka gra ma byc wtedy na samej gorze listy po wyfiltrowaniu
+8. przejrzec kod fe
+9. podzielic kod fe
+10. napisac testy be
+11. napisac testy fe
+12. lepiej ogarnac stylowanie karty z gra
+13. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
+14. poprawic optymalizacje
+15. hostowac backend
+16. hostowac frontend

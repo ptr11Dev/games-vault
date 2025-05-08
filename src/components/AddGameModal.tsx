@@ -24,7 +24,10 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
 
   const { data: searchedGames, isLoading } =
     useSearchGamesQuery(debouncedSearch);
-  const { data: userGames } = useUserGamesQuery(user!.id);
+  const { data: userGames } = useUserGamesQuery(
+    user!.id,
+    new URLSearchParams(),
+  );
   const { mutate: addUserGame } = useAddUserGameMutation();
 
   const isGameInLibrary = (game: GameApi) =>

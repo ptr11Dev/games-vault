@@ -1,13 +1,4 @@
-import { useState } from 'react';
-
-import {
-  ArrowDown,
-  ArrowUp,
-  Filter,
-  Gauge,
-  RefreshCw,
-  Search,
-} from 'lucide-react';
+import { ArrowDown, ArrowUp, Gauge, RefreshCw, Search } from 'lucide-react';
 
 import { UserGamesFilters } from '@/hooks/useUserGamesQuery';
 import { GameUserStatus } from '@/types';
@@ -27,36 +18,44 @@ const sortOptions: { value: UserGamesFilters['sort']; label: string }[] = [
   { value: 'metacritic', label: 'Metacritic' },
 ];
 
-export const Filters = ({
-  onChange,
-}: {
-  onChange: (filters: UserGamesFilters) => void;
-}) => {
-  const [status, setStatus] = useState('');
-  const [name, setName] = useState('');
-  const [metacriticMin, setMetacriticMin] = useState('');
-  const [sort, setSort] = useState<UserGamesFilters['sort']>('status');
-  const [direction, setDirection] =
-    useState<UserGamesFilters['direction']>('desc');
+type FiltersProps = {
+  searchParams: URLSearchParams;
+  setSearchParams: (params: URLSearchParams) => void;
+};
 
+export const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
   const handleApply = (e?: React.FormEvent) => {
     e?.preventDefault();
-    onChange({
-      status: status as GameUserStatus,
-      name,
-      metacriticMin: metacriticMin ? Number(metacriticMin) : undefined,
-      sort,
-      direction,
-    });
+    const newParams = new URLSearchParams(searchParams);
+
+    const name = newParams.get('name') || '';
+    const status = newParams.get('status') || '';
+    const metacriticMin = newParams.get('metacriticMin') || '';
+    const sort = newParams.get('sort') || 'status';
+    const direction = newParams.get('direction') || 'desc';
+
+    if (name) newParams.set('name', name);
+    else newParams.delete('name');
+
+    if (status) newParams.set('status', status);
+    else newParams.delete('status');
+
+    if (metacriticMin) newParams.set('metacriticMin', metacriticMin);
+    else newParams.delete('metacriticMin');
+
+    newParams.set('sort', sort);
+    newParams.set('direction', direction);
+
+    setSearchParams(newParams);
   };
 
   const handleReset = () => {
-    setStatus('');
-    setName('');
-    setMetacriticMin('');
-    setSort('status');
-    setDirection('desc');
-    onChange({ sort: 'status', direction: 'desc' });
+    setSearchParams(
+      new URLSearchParams({
+        sort: 'status',
+        direction: 'desc',
+      }),
+    );
   };
 
   return (
@@ -72,15 +71,25 @@ export const Filters = ({
             type="text"
             placeholder="Search..."
             className="border-border/40 bg-primary h-9 w-full rounded border pr-2 pl-9 text-sm text-white placeholder:text-gray-500 focus:ring-1 focus:ring-blue-600 focus:outline-none"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={searchParams.get('name') || ''}
+            onChange={(e) => {
+              const newParams = new URLSearchParams(searchParams);
+              if (e.target.value) newParams.set('name', e.target.value);
+              else newParams.delete('name');
+              setSearchParams(newParams);
+            }}
           />
         </div>
 
         {/* Status Select */}
         <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          value={searchParams.get('status') || ''}
+          onChange={(e) => {
+            const newParams = new URLSearchParams(searchParams);
+            if (e.target.value) newParams.set('status', e.target.value);
+            else newParams.delete('status');
+            setSearchParams(newParams);
+          }}
           className="custom-select border-border/40 bg-primary h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:ring-blue-600 focus:outline-none"
         >
           <option value="">All Statuses</option>
@@ -100,15 +109,25 @@ export const Filters = ({
             max="100"
             placeholder="Metacritic"
             className="custom-number-input border-border/40 bg-primary h-9 w-full appearance-none rounded border pr-2 pl-9 text-sm text-white placeholder:text-gray-500 focus:ring-1 focus:ring-blue-600 focus:outline-none"
-            value={metacriticMin}
-            onChange={(e) => setMetacriticMin(e.target.value)}
+            value={searchParams.get('metacriticMin') || ''}
+            onChange={(e) => {
+              const newParams = new URLSearchParams(searchParams);
+              if (e.target.value)
+                newParams.set('metacriticMin', e.target.value);
+              else newParams.delete('metacriticMin');
+              setSearchParams(newParams);
+            }}
           />
         </div>
 
         {/* Sort Select */}
         <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value as UserGamesFilters['sort'])}
+          value={searchParams.get('sort') || 'status'}
+          onChange={(e) => {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.set('sort', e.target.value);
+            setSearchParams(newParams);
+          }}
           className="custom-select border-border/40 bg-primary h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:ring-blue-600 focus:outline-none"
         >
           {sortOptions.map((s) => (
@@ -121,12 +140,18 @@ export const Filters = ({
         {/* Direction toggle */}
         <button
           type="button"
-          onClick={() =>
-            setDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))
-          }
+          onClick={() => {
+            const newParams = new URLSearchParams(searchParams);
+            const currentDirection = newParams.get('direction') || 'desc';
+            newParams.set(
+              'direction',
+              currentDirection === 'asc' ? 'desc' : 'asc',
+            );
+            setSearchParams(newParams);
+          }}
           className="h-9 cursor-pointer rounded bg-blue-600/20 px-2 text-sm text-white transition hover:bg-blue-600/30"
         >
-          {direction === 'asc' ? (
+          {searchParams.get('direction') === 'asc' ? (
             <ArrowUp size={18} />
           ) : (
             <ArrowDown size={18} />
@@ -134,24 +159,15 @@ export const Filters = ({
         </button>
       </div>
 
-      {/* Action buttons */}
-      <div className="flex items-center gap-2">
-        <button
-          type="submit"
-          className="flex h-9 cursor-pointer items-center gap-1 rounded bg-blue-600 px-3 text-sm font-medium text-white transition hover:bg-blue-300"
-        >
-          <Filter size={18} />
-          Apply
-        </button>
-        <button
-          type="button"
-          onClick={handleReset}
-          className="border-border hover:bg-border/50 flex h-9 cursor-pointer items-center gap-1 rounded border px-3 text-sm text-white transition"
-        >
-          <RefreshCw size={18} />
-          Reset
-        </button>
-      </div>
+      {/* Action button */}
+      <button
+        type="button"
+        onClick={handleReset}
+        className="border-border hover:bg-border/50 flex h-9 cursor-pointer items-center gap-1 rounded border px-3 text-sm text-white transition"
+      >
+        <RefreshCw size={18} />
+        Reset
+      </button>
     </form>
   );
 };

@@ -1,25 +1,21 @@
-import { useState } from 'react';
-
 import { LogOut } from 'lucide-react';
 
 import AddGameButton from '@/components/AddGameButton';
 import { Filters } from '@/components/Filters';
 import GameCard from '@/components/GameCard';
-import { UserGamesFilters, useUserGamesQuery } from '@/hooks/useUserGamesQuery';
+import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
+import { useUserGamesQuery } from '@/hooks/useUserGamesQuery';
 import { supabase } from '@/lib/supabase';
 import { useUserStore } from '@/store/userStore';
 
 const Home = () => {
+  const { searchParams, setSearchParams, debouncedParams } =
+    useDebounceSearchParams(400);
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
   const setSession = useUserStore((state) => state.setSession);
 
-  const [filters, setFilters] = useState<UserGamesFilters>({
-    sort: 'status',
-    direction: 'desc',
-  });
-
-  const { data: games } = useUserGamesQuery(user?.id ?? null, filters);
+  const { data: games } = useUserGamesQuery(user?.id ?? null, debouncedParams);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -52,7 +48,7 @@ const Home = () => {
       </header>
 
       {/* 🔍 Filtry */}
-      <Filters onChange={setFilters} />
+      <Filters searchParams={searchParams} setSearchParams={setSearchParams} />
 
       {/* 🕹️ Gry */}
       <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
