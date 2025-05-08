@@ -62,16 +62,16 @@ export const Filters = ({
   return (
     <form
       onSubmit={handleApply}
-      className="border-accent/30 bg-primary-dark flex flex-wrap items-end justify-between gap-2 rounded-lg border p-3 shadow-md"
+      className="bg-primary-dark flex flex-wrap items-end justify-between gap-2 rounded-lg border border-blue-600/30 p-3 shadow-md"
     >
       <div className="flex flex-1 flex-wrap items-center gap-2">
         {/* Search */}
         <div className="relative w-48">
-          <Search className="text-accent pointer-events-none absolute top-2 left-2 h-5 w-5" />
+          <Search className="pointer-events-none absolute top-2 left-2 h-5 w-5 text-blue-600" />
           <input
             type="text"
             placeholder="Search..."
-            className="border-border/40 bg-primary focus:ring-accent h-9 w-full rounded border pr-2 pl-9 text-sm text-white placeholder:text-gray-500 focus:ring-1 focus:outline-none"
+            className="border-border/40 bg-primary h-9 w-full rounded border pr-2 pl-9 text-sm text-white placeholder:text-gray-500 focus:ring-1 focus:ring-blue-600 focus:outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -81,7 +81,7 @@ export const Filters = ({
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="custom-select border-border/40 bg-primary focus:ring-accent h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:outline-none"
+          className="custom-select border-border/40 bg-primary h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:ring-blue-600 focus:outline-none"
         >
           <option value="">All Statuses</option>
           {statusOptions.map((s) => (
@@ -93,13 +93,13 @@ export const Filters = ({
 
         {/* Metacritic */}
         <div className="relative w-32">
-          <Gauge className="text-accent pointer-events-none absolute top-2 left-2 h-5 w-5" />
+          <Gauge className="pointer-events-none absolute top-2 left-2 h-5 w-5 text-blue-600" />
           <input
             type="number"
             min="0"
             max="100"
             placeholder="Metacritic"
-            className="custom-number-input border-border/40 bg-primary focus:ring-accent h-9 w-full appearance-none rounded border pr-2 pl-9 text-sm text-white placeholder:text-gray-500 focus:ring-1 focus:outline-none"
+            className="custom-number-input border-border/40 bg-primary h-9 w-full appearance-none rounded border pr-2 pl-9 text-sm text-white placeholder:text-gray-500 focus:ring-1 focus:ring-blue-600 focus:outline-none"
             value={metacriticMin}
             onChange={(e) => setMetacriticMin(e.target.value)}
           />
@@ -109,7 +109,7 @@ export const Filters = ({
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value as UserGamesFilters['sort'])}
-          className="custom-select border-border/40 bg-primary focus:ring-accent h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:outline-none"
+          className="custom-select border-border/40 bg-primary h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:ring-blue-600 focus:outline-none"
         >
           {sortOptions.map((s) => (
             <option key={s.value} value={s.value}>
@@ -124,7 +124,7 @@ export const Filters = ({
           onClick={() =>
             setDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))
           }
-          className="bg-accent/20 hover:bg-accent/30 h-9 cursor-pointer rounded px-2 text-sm text-white transition"
+          className="h-9 cursor-pointer rounded bg-blue-600/20 px-2 text-sm text-white transition hover:bg-blue-600/30"
         >
           {direction === 'asc' ? (
             <ArrowUp size={18} />
@@ -138,7 +138,7 @@ export const Filters = ({
       <div className="flex items-center gap-2">
         <button
           type="submit"
-          className="hover:bg-accent-lighter flex h-9 cursor-pointer items-center gap-1 rounded bg-blue-600 px-3 text-sm font-medium text-white transition"
+          className="flex h-9 cursor-pointer items-center gap-1 rounded bg-blue-600 px-3 text-sm font-medium text-white transition hover:bg-blue-300"
         >
           <Filter size={18} />
           Apply
