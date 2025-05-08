@@ -108,7 +108,6 @@ const GameCard = ({ game }: GameCardProps) => {
           )
         )}
       </div>
-
       {/* Green Right Action (Complete) */}
       {game.userStatus !== 'platinum' && (
         <div
@@ -116,7 +115,6 @@ const GameCard = ({ game }: GameCardProps) => {
           className="absolute top-1/2 right-0 z-50 flex h-1/2 w-0 translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-l-full bg-green-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
         />
       )}
-
       {/* Red Left Action (Abandon) */}
       {game.userStatus === 'wishlisted' && (
         <div
@@ -124,7 +122,6 @@ const GameCard = ({ game }: GameCardProps) => {
           className="absolute top-1/2 left-0 z-50 flex h-1/2 w-0 -translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-r-full bg-red-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
         />
       )}
-
       {/* Top Bar */}
       <div className="flex justify-between p-2">
         {!isReleased && (
@@ -134,7 +131,6 @@ const GameCard = ({ game }: GameCardProps) => {
         )}
         <MetascoreBadge score={game.metacritic} />
       </div>
-
       {/* Center - Big statuses */}
       <div className="relative flex h-full items-center justify-center">
         <span
@@ -149,7 +145,6 @@ const GameCard = ({ game }: GameCardProps) => {
         >
           ABANDONED
         </span>
-
         <span
           className={`absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-opacity duration-1000 ${
             (game.userStatus === 'completed' ||
@@ -188,7 +183,6 @@ const GameCard = ({ game }: GameCardProps) => {
           </div>
         }
       </div>
-
       {/* Bottom - Title */}
       <div className="flex w-full items-center justify-between gap-3 bg-black/70 p-2">
         <p className="text-sm font-bold text-white">{game.name}</p>

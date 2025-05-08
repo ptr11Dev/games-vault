@@ -23,7 +23,7 @@ type FiltersProps = {
   setSearchParams: (params: URLSearchParams) => void;
 };
 
-export const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
+const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
   const handleApply = (e?: React.FormEvent) => {
     e?.preventDefault();
     const newParams = new URLSearchParams(searchParams);
@@ -80,7 +80,6 @@ export const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
             }}
           />
         </div>
-
         {/* Status Select */}
         <select
           value={searchParams.get('status') || ''}
@@ -99,7 +98,6 @@ export const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
             </option>
           ))}
         </select>
-
         {/* Metacritic */}
         <div className="relative w-32">
           <Gauge className="pointer-events-none absolute top-2 left-2 h-5 w-5 text-blue-600" />
@@ -119,7 +117,6 @@ export const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
             }}
           />
         </div>
-
         {/* Sort Select */}
         <select
           value={searchParams.get('sort') || 'status'}
@@ -136,7 +133,6 @@ export const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
             </option>
           ))}
         </select>
-
         {/* Direction toggle */}
         <button
           type="button"
@@ -158,7 +154,6 @@ export const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
           )}
         </button>
       </div>
-
       {/* Action button */}
       <button
         type="button"
@@ -171,3 +166,5 @@ export const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
     </form>
   );
 };
+
+export default Filters;

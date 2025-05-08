@@ -55,7 +55,6 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
             <CircleX />
           </button>
         </div>
-
         <input
           type="text"
           value={searchTerm}
@@ -63,11 +62,9 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
           placeholder="Type game title..."
           className="mb-4 w-full rounded border border-gray-600 bg-gray-800 p-2 text-white placeholder-gray-400"
         />
-
         {isLoading && (
           <div className="text-center text-gray-300">Loading games...</div>
         )}
-
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {searchedGames?.map((game) => (
             <GameCardMini

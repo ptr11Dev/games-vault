@@ -1,7 +1,7 @@
 import { LogOut } from 'lucide-react';
 
 import AddGameButton from '@/components/AddGameButton';
-import { Filters } from '@/components/Filters';
+import Filters from '@/components/Filters';
 import GameCard from '@/components/GameCard';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
 import { useUserGamesQuery } from '@/hooks/useUserGamesQuery';
@@ -46,10 +46,8 @@ const Home = () => {
           </div>
         </div>
       </header>
-
       {/* 🔍 Filtry */}
       <Filters searchParams={searchParams} setSearchParams={setSearchParams} />
-
       {/* 🕹️ Gry */}
       <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {games?.map((game) => <GameCard key={game.id} game={game} />)}
