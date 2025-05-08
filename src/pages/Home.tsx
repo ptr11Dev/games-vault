@@ -29,17 +29,27 @@ const Home = () => {
 
   return (
     <div className="p-4">
-      {/* Nagłówek z przyciskiem */}
-      <div className="mb-4 flex items-center justify-between">
-        <button
-          className="cursor-pointer text-gray-400 hover:text-white"
-          onClick={handleLogout}
-          aria-label="Logout"
-        >
-          <LogOut />
-        </button>
-        <AddGameButton />
-      </div>
+      <header className="mb-8 rounded-lg bg-gray-800/50 p-4 shadow-lg">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleLogout}
+              aria-label="Logout"
+              className="flex cursor-pointer items-center gap-2 rounded-md border border-gray-600 px-3 py-1.5 text-sm text-gray-400 transition-colors hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
+            >
+              <span>Sign out</span>
+              <LogOut size={16} />
+            </button>
+            <span className="animated-username animate-glow bg-gradient-to-r from-blue-300 to-red-400 bg-clip-text text-lg font-medium tracking-widest text-transparent">
+              {user?.email?.toUpperCase().replace(/@.*$/, '')}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <div className="h-8 w-px bg-gray-700"></div>
+            <AddGameButton />
+          </div>
+        </div>
+      </header>
 
       {/* 🔍 Filtry */}
       <Filters onChange={setFilters} />

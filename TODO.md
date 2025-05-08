@@ -23,21 +23,20 @@ https://rawg.io/@kaczmar11/apikey
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
 
-1. ogarnac gdzies w 'nawigacji' nazwe konta na jakim jestem zalogowany
-2. lepiej ogarnac stylowanie karty z gra
-3. ogarnac jakie gry gralem na PS i dodac do biblioteki
+1. lepiej ogarnac stylowanie karty z gra
+2. ogarnac jakie gry gralem na PS i dodac do biblioteki
+3. przejrzec kod fe
 4. podzielic kod fe
-5. przejrzec kod fe
-6. napisac testy be
-7. napisac testy fe
-8. dodac gdzies checkbox 'pokazuj' statusy (chodzi o te wielkie badge) - np. jak wyfiltruje sobie platyny to moge widziec ladnie plakaty, a nie same badge
-9. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
-10. ogarnac obsluge bledow i isloading
-11. ogarnac wysylanie zapytania do api po zmianie karty
-12. hostowac backend
-13. hostowac frontend
-14. poprawic optymalizacje
-15. ogarnac domyslne sortowanie, zeby bylo w grupach, tj. jak mam sortowanie po wszystkich statusach ascending, to w kazdej z grup wyswietla sie to w sensowny sposob, a nie, ze jest pierdolnik troche TBA, pozniej po premierze, pozniej znowu TBA etc
-16. ogarnac jakiegos scrappera na metacritic
-17. dodac status 'playing' oznaczajacy, ze cos jest obecnie ogrywane i taka gra ma byc wtedy na samej gorze listy po wyfiltrowaniu
-18. przeniesc informacje z filtrow do url i tam je przechowywac
+5. napisac testy be
+6. napisac testy fe
+7. dodac gdzies checkbox 'pokazuj' statusy (chodzi o te wielkie badge) - np. jak wyfiltruje sobie platyny to moge widziec ladnie plakaty, a nie same badge
+8. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
+9. ogarnac obsluge bledow i isloading
+10. ogarnac wysylanie zapytania do api po zmianie karty
+11. hostowac backend
+12. hostowac frontend
+13. poprawic optymalizacje
+14. ogarnac domyslne sortowanie, zeby bylo w grupach, tj. jak mam sortowanie po wszystkich statusach ascending, to w kazdej z grup wyswietla sie to w sensowny sposob, a nie, ze jest pierdolnik troche TBA, pozniej po premierze, pozniej znowu TBA etc
+15. ogarnac jakiegos scrappera na metacritic
+16. dodac status 'playing' oznaczajacy, ze cos jest obecnie ogrywane i taka gra ma byc wtedy na samej gorze listy po wyfiltrowaniu
+17. przeniesc informacje z filtrow do url i tam je przechowywac

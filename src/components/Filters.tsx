@@ -124,7 +124,7 @@ export const Filters = ({
           onClick={() =>
             setDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))
           }
-          className="bg-accent/20 hover:bg-accent/30 h-9 rounded px-2 text-sm text-white transition"
+          className="bg-accent/20 hover:bg-accent/30 h-9 cursor-pointer rounded px-2 text-sm text-white transition"
         >
           {direction === 'asc' ? (
             <ArrowUp size={18} />
@@ -138,7 +138,7 @@ export const Filters = ({
       <div className="flex items-center gap-2">
         <button
           type="submit"
-          className="bg-accent hover:bg-accent-lighter flex h-9 items-center gap-1 rounded px-3 text-sm font-medium text-white transition"
+          className="hover:bg-accent-lighter flex h-9 cursor-pointer items-center gap-1 rounded bg-blue-600 px-3 text-sm font-medium text-white transition"
         >
           <Filter size={18} />
           Apply
@@ -146,7 +146,7 @@ export const Filters = ({
         <button
           type="button"
           onClick={handleReset}
-          className="border-border hover:bg-border/50 flex h-9 items-center gap-1 rounded border px-3 text-sm text-white transition"
+          className="border-border hover:bg-border/50 flex h-9 cursor-pointer items-center gap-1 rounded border px-3 text-sm text-white transition"
         >
           <RefreshCw size={18} />
           Reset
