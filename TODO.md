@@ -18,54 +18,26 @@ https://rawg.io/@kaczmar11/apikey
 - TeleportHQ – AI + no-code builder, eksport do React/Next.js.
 - Vercel v0 – wpisujesz prompt, a otrzymujesz gotowy komponent React (Tailwind + shadcn/ui). Bardzo fajne dla devów.
 
-# załozenia do BE
-
-1. user pobiera liste gier z RAWG
-2. be zapisuje dane do tablicy games
-
-- id
-- slug
-- name
-- released
-- tba
-- background_image
-- rating - rawg_rating
-- ratings_count - rawg_ratings_count
-- metacritic
-- updated
-- parent_platforms, ale jako platforms: elt.map(platform => platform.- platform.slug)
-
-3. po dodaniu przez uzytkownika gry do swojego boarda zostaje to zapisane w tablicy userGames w postaci
-
-- id - generowany przez system
-- userId
-- gameId
-- userStatus - wybrany przez usera
-- createdAt
-- updatedAt
-
-4. pobieranie danych o uzytkowniku zwraca sklejone dane usera w postaci
-
-- userId
-- games - tablica gier klejona w taki sposob, ze brane sa wszystkie rekordy z tablicy userGames, w miejsce gameId wklejane sa szczegoly z tablicy games i dodawane sa informacje zalegle z userGames - w ten sposob powstaja takie obiekty
-
-  - id - to jest id gry
-  - slug
-  - name
-  - released
-  - tba
-  - background_image
-  - rating
-  - ratings_count
-  - metacritic
-  - updated
-  - platforms
-
-  - userStatus
-  - createdAt
-  - updatedAt
-
   5. Raz na jakiś czas (dziennie? tygodniowo?) aktualizowane są dane z RAWG co do wszystkich gier, które są w bazie
 
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
+
+1. ogarnac gdzies w 'nawigacji' nazwe konta na jakim jestem zalogowany
+2. lepiej ogarnac stylowanie karty z gra
+3. ogarnac jakie gry gralem na PS i dodac do biblioteki
+4. podzielic kod fe
+5. przejrzec kod fe
+6. napisac testy be
+7. napisac testy fe
+8. dodac gdzies checkbox 'pokazuj' statusy (chodzi o te wielkie badge) - np. jak wyfiltruje sobie platyny to moge widziec ladnie plakaty, a nie same badge
+9. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
+10. ogarnac obsluge bledow i isloading
+11. ogarnac wysylanie zapytania do api po zmianie karty
+12. hostowac backend
+13. hostowac frontend
+14. poprawic optymalizacje
+15. ogarnac domyslne sortowanie, zeby bylo w grupach, tj. jak mam sortowanie po wszystkich statusach ascending, to w kazdej z grup wyswietla sie to w sensowny sposob, a nie, ze jest pierdolnik troche TBA, pozniej po premierze, pozniej znowu TBA etc
+16. ogarnac jakiegos scrappera na metacritic
+17. dodac status 'playing' oznaczajacy, ze cos jest obecnie ogrywane i taka gra ma byc wtedy na samej gorze listy po wyfiltrowaniu
+18. przeniesc informacje z filtrow do url i tam je przechowywac

@@ -1,5 +1,14 @@
 import { useState } from 'react';
 
+import {
+  ArrowDown,
+  ArrowUp,
+  Filter,
+  Gauge,
+  RefreshCw,
+  Search,
+} from 'lucide-react';
+
 import { UserGamesFilters } from '@/hooks/useUserGamesQuery';
 import { GameUserStatus } from '@/types';
 
@@ -18,14 +27,6 @@ const sortOptions: { value: UserGamesFilters['sort']; label: string }[] = [
   { value: 'metacritic', label: 'Metacritic' },
 ];
 
-const directionOptions: {
-  value: UserGamesFilters['direction'];
-  label: string;
-}[] = [
-  { value: 'asc', label: 'Ascending' },
-  { value: 'desc', label: 'Descending' },
-];
-
 export const Filters = ({
   onChange,
 }: {
@@ -38,7 +39,8 @@ export const Filters = ({
   const [direction, setDirection] =
     useState<UserGamesFilters['direction']>('desc');
 
-  const handleApply = () => {
+  const handleApply = (e?: React.FormEvent) => {
+    e?.preventDefault();
     onChange({
       status: status as GameUserStatus,
       name,
@@ -54,81 +56,102 @@ export const Filters = ({
     setMetacriticMin('');
     setSort('status');
     setDirection('desc');
-    onChange({
-      sort: 'status',
-      direction: 'desc',
-    });
+    onChange({ sort: 'status', direction: 'desc' });
   };
 
   return (
-    <div className="bg-primary-lighter flex flex-wrap gap-4 rounded-xl p-4 shadow-md">
-      <input
-        type="text"
-        placeholder="Search by name"
-        className="bg-primary border-border w-60 rounded-md border px-4 py-2 text-white"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+    <form
+      onSubmit={handleApply}
+      className="border-accent/30 bg-primary-dark flex flex-wrap items-end justify-between gap-2 rounded-lg border p-3 shadow-md"
+    >
+      <div className="flex flex-1 flex-wrap items-center gap-2">
+        {/* Search */}
+        <div className="relative w-48">
+          <Search className="text-accent pointer-events-none absolute top-2 left-2 h-5 w-5" />
+          <input
+            type="text"
+            placeholder="Search..."
+            className="border-border/40 bg-primary focus:ring-accent h-9 w-full rounded border pr-2 pl-9 text-sm text-white placeholder:text-gray-500 focus:ring-1 focus:outline-none"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-      <select
-        className="bg-primary border-border rounded-md border px-3 py-2 text-white"
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-      >
-        <option value="">All statuses</option>
-        {statusOptions.map((s) => (
-          <option key={s} value={s}>
-            {s.charAt(0).toUpperCase() + s.slice(1)}
-          </option>
-        ))}
-      </select>
+        {/* Status Select */}
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="custom-select border-border/40 bg-primary focus:ring-accent h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:outline-none"
+        >
+          <option value="">All Statuses</option>
+          {statusOptions.map((s) => (
+            <option key={s} value={s}>
+              {s.charAt(0).toUpperCase() + s.slice(1)}
+            </option>
+          ))}
+        </select>
 
-      <input
-        type="number"
-        placeholder="Metacritic ≥"
-        className="bg-primary border-border w-36 rounded-md border px-4 py-2 text-white"
-        value={metacriticMin}
-        onChange={(e) => setMetacriticMin(e.target.value)}
-      />
+        {/* Metacritic */}
+        <div className="relative w-32">
+          <Gauge className="text-accent pointer-events-none absolute top-2 left-2 h-5 w-5" />
+          <input
+            type="number"
+            min="0"
+            max="100"
+            placeholder="Metacritic"
+            className="custom-number-input border-border/40 bg-primary focus:ring-accent h-9 w-full appearance-none rounded border pr-2 pl-9 text-sm text-white placeholder:text-gray-500 focus:ring-1 focus:outline-none"
+            value={metacriticMin}
+            onChange={(e) => setMetacriticMin(e.target.value)}
+          />
+        </div>
 
-      <select
-        className="bg-primary border-border rounded-md border px-3 py-2 text-white"
-        value={sort}
-        onChange={(e) => setSort(e.target.value as UserGamesFilters['sort'])}
-      >
-        {sortOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            Sort by {option.label}
-          </option>
-        ))}
-      </select>
+        {/* Sort Select */}
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value as UserGamesFilters['sort'])}
+          className="custom-select border-border/40 bg-primary focus:ring-accent h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:outline-none"
+        >
+          {sortOptions.map((s) => (
+            <option key={s.value} value={s.value}>
+              {s.label}
+            </option>
+          ))}
+        </select>
 
-      <select
-        className="bg-primary border-border rounded-md border px-3 py-2 text-white"
-        value={direction}
-        onChange={(e) =>
-          setDirection(e.target.value as UserGamesFilters['direction'])
-        }
-      >
-        {directionOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+        {/* Direction toggle */}
+        <button
+          type="button"
+          onClick={() =>
+            setDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+          }
+          className="bg-accent/20 hover:bg-accent/30 h-9 rounded px-2 text-sm text-white transition"
+        >
+          {direction === 'asc' ? (
+            <ArrowUp size={18} />
+          ) : (
+            <ArrowDown size={18} />
+          )}
+        </button>
+      </div>
 
-      <button
-        onClick={handleApply}
-        className="bg-accent hover:bg-accent-lighter cursor-pointer rounded-md px-6 py-2 font-semibold text-white transition"
-      >
-        Apply Filters
-      </button>
-      <button
-        onClick={handleReset}
-        className="bg-border hover:bg-border/80 cursor-pointer rounded-md px-6 py-2 font-semibold text-white transition"
-      >
-        Reset Filters
-      </button>
-    </div>
+      {/* Action buttons */}
+      <div className="flex items-center gap-2">
+        <button
+          type="submit"
+          className="bg-accent hover:bg-accent-lighter flex h-9 items-center gap-1 rounded px-3 text-sm font-medium text-white transition"
+        >
+          <Filter size={18} />
+          Apply
+        </button>
+        <button
+          type="button"
+          onClick={handleReset}
+          className="border-border hover:bg-border/50 flex h-9 items-center gap-1 rounded border px-3 text-sm text-white transition"
+        >
+          <RefreshCw size={18} />
+          Reset
+        </button>
+      </div>
+    </form>
   );
 };
