@@ -3,6 +3,7 @@ import { LogOut } from 'lucide-react';
 import AddGameButton from '@/components/AddGameButton';
 import Filters from '@/components/Filters';
 import GameCard from '@/components/GameCard';
+import Loader from '@/components/Loader';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
 import { useUserGamesQuery } from '@/hooks/useUserGamesQuery';
 import { supabase } from '@/lib/supabase';
@@ -15,7 +16,11 @@ const Home = () => {
   const setUser = useUserStore((state) => state.setUser);
   const setSession = useUserStore((state) => state.setSession);
 
-  const { data: games } = useUserGamesQuery(user?.id ?? null, debouncedParams);
+  const {
+    data: games,
+    isLoading,
+    error,
+  } = useUserGamesQuery(user?.id ?? null, debouncedParams);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -49,9 +54,25 @@ const Home = () => {
       {/* 🔍 Filtry */}
       <Filters searchParams={searchParams} setSearchParams={setSearchParams} />
       {/* 🕹️ Gry */}
-      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {games?.map((game) => <GameCard key={game.id} game={game} />)}
-      </div>
+      {isLoading ? (
+        <div className="mt-6 min-h-[400px]">
+          <Loader size="large" />
+        </div>
+      ) : error ? (
+        <div className="mt-6 flex min-h-[400px] items-center justify-center">
+          <p className="text-red-500">Failed to load games</p>
+        </div>
+      ) : !games?.length ? (
+        <div className="mt-6 flex min-h-[400px] items-center justify-center">
+          <p className="text-text-secondary">No games found</p>
+        </div>
+      ) : (
+        <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {games.map((game) => (
+            <GameCard key={game.id} game={game} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

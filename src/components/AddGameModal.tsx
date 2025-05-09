@@ -11,6 +11,7 @@ import { useUserStore } from '@/store/userStore';
 import { GameApi } from '@/types';
 
 import GameCardMini from './GameCardMini';
+import Loader from './Loader';
 
 type AddGameModalProps = {
   onClose: () => void;
@@ -22,13 +23,13 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
   const user = useUserStore((state) => state.user);
   const modalRef = useClickOutside(onClose);
 
-  const { data: searchedGames, isLoading } =
+  const { data: searchedGames, isLoading: isSearching } =
     useSearchGamesQuery(debouncedSearch);
   const { data: userGames } = useUserGamesQuery(
     user!.id,
     new URLSearchParams(),
   );
-  const { mutate: addUserGame } = useAddUserGameMutation();
+  const { mutate: addUserGame, isPending: isAdding } = useAddUserGameMutation();
 
   const isGameInLibrary = (game: GameApi) =>
     userGames?.some((userGame) => userGame.id === game.id) ?? false;
@@ -44,8 +45,13 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div
         ref={modalRef}
-        className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-lg bg-gray-900 p-6 text-white"
+        className="relative max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-lg bg-gray-900 p-6 text-white"
       >
+        {isAdding && (
+          <div className="absolute inset-0 z-50 bg-gray-900/50 backdrop-blur-sm">
+            <Loader size="medium" className="h-full" />
+          </div>
+        )}
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-bold">Search Game</h2>
           <button
@@ -62,19 +68,22 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
           placeholder="Type game title..."
           className="mb-4 w-full rounded border border-gray-600 bg-gray-800 p-2 text-white placeholder-gray-400"
         />
-        {isLoading && (
-          <div className="text-center text-gray-300">Loading games...</div>
+        {isSearching ? (
+          <div className="flex min-h-[200px] items-center justify-center">
+            <Loader size="medium" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {searchedGames?.map((game) => (
+              <GameCardMini
+                key={game.id}
+                game={game}
+                onAddClick={() => handleAdd(game)}
+                isGameInLibrary={isGameInLibrary(game)}
+              />
+            ))}
+          </div>
         )}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {searchedGames?.map((game) => (
-            <GameCardMini
-              key={game.id}
-              game={game}
-              onAddClick={() => handleAdd(game)}
-              isGameInLibrary={isGameInLibrary(game)}
-            />
-          ))}
-        </div>
       </div>
     </div>
   );

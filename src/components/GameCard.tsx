@@ -6,9 +6,11 @@ import { useSearchParams } from 'react-router-dom';
 import { BurnCanvas } from '@/effects/BurnCardEffect';
 import { useRemoveUserGameMutation } from '@/hooks/useRemoveUserGameMutation';
 import { useUpdateUserGameStatusMutation } from '@/hooks/useUpdateUserGameStatusMutation';
+import { cn } from '@/lib/utils';
 import { useUserStore } from '@/store/userStore';
 import { GameUserStatus, UserGame } from '@/types';
 
+import Loader from './Loader';
 import MetascoreBadge from './MetascoreBadge';
 
 type GameCardProps = {
@@ -22,11 +24,12 @@ const GameCard = ({ game }: GameCardProps) => {
   const [showBadge, setShowBadge] = useState<GameUserStatus | 'none'>('none');
   const user = useUserStore((state) => state.user);
   const [searchParams] = useSearchParams();
-
   const currentStatusFilter = searchParams.get('status');
 
-  const { mutate: updateStatus } = useUpdateUserGameStatusMutation();
-  const { mutate: removeUserGame } = useRemoveUserGameMutation();
+  const { mutate: updateStatus, isPending: isUpdating } =
+    useUpdateUserGameStatusMutation();
+  const { mutate: removeUserGame, isPending: isRemoving } =
+    useRemoveUserGameMutation();
 
   useEffect(() => {
     const timer = setTimeout(() => setShowBadge(game.userStatus), 100);
@@ -85,15 +88,17 @@ const GameCard = ({ game }: GameCardProps) => {
   };
 
   const handleDelete = () => {
-    removeUserGame({
-      userId: user!.id,
-      gameId: game.id,
-    });
+    removeUserGame({ userId: user!.id, gameId: game.id });
   };
 
   return (
     <div className="group relative flex h-[200px] w-[300px] flex-col justify-around overflow-hidden rounded-xl">
-      {/* Background */}
+      {(isUpdating || isRemoving) && (
+        <div className="absolute inset-0 z-50 bg-black/50 backdrop-blur-sm">
+          <Loader size="small" className="h-full" />
+        </div>
+      )}
+
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center will-change-transform"
@@ -113,21 +118,21 @@ const GameCard = ({ game }: GameCardProps) => {
           )
         )}
       </div>
-      {/* Green Right Action (Complete) */}
+
       {game.userStatus !== 'platinum' && (
         <div
           onClick={handleCompleteClick}
           className="absolute top-1/2 right-0 z-50 flex h-1/2 w-0 translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-l-full bg-green-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
         />
       )}
-      {/* Red Left Action (Abandon) */}
+
       {game.userStatus === 'wishlisted' && (
         <div
           onClick={handleAbandonClick}
           className="absolute top-1/2 left-0 z-50 flex h-1/2 w-0 -translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-r-full bg-red-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
         />
       )}
-      {/* Top Bar */}
+
       <div className="flex justify-between p-2">
         {!isReleased && (
           <p className="flex h-1/2 items-center rounded bg-white px-2 py-1 text-xs font-bold text-black">
@@ -136,45 +141,46 @@ const GameCard = ({ game }: GameCardProps) => {
         )}
         <MetascoreBadge score={game.metacritic} />
       </div>
-      {/* Center - Big statuses */}
+
       <div className="relative flex h-full items-center justify-center">
         {currentStatusFilter !== 'abandoned' && (
           <span
-            className={`absolute top-4 right-4 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-opacity duration-1000 ${
+            className={cn(
+              'absolute top-4 right-4 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-opacity duration-1000',
               game.userStatus === 'abandoned' && showBadge === 'abandoned'
                 ? 'opacity-100'
-                : 'opacity-0'
-            }`}
-            style={{
-              fontFamily: '"Staatliches", sans-serif',
-            }}
+                : 'opacity-0',
+            )}
+            style={{ fontFamily: '"Staatliches", sans-serif' }}
           >
             ABANDONED
           </span>
         )}
+
         {currentStatusFilter !== 'completed' && (
           <span
-            className={`absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-opacity duration-1000 ${
+            className={cn(
+              'absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-opacity duration-1000',
               (game.userStatus === 'completed' ||
                 game.userStatus === 'platinum') &&
-              showBadge === 'completed'
+                showBadge === 'completed'
                 ? 'opacity-100 group-hover:opacity-40'
-                : 'opacity-0'
-            }`}
-            style={{
-              fontFamily: '"Staatliches", sans-serif',
-            }}
+                : 'opacity-0',
+            )}
+            style={{ fontFamily: '"Staatliches", sans-serif' }}
           >
             COMPLETED
           </span>
         )}
+
         {currentStatusFilter !== 'platinum' && (
           <div
-            className={`absolute inset-0 bottom-8 z-30 flex items-center justify-center transition-opacity duration-1000 ${
+            className={cn(
+              'absolute inset-0 bottom-8 z-30 flex items-center justify-center transition-opacity duration-1000',
               game.userStatus === 'platinum' && showBadge === 'platinum'
                 ? 'opacity-100 group-hover:opacity-40'
-                : 'opacity-0'
-            }`}
+                : 'opacity-0',
+            )}
           >
             <div className="relative">
               <img
@@ -192,7 +198,7 @@ const GameCard = ({ game }: GameCardProps) => {
           </div>
         )}
       </div>
-      {/* Bottom - Title */}
+
       <div className="flex w-full items-center justify-between gap-3 bg-black/70 p-2">
         <p className="text-sm font-bold text-white">{game.name}</p>
         <button

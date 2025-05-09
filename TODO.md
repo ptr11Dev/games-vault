@@ -23,19 +23,18 @@ https://rawg.io/@kaczmar11/apikey
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
 
-1. ogarnac jakie gry gralem na PS i dodac do biblioteki
-2. ogarnac obsluge bledow i isloading
-3. ogarnac domyslne sortowanie, zeby bylo w grupach, tj. jak mam sortowanie po wszystkich statusach ascending, to w kazdej z grup wyswietla sie to w sensowny sposob, a nie, ze jest pierdolnik troche TBA, pozniej po premierze, pozniej znowu TBA etc
+1. dodac status 'playing' oznaczajacy, ze cos jest obecnie ogrywane i taka gra ma byc wtedy na samej gorze listy po wyfiltrowaniu
+2. ogarnac jakie gry gralem na PS i dodac do biblioteki
+3. ogarnac domyslne sortowanie, zeby bylo w grupach, tj. jak mam sortowanie po wszystkich statusach ascending, to w kazdej z grup wyswietla sie to w sensowny sposob, a nie, ze jest pierdolnik troche TBA, pozniej po premierze, pozniej znowu TBA etc, gry ze statusem 'playing' maja byc na samej gorze
 4. ogarnac jakiegos scrappera na metacritic
-5. dodac status 'playing' oznaczajacy, ze cos jest obecnie ogrywane i taka gra ma byc wtedy na samej gorze listy po wyfiltrowaniu
-6. przejrzec kod fe
-7. podzielic kod fe
-8. napisac testy be
-9. napisac testy fe
-10. lepiej ogarnac stylowanie karty z gra
-11. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
-12. poprawic optymalizacje
-13. hostowac backend
-14. hostowac frontend
-15. wprowadzic motywy, tj. wyciagnac wszystkie zmienne do jakiegos pliku
-16. ogarnac wysylanie zapytania do api po zmianie karty --- o co mi tutaj chodzilo?
+5. przejrzec kod fe
+6. podzielic kod fe
+7. napisac testy be
+8. napisac testy fe
+9. lepiej ogarnac stylowanie karty z gra
+10. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
+11. poprawic optymalizacje
+12. hostowac backend
+13. hostowac frontend
+14. wprowadzic motywy, tj. wyciagnac wszystkie zmienne do jakiegos pliku
+15. ogarnac wysylanie zapytania do api po zmianie karty --- o co mi tutaj chodzilo?
