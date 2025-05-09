@@ -36,7 +36,7 @@ const Home = () => {
               <span>Sign out</span>
               <LogOut size={16} />
             </button>
-            <span className="animated-username animate-glow bg-gradient-to-r from-blue-300 to-red-400 bg-clip-text text-lg font-medium tracking-widest text-transparent">
+            <span className="animated-username animate-glow bg-gradient-to-r from-[#6EFB5D] to-[#0A481E] bg-clip-text text-lg font-medium tracking-widest text-transparent">
               {user?.email?.toUpperCase().replace(/@.*$/, '')}
             </span>
           </div>

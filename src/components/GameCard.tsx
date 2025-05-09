@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { CircleX, RotateCcw } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 
 import { BurnCanvas } from '@/effects/BurnCardEffect';
 import { useRemoveUserGameMutation } from '@/hooks/useRemoveUserGameMutation';
@@ -20,6 +21,9 @@ const GameCard = ({ game }: GameCardProps) => {
   );
   const [showBadge, setShowBadge] = useState<GameUserStatus | 'none'>('none');
   const user = useUserStore((state) => state.user);
+  const [searchParams] = useSearchParams();
+
+  const currentStatusFilter = searchParams.get('status');
 
   const { mutate: updateStatus } = useUpdateUserGameStatusMutation();
   const { mutate: removeUserGame } = useRemoveUserGameMutation();
@@ -103,6 +107,7 @@ const GameCard = ({ game }: GameCardProps) => {
             <BurnCanvas type={effectType} />
           </div>
         ) : (
+          !currentStatusFilter &&
           game.userStatus !== 'wishlisted' && (
             <div className="absolute inset-0 z-10 bg-black/60 transition-[background] duration-1000 will-change-transform group-hover:bg-transparent" />
           )
@@ -133,33 +138,37 @@ const GameCard = ({ game }: GameCardProps) => {
       </div>
       {/* Center - Big statuses */}
       <div className="relative flex h-full items-center justify-center">
-        <span
-          className={`absolute top-4 right-4 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-opacity duration-1000 ${
-            game.userStatus === 'abandoned' && showBadge === 'abandoned'
-              ? 'opacity-100'
-              : 'opacity-0'
-          }`}
-          style={{
-            fontFamily: '"Staatliches", sans-serif',
-          }}
-        >
-          ABANDONED
-        </span>
-        <span
-          className={`absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-opacity duration-1000 ${
-            (game.userStatus === 'completed' ||
-              game.userStatus === 'platinum') &&
-            showBadge === 'completed'
-              ? 'opacity-100 group-hover:opacity-40'
-              : 'opacity-0'
-          }`}
-          style={{
-            fontFamily: '"Staatliches", sans-serif',
-          }}
-        >
-          COMPLETED
-        </span>
-        {
+        {currentStatusFilter !== 'abandoned' && (
+          <span
+            className={`absolute top-4 right-4 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-opacity duration-1000 ${
+              game.userStatus === 'abandoned' && showBadge === 'abandoned'
+                ? 'opacity-100'
+                : 'opacity-0'
+            }`}
+            style={{
+              fontFamily: '"Staatliches", sans-serif',
+            }}
+          >
+            ABANDONED
+          </span>
+        )}
+        {currentStatusFilter !== 'completed' && (
+          <span
+            className={`absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-opacity duration-1000 ${
+              (game.userStatus === 'completed' ||
+                game.userStatus === 'platinum') &&
+              showBadge === 'completed'
+                ? 'opacity-100 group-hover:opacity-40'
+                : 'opacity-0'
+            }`}
+            style={{
+              fontFamily: '"Staatliches", sans-serif',
+            }}
+          >
+            COMPLETED
+          </span>
+        )}
+        {currentStatusFilter !== 'platinum' && (
           <div
             className={`absolute inset-0 bottom-8 z-30 flex items-center justify-center transition-opacity duration-1000 ${
               game.userStatus === 'platinum' && showBadge === 'platinum'
@@ -181,7 +190,7 @@ const GameCard = ({ game }: GameCardProps) => {
               </span>
             </div>
           </div>
-        }
+        )}
       </div>
       {/* Bottom - Title */}
       <div className="flex w-full items-center justify-between gap-3 bg-black/70 p-2">
