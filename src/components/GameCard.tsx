@@ -161,9 +161,9 @@ const GameCard = ({ game }: GameCardProps) => {
         {currentStatusFilter !== 'abandoned' && (
           <span
             className={cn(
-              'absolute top-4 right-4 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-opacity duration-1000',
+              'absolute top-4 right-4 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-all duration-500',
               game.userStatus === 'abandoned' && showBadge === 'abandoned'
-                ? 'opacity-100'
+                ? 'opacity-100 group-hover:top-[-40px] group-hover:right-[180px] group-hover:scale-60 group-hover:rotate-0'
                 : 'opacity-0',
             )}
             style={{ fontFamily: '"Staatliches", sans-serif' }}
@@ -175,9 +175,9 @@ const GameCard = ({ game }: GameCardProps) => {
         {currentStatusFilter !== 'playing' && (
           <span
             className={cn(
-              'absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded bg-blue-600/90 px-6 py-1 text-base tracking-[4px] text-white shadow-lg ring-2 ring-sky-300 transition-opacity duration-1000',
+              'absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded bg-blue-600/90 px-6 py-1 text-base tracking-[4px] text-white shadow-lg ring-2 ring-sky-300 transition-all duration-500',
               game.userStatus === 'playing' && showBadge === 'playing'
-                ? 'animate-wiggle opacity-100'
+                ? 'animate-wiggle opacity-100 group-hover:top-0 group-hover:right-0 group-hover:left-auto group-hover:translate-x-[-200px] group-hover:translate-y-[-40px] group-hover:scale-60 group-hover:animate-none'
                 : 'opacity-0',
             )}
             style={{ fontFamily: '"Staatliches", sans-serif' }}
@@ -189,11 +189,11 @@ const GameCard = ({ game }: GameCardProps) => {
         {currentStatusFilter !== 'completed' && (
           <span
             className={cn(
-              'absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-opacity duration-1000',
+              'absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-all duration-500',
               (game.userStatus === 'completed' ||
                 game.userStatus === 'platinum') &&
                 showBadge === 'completed'
-                ? 'opacity-100 group-hover:opacity-40'
+                ? 'opacity-100 group-hover:top-0 group-hover:left-0 group-hover:translate-x-[-30px] group-hover:translate-y-[-40px] group-hover:scale-50 group-hover:rotate-0'
                 : 'opacity-0',
             )}
             style={{ fontFamily: '"Staatliches", sans-serif' }}
@@ -205,9 +205,9 @@ const GameCard = ({ game }: GameCardProps) => {
         {currentStatusFilter !== 'platinum' && (
           <div
             className={cn(
-              'absolute inset-0 bottom-8 z-30 flex items-center justify-center transition-opacity duration-1000',
+              'absolute inset-0 bottom-8 z-30 flex items-center justify-center transition-all duration-500',
               game.userStatus === 'platinum' && showBadge === 'platinum'
-                ? 'opacity-100 group-hover:opacity-40'
+                ? 'opacity-100 group-hover:translate-x-[-35%] group-hover:translate-y-[-80%] group-hover:scale-40'
                 : 'opacity-0',
             )}
           >
