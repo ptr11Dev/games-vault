@@ -23,18 +23,17 @@ https://rawg.io/@kaczmar11/apikey
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
 
-1. dodac status 'playing' oznaczajacy, ze cos jest obecnie ogrywane i taka gra ma byc wtedy na samej gorze listy po wyfiltrowaniu
+1. po hoverze na karte zrobic tak, ze badge sie zmniejsza (scale) i idzie do gory, zamiast nakladania opacity tak jak teraz jest
 2. ogarnac jakie gry gralem na PS i dodac do biblioteki
-3. ogarnac domyslne sortowanie, zeby bylo w grupach, tj. jak mam sortowanie po wszystkich statusach ascending, to w kazdej z grup wyswietla sie to w sensowny sposob, a nie, ze jest pierdolnik troche TBA, pozniej po premierze, pozniej znowu TBA etc, gry ze statusem 'playing' maja byc na samej gorze
-4. ogarnac jakiegos scrappera na metacritic
-5. przejrzec kod fe
-6. podzielic kod fe
-7. napisac testy be
-8. napisac testy fe
-9. lepiej ogarnac stylowanie karty z gra
-10. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
-11. poprawic optymalizacje
-12. hostowac backend
-13. hostowac frontend
-14. wprowadzic motywy, tj. wyciagnac wszystkie zmienne do jakiegos pliku
-15. ogarnac wysylanie zapytania do api po zmianie karty --- o co mi tutaj chodzilo?
+3. ogarnac jakiegos scrappera na metacritic
+4. przejrzec kod fe
+5. podzielic kod fe
+6. napisac testy be
+7. napisac testy fe
+8. lepiej ogarnac stylowanie karty z gra
+9. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
+10. poprawic optymalizacje
+11. hostowac backend
+12. hostowac frontend
+13. wprowadzic motywy, tj. wyciagnac wszystkie zmienne do jakiegos pliku
+14. ogarnac wysylanie zapytania do api po zmianie karty --- o co mi tutaj chodzilo?

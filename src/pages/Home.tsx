@@ -22,6 +22,26 @@ const Home = () => {
     error,
   } = useUserGamesQuery(user?.id ?? null, debouncedParams);
 
+  const filterGames = () => {
+    const statusOrder = [
+      'playing',
+      'wishlisted',
+      'completed',
+      'platinum',
+      'abandoned',
+    ];
+
+    return games?.sort((a, b) => {
+      const statusDiff =
+        statusOrder.indexOf(a.userStatus) - statusOrder.indexOf(b.userStatus);
+      if (statusDiff !== 0) return statusDiff;
+
+      const aDate = a.released ? new Date(a.released).getTime() : Infinity;
+      const bDate = b.released ? new Date(b.released).getTime() : Infinity;
+      return aDate - bDate;
+    });
+  };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
@@ -68,9 +88,7 @@ const Home = () => {
         </div>
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {games.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
+          {filterGames()?.map((game) => <GameCard key={game.id} game={game} />)}
         </div>
       )}
     </div>
