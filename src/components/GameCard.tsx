@@ -157,13 +157,13 @@ const GameCard = ({ game }: GameCardProps) => {
         <MetascoreBadge score={game.metacritic} />
       </div>
 
-      <div className="relative flex h-full items-center justify-center">
-        {currentStatusFilter !== 'abandoned' && (
+      {currentStatusFilter !== 'abandoned' &&
+        game.userStatus === 'abandoned' && (
           <span
             className={cn(
-              'absolute top-4 right-4 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-all duration-500',
+              'absolute top-18 left-24 z-10 rotate-[-15deg] rounded bg-red-700/90 px-4 py-1 text-base tracking-[5px] text-white shadow-md ring-2 ring-red-900 transition-all duration-500',
               game.userStatus === 'abandoned' && showBadge === 'abandoned'
-                ? 'opacity-100 group-hover:top-[-40px] group-hover:right-[180px] group-hover:scale-60 group-hover:rotate-0'
+                ? 'opacity-100 group-hover:top-0 group-hover:left-[-20px] group-hover:scale-60 group-hover:rotate-0'
                 : 'opacity-0',
             )}
             style={{ fontFamily: '"Staatliches", sans-serif' }}
@@ -172,28 +172,29 @@ const GameCard = ({ game }: GameCardProps) => {
           </span>
         )}
 
-        {currentStatusFilter !== 'playing' && (
-          <span
-            className={cn(
-              'absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded bg-blue-600/90 px-6 py-1 text-base tracking-[4px] text-white shadow-lg ring-2 ring-sky-300 transition-all duration-500',
-              game.userStatus === 'playing' && showBadge === 'playing'
-                ? 'animate-wiggle opacity-100 group-hover:top-0 group-hover:right-0 group-hover:left-auto group-hover:translate-x-[-200px] group-hover:translate-y-[-40px] group-hover:scale-60 group-hover:animate-none'
-                : 'opacity-0',
-            )}
-            style={{ fontFamily: '"Staatliches", sans-serif' }}
-          >
-            PLAYING
-          </span>
-        )}
+      {currentStatusFilter !== 'playing' && game.userStatus === 'playing' && (
+        <span
+          className={cn(
+            'absolute top-18 left-22 z-10 rounded bg-blue-600/90 px-4 py-1 text-base tracking-[4px] text-white shadow-lg ring-2 ring-sky-300 transition-all duration-500',
+            game.userStatus === 'playing' && showBadge === 'playing'
+              ? 'animate-wiggle opacity-100 group-hover:top-0 group-hover:left-[-15px] group-hover:scale-60 group-hover:animate-none'
+              : 'opacity-0',
+          )}
+          style={{ fontFamily: '"Staatliches", sans-serif' }}
+        >
+          PLAYING
+        </span>
+      )}
 
-        {currentStatusFilter !== 'completed' && (
+      {currentStatusFilter !== 'completed' &&
+        game.userStatus === 'completed' && (
           <span
             className={cn(
-              'absolute top-4 left-1/2 z-10 -translate-x-1/2 rotate-[2deg] rounded bg-yellow-500/90 px-5 py-1.5 text-lg tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-all duration-500',
+              'absolute top-14 left-22 z-10 rotate-[2deg] rounded bg-yellow-500/90 px-4 py-1 text-base tracking-[6px] text-white shadow-md ring-2 ring-yellow-700 transition-all duration-500',
               (game.userStatus === 'completed' ||
                 game.userStatus === 'platinum') &&
                 showBadge === 'completed'
-                ? 'opacity-100 group-hover:top-0 group-hover:left-0 group-hover:translate-x-[-30px] group-hover:translate-y-[-40px] group-hover:scale-50 group-hover:rotate-0'
+                ? 'opacity-100 group-hover:top-0 group-hover:left-[-20px] group-hover:scale-60 group-hover:rotate-0'
                 : 'opacity-0',
             )}
             style={{ fontFamily: '"Staatliches", sans-serif' }}
@@ -202,33 +203,32 @@ const GameCard = ({ game }: GameCardProps) => {
           </span>
         )}
 
-        {currentStatusFilter !== 'platinum' && (
-          <div
-            className={cn(
-              'absolute inset-0 bottom-8 z-30 flex items-center justify-center transition-all duration-500',
-              game.userStatus === 'platinum' && showBadge === 'platinum'
-                ? 'opacity-100 group-hover:translate-x-[-35%] group-hover:translate-y-[-80%] group-hover:scale-40'
-                : 'opacity-0',
-            )}
-          >
-            <div className="relative">
-              <img
-                src="/ps-trophy.png"
-                alt="Platinum Trophy"
-                className="h-24 drop-shadow-[0_0_12px_rgba(173,216,230,0.6)]"
-              />
-              <span
-                className="shine-wrapper absolute bottom-[-1.5rem] left-1/2 -translate-x-1/2 rounded bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-1.5 text-sm font-bold tracking-[8px] text-white uppercase shadow-md ring-1 ring-white/30"
-                style={{ fontFamily: '"Staatliches", sans-serif' }}
-              >
-                Platinum
-              </span>
-            </div>
+      {currentStatusFilter !== 'platinum' && game.userStatus === 'platinum' && (
+        <div
+          className={cn(
+            'absolute top-6 left-26 z-30 flex items-center justify-center transition-all duration-500',
+            game.userStatus === 'platinum' && showBadge === 'platinum'
+              ? 'opacity-100 group-hover:top-[-25px] group-hover:left-[-5px] group-hover:scale-40'
+              : 'opacity-0',
+          )}
+        >
+          <div className="relative">
+            <img
+              src="/ps-trophy.png"
+              alt="Platinum Trophy"
+              className="h-24 drop-shadow-[0_0_12px_rgba(173,216,230,0.6)]"
+            />
+            <span
+              className="shine-wrapper absolute bottom-[-1.5rem] left-1/2 -translate-x-1/2 rounded bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-1.5 text-sm font-bold tracking-[8px] text-white uppercase shadow-md ring-1 ring-white/30"
+              style={{ fontFamily: '"Staatliches", sans-serif' }}
+            >
+              Platinum
+            </span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      <div className="flex w-full items-center justify-between gap-3 bg-black/70 p-2">
+      <div className="mt-auto flex w-full items-center justify-between gap-3 bg-black/70 p-2">
         <p className="text-sm font-bold text-white">{game.name}</p>
         <button
           onClick={handleReset}
