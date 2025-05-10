@@ -40,7 +40,7 @@ const GameCard = ({ game }: GameCardProps) => {
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
 
   const handleCompleteClick = () => {
-    if (game.userStatus === 'wishlisted') {
+    if (game.userStatus === 'playing') {
       setShowBadge('completed');
       updateStatus({
         userId: user?.id ?? '',
@@ -62,11 +62,18 @@ const GameCard = ({ game }: GameCardProps) => {
         gameId: game.id,
         userStatus: 'platinum',
       });
+    } else if (game.userStatus === 'wishlisted') {
+      setShowBadge('playing');
+      updateStatus({
+        userId: user?.id ?? '',
+        gameId: game.id,
+        userStatus: 'playing',
+      });
     }
   };
 
   const handleAbandonClick = () => {
-    if (game.userStatus === 'wishlisted') {
+    if (game.userStatus === 'wishlisted' || game.userStatus === 'playing') {
       setEffectType('burn');
       setShowBadge('abandoned');
       updateStatus({
@@ -92,7 +99,14 @@ const GameCard = ({ game }: GameCardProps) => {
   };
 
   return (
-    <div className="group relative flex h-[200px] w-[300px] flex-col justify-around overflow-hidden rounded-xl">
+    <div
+      className={cn(
+        'group relative flex h-[200px] w-[300px] flex-col justify-around overflow-hidden rounded-xl transition-shadow duration-500',
+        game.userStatus === 'playing' && showBadge === 'playing'
+          ? 'glow-card'
+          : '',
+      )}
+    >
       {(isUpdating || isRemoving) && (
         <div className="absolute inset-0 z-50 bg-black/50 backdrop-blur-sm">
           <Loader size="small" className="h-full" />
@@ -113,7 +127,8 @@ const GameCard = ({ game }: GameCardProps) => {
           </div>
         ) : (
           !currentStatusFilter &&
-          game.userStatus !== 'wishlisted' && (
+          game.userStatus !== 'wishlisted' &&
+          game.userStatus !== 'playing' && (
             <div className="absolute inset-0 z-10 bg-black/60 transition-[background] duration-1000 will-change-transform group-hover:bg-transparent" />
           )
         )}
@@ -126,7 +141,7 @@ const GameCard = ({ game }: GameCardProps) => {
         />
       )}
 
-      {game.userStatus === 'wishlisted' && (
+      {(game.userStatus === 'wishlisted' || game.userStatus === 'playing') && (
         <div
           onClick={handleAbandonClick}
           className="absolute top-1/2 left-0 z-50 flex h-1/2 w-0 -translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-r-full bg-red-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
@@ -154,6 +169,20 @@ const GameCard = ({ game }: GameCardProps) => {
             style={{ fontFamily: '"Staatliches", sans-serif' }}
           >
             ABANDONED
+          </span>
+        )}
+
+        {currentStatusFilter !== 'playing' && (
+          <span
+            className={cn(
+              'absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded bg-blue-600/90 px-6 py-1 text-base tracking-[4px] text-white shadow-lg ring-2 ring-sky-300 transition-opacity duration-1000',
+              game.userStatus === 'playing' && showBadge === 'playing'
+                ? 'animate-wiggle opacity-100'
+                : 'opacity-0',
+            )}
+            style={{ fontFamily: '"Staatliches", sans-serif' }}
+          >
+            PLAYING
           </span>
         )}
 

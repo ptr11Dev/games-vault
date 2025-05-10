@@ -2,7 +2,8 @@ export type GameUserStatus =
   | 'wishlisted'
   | 'completed'
   | 'platinum'
-  | 'abandoned';
+  | 'abandoned'
+  | 'playing';
 
 export type AvailablePlatforms =
   | 'pc'

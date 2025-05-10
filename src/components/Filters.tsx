@@ -8,6 +8,7 @@ const statusOptions: GameUserStatus[] = [
   'abandoned',
   'completed',
   'platinum',
+  'playing',
 ];
 
 const sortOptions: { value: UserGamesFilters['sort']; label: string }[] = [

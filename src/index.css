@@ -124,3 +124,41 @@
     -webkit-text-fill-color: transparent;
   }
 }
+
+/* GameCard playing badge wiggle */
+@layer utilities {
+  @keyframes wiggle {
+    0% {
+      transform: rotate(0deg);
+    }
+    5% {
+      transform: rotate(2deg);
+    }
+    10% {
+      transform: rotate(-2deg);
+    }
+    15% {
+      transform: rotate(2deg);
+    }
+    20% {
+      transform: rotate(-2deg);
+    }
+    25% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  .animate-wiggle {
+    animation: wiggle 5s ease-in-out infinite;
+  }
+}
+
+/* GameCard glow */
+@layer utilities {
+  .glow-card {
+    filter: drop-shadow(0 0 8px #3b82f6);
+  }
+}
