@@ -23,17 +23,15 @@ https://rawg.io/@kaczmar11/apikey
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
 
-1. po hoverze na karte zrobic tak, ze badge sie zmniejsza (scale) i idzie do gory, zamiast nakladania opacity tak jak teraz jest
-2. ogarnac jakie gry gralem na PS i dodac do biblioteki
-3. ogarnac jakiegos scrappera na metacritic
+1. ogarnac jakiegos scrappera na metacritic
+2. lepiej ogarnac stylowanie karty z gra - glownie chodzi tutaj o przyciski resetowania stanu i usuwania karty z biblioteki
+3. ogarnac jakie gry gralem na PS i dodac do biblioteki
 4. przejrzec kod fe
 5. podzielic kod fe
-6. napisac testy be
-7. napisac testy fe
-8. lepiej ogarnac stylowanie karty z gra
-9. ogarnac nazwy gier, zeby jakos lepiej miescily sie na karcie
-10. poprawic optymalizacje
-11. hostowac backend
-12. hostowac frontend
-13. wprowadzic motywy, tj. wyciagnac wszystkie zmienne do jakiegos pliku
-14. ogarnac wysylanie zapytania do api po zmianie karty --- o co mi tutaj chodzilo?
+6. wprowadzic motywy, tj. wyciagnac wszystkie zmienne do jakiegos pliku
+7. napisac testy be
+8. napisac testy fe
+9. poprawic optymalizacje
+10. hostowac backend
+11. hostowac frontend
+12. ogarnac wysylanie zapytania do api po zmianie karty --- jakos tak, zeby te karty nie skakaly - nie mam pomyslu jak to powinno dzialac, ale obecnie jest to troche problematyczne :/

@@ -229,7 +229,12 @@ const GameCard = ({ game }: GameCardProps) => {
       )}
 
       <div className="mt-auto flex w-full items-center justify-between gap-3 bg-black/70 p-2">
-        <p className="text-sm font-bold text-white">{game.name}</p>
+        <p
+          title={game.name}
+          className="max-w-[250px] truncate text-sm font-bold text-white"
+        >
+          {game.name}
+        </p>
         <button
           onClick={handleReset}
           className="ml-auto cursor-pointer rounded-full p-1 transition-all duration-300 hover:bg-white/40"
