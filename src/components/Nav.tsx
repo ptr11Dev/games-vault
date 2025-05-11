@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 import { supabase } from '@/lib/supabase';
 import { useUserStore } from '@/store/userStore';
@@ -13,11 +14,13 @@ const Nav = () => {
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
   const setSession = useUserStore((state) => state.setSession);
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
     setSession(null);
+    navigate('/');
   };
 
   return (
