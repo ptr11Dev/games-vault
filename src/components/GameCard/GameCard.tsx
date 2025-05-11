@@ -24,7 +24,7 @@ const GameCard = ({ game }: GameCardProps) => {
   const [showBadge, setShowBadge] = useState<GameInLibraryStatus | 'none'>(
     'none',
   );
-  const user = useUserStore((state) => state.user);
+  const userId = useUserStore((state) => state.user?.id ?? '');
   const [searchParams] = useSearchParams();
   const currentStatusFilter = searchParams.get('status');
 
@@ -33,20 +33,25 @@ const GameCard = ({ game }: GameCardProps) => {
   const { mutate: removeUserGame, isPending: isRemoving } =
     useRemoveGameFromLibraryMutation();
 
-  useEffect(() => {
-    setShowBadge(game.userStatus);
-  }, [game.userStatus]);
-
   const isReleased =
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
+
+  useEffect(() => {
+    if (!currentStatusFilter) {
+      setShowBadge(game.userStatus);
+    }
+  }, []);
 
   const handleCompleteClick = () => {
     const nextStatus = NEXT_STATUS_MAP[game.userStatus];
     if (!nextStatus) return;
 
-    setShowBadge(nextStatus === 'wishlisted' ? 'none' : nextStatus);
+    setShowBadge(
+      nextStatus === 'wishlisted' || currentStatusFilter ? 'none' : nextStatus,
+    );
+
     updateStatus({
-      userId: user?.id ?? '',
+      userId,
       gameId: game.id,
       userStatus: nextStatus,
     });
@@ -56,9 +61,10 @@ const GameCard = ({ game }: GameCardProps) => {
     const nextStatus = ABANDON_STATUS_MAP[game.userStatus];
     if (!nextStatus) return;
 
-    setShowBadge(nextStatus);
+    setShowBadge(currentStatusFilter ? 'none' : nextStatus);
+
     updateStatus({
-      userId: user?.id ?? '',
+      userId,
       gameId: game.id,
       userStatus: nextStatus,
     });
@@ -67,28 +73,27 @@ const GameCard = ({ game }: GameCardProps) => {
   const handleReset = () => {
     setShowBadge('none');
     updateStatus({
-      userId: user?.id ?? '',
+      userId,
       gameId: game.id,
       userStatus: 'wishlisted',
     });
   };
 
   const handleDelete = () => {
-    removeUserGame({ userId: user!.id, gameId: game.id });
+    removeUserGame({ userId, gameId: game.id });
   };
 
   const isOverlayVisible =
     !currentStatusFilter &&
-    game.userStatus !== 'wishlisted' &&
-    game.userStatus !== 'playing';
+    showBadge !== 'none' &&
+    showBadge !== 'wishlisted' &&
+    showBadge !== 'playing';
 
   return (
     <div
       className={cn(
         'group relative flex h-[200px] w-[300px] flex-col justify-around overflow-hidden rounded-xl transition-shadow duration-500',
-        game.userStatus === 'playing' && showBadge === 'playing'
-          ? 'glow-card'
-          : '',
+        game.userStatus === 'playing' && showBadge === 'playing' && 'glow-card',
       )}
     >
       {/* Loader */}
@@ -97,7 +102,7 @@ const GameCard = ({ game }: GameCardProps) => {
           <Loader size="small" className="h-full" />
         </div>
       )}
-      {/* Overlay */}
+      {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center will-change-transform"
@@ -110,7 +115,7 @@ const GameCard = ({ game }: GameCardProps) => {
           <div className="absolute inset-0 z-10 bg-black/60 transition-[background] duration-1000 will-change-transform group-hover:bg-transparent" />
         )}
       </div>
-      {/* Action buttons */}
+      {/* Actions */}
       <Actions
         status={game.userStatus}
         onComplete={handleCompleteClick}
@@ -125,7 +130,7 @@ const GameCard = ({ game }: GameCardProps) => {
         )}
         <MetascoreBadge score={game.metacritic} />
       </div>
-      {/* Status badge */}
+      {/* Status badges */}
       {(['abandoned', 'playing', 'completed'] as const).map((status) =>
         currentStatusFilter !== status && game.userStatus === status ? (
           <StatusBadge
