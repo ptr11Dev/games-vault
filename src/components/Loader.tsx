@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
 
-interface LoaderProps {
+type LoaderProps = {
   className?: string;
   size?: 'small' | 'medium' | 'large';
   fullScreen?: boolean;
-}
+};
 
 const Loader = ({ className, size = 'medium', fullScreen }: LoaderProps) => {
   const sizeClasses = {

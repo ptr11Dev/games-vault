@@ -113,7 +113,7 @@ export const BurnCanvas = ({ type }: { type: 'burn' | 'unburn' | null }) => (
     camera={{ zoom: 100, position: [0, 0, 10] }}
     style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
     gl={{ alpha: true, preserveDrawingBuffer: true }}
-    // frameloop="demand" // TODO - check it when there are optimizations issues
+    // frameloop="demand" // to check in case of optimizations issues
   >
     <BurnCard direction={type} />
   </Canvas>
