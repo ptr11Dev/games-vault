@@ -1,96 +1,59 @@
-import { LogOut } from 'lucide-react';
-
-import AddGameButton from '@/components/AddGameButton';
 import Filters from '@/components/Filters';
 import GameCard from '@/components/GameCard';
 import Loader from '@/components/Loader';
+import Nav from '@/components/Nav';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
 import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
-import { supabase } from '@/lib/supabase';
 import { useUserStore } from '@/store/userStore';
+import { filterGamesInLibrary } from '@/utils/filterGamesInLibrary';
 
 const Home = () => {
   const { searchParams, setSearchParams, debouncedParams } =
     useDebounceSearchParams(400);
-  const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
-  const setSession = useUserStore((state) => state.setSession);
+  const userId = useUserStore((state) => state.user?.id ?? null);
 
   const {
     data: games,
     isLoading,
     error,
-  } = useGamesLibraryQuery(user?.id ?? null, debouncedParams);
+  } = useGamesLibraryQuery(userId, debouncedParams);
 
-  const filterGames = () => {
-    const statusOrder = [
-      'playing',
-      'wishlisted',
-      'completed',
-      'platinum',
-      'abandoned',
-    ];
+  const renderGamesLibrary = () => {
+    if (isLoading)
+      return (
+        <div className="mt-6 min-h-[400px]">
+          <Loader size="large" />
+        </div>
+      );
 
-    return games?.sort((a, b) => {
-      const statusDiff =
-        statusOrder.indexOf(a.userStatus) - statusOrder.indexOf(b.userStatus);
-      if (statusDiff !== 0) return statusDiff;
+    if (error)
+      return (
+        <div className="mt-6 flex min-h-[400px] items-center justify-center">
+          <p className="text-red-500">Failed to load games</p>
+        </div>
+      );
 
-      const aDate = a.released ? new Date(a.released).getTime() : Infinity;
-      const bDate = b.released ? new Date(b.released).getTime() : Infinity;
-      return aDate - bDate;
-    });
-  };
+    if (!games?.length)
+      return (
+        <div className="mt-6 flex min-h-[400px] items-center justify-center">
+          <p className="text-text-secondary">No games found</p>
+        </div>
+      );
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
-    setSession(null);
+    return (
+      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {filterGamesInLibrary(games).map((game) => (
+          <GameCard key={game.id} game={game} />
+        ))}
+      </div>
+    );
   };
 
   return (
     <div className="p-4">
-      <header className="mb-8 rounded-lg bg-gray-800/50 p-4 shadow-lg">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleLogout}
-              aria-label="Logout"
-              className="flex cursor-pointer items-center gap-2 rounded-md border border-gray-600 px-3 py-1.5 text-sm text-gray-400 transition-colors hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
-            >
-              <span>Sign out</span>
-              <LogOut size={16} />
-            </button>
-            <span className="animated-username animate-glow bg-gradient-to-r from-[#6EFB5D] to-[#0A481E] bg-clip-text text-lg font-medium tracking-widest text-transparent">
-              {user?.email?.toUpperCase().replace(/@.*$/, '')}
-            </span>
-          </div>
-          <div className="flex items-center">
-            <div className="h-8 w-px bg-gray-700"></div>
-            <AddGameButton />
-          </div>
-        </div>
-      </header>
-      {/* 🔍 Filtry */}
+      <Nav />
       <Filters searchParams={searchParams} setSearchParams={setSearchParams} />
-      {/* 🕹️ Gry */}
-      {isLoading ? (
-        <div className="mt-6 min-h-[400px]">
-          <Loader size="large" />
-        </div>
-      ) : error ? (
-        <div className="mt-6 flex min-h-[400px] items-center justify-center">
-          <p className="text-red-500">Failed to load games</p>
-        </div>
-      ) : !games?.length ? (
-        <div className="mt-6 flex min-h-[400px] items-center justify-center">
-          <p className="text-text-secondary">No games found</p>
-        </div>
-      ) : (
-        <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {filterGames()?.map((game) => <GameCard key={game.id} game={game} />)}
-        </div>
-      )}
+      {renderGamesLibrary()}
     </div>
   );
 };
