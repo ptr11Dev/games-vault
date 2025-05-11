@@ -42,7 +42,10 @@ const Home = () => {
 
     return (
       <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {filterGamesInLibrary(games).map((game) => (
+        {(searchParams.get('sort') === 'none' || !searchParams.get('sort')
+          ? filterGamesInLibrary(games, searchParams)
+          : games
+        ).map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
       </div>

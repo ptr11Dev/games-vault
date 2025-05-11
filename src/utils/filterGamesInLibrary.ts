@@ -8,8 +8,11 @@ const statusOrder = [
   'abandoned',
 ];
 
-export const filterGamesInLibrary = (games: GameInLibrary[]) => {
-  return games?.sort((a, b) => {
+export const filterGamesInLibrary = (
+  games: GameInLibrary[],
+  params?: URLSearchParams,
+) => {
+  const sorted = games?.sort((a, b) => {
     const statusDiff =
       statusOrder.indexOf(a.userStatus) - statusOrder.indexOf(b.userStatus);
     if (statusDiff !== 0) return statusDiff;
@@ -18,4 +21,6 @@ export const filterGamesInLibrary = (games: GameInLibrary[]) => {
     const bDate = b.released ? new Date(b.released).getTime() : Infinity;
     return aDate - bDate;
   });
+
+  return params?.get('direction') === 'desc' ? sorted.reverse() : sorted;
 };

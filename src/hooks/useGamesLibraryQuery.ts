@@ -7,7 +7,7 @@ export type GamesLibraryFilters = {
   status?: GameInLibraryStatus;
   name?: string;
   metacriticMin?: number;
-  sort?: 'name' | 'released' | 'updatedAt' | 'metacritic' | 'status';
+  sort?: 'name' | 'released' | 'updatedAt' | 'metacritic' | 'status' | 'none';
   direction?: 'asc' | 'desc';
 };
 

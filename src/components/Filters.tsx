@@ -1,3 +1,4 @@
+// TODO refactor
 import { ArrowDown, ArrowUp, Gauge, RefreshCw, Search } from 'lucide-react';
 
 import { GamesLibraryFilters } from '@/hooks/useGamesLibraryQuery';
@@ -12,6 +13,7 @@ const statusOptions: GameInLibraryStatus[] = [
 ];
 
 const sortOptions: { value: GamesLibraryFilters['sort']; label: string }[] = [
+  { value: 'none', label: 'Default Order' },
   { value: 'status', label: 'Status' },
   { value: 'name', label: 'Name' },
   { value: 'released', label: 'Release Date' },
@@ -51,12 +53,7 @@ const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
   };
 
   const handleReset = () => {
-    setSearchParams(
-      new URLSearchParams({
-        sort: 'status',
-        direction: 'desc',
-      }),
-    );
+    setSearchParams(new URLSearchParams({}));
   };
 
   return (
@@ -120,7 +117,7 @@ const Filters = ({ searchParams, setSearchParams }: FiltersProps) => {
         </div>
         {/* Sort Select */}
         <select
-          value={searchParams.get('sort') || 'status'}
+          value={searchParams.get('sort') || 'none'}
           onChange={(e) => {
             const newParams = new URLSearchParams(searchParams);
             newParams.set('sort', e.target.value);
