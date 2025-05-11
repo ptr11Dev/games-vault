@@ -1,4 +1,4 @@
-import { GameInLibrary } from '@/types';
+import { GameInLibrary } from '@/misc/types';
 
 const statusOrder = [
   'playing',

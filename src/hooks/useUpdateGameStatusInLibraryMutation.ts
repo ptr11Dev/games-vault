@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { axiosInstance } from '@/lib/axios';
-import { GameInLibraryStatus } from '@/types';
+import { GameInLibraryStatus } from '@/misc/types';
 
 type UpdateGameStatusInLibraryPayload = {
   userId: string;

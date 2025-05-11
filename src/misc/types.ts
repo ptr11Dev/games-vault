@@ -38,3 +38,18 @@ export type UserWithGames = {
   userId: string;
   games: GameInLibrary[];
 };
+
+export type GamesLibraryFilters = {
+  status?: GameInLibraryStatus;
+  name?: string;
+  metacriticMin?: number;
+  sort?: 'name' | 'released' | 'updatedAt' | 'metacritic' | 'status' | 'none';
+  direction?: 'asc' | 'desc';
+};
+
+export type PossibleFilters =
+  | 'name'
+  | 'status'
+  | 'metacriticMin'
+  | 'sort'
+  | 'direction';

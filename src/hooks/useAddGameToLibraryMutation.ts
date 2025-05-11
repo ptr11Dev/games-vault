@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { axiosInstance } from '@/lib/axios';
-import { GameApi } from '@/types';
+import { GameApi } from '@/misc/types';
 
 type AddGameToLibraryPayload = GameApi & {
   userId: string;

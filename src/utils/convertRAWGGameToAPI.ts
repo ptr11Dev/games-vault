@@ -1,5 +1,5 @@
-import { RawgGame } from '@/RawgTypes';
-import { AvailablePlatforms, GameApi } from '@/types';
+import { RawgGame } from '@/misc/RawgTypes';
+import { AvailablePlatforms, GameApi } from '@/misc/types';
 
 export const convertRawgGameToApi = (game: RawgGame): GameApi => {
   return {

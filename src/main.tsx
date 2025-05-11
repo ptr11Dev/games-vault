@@ -6,9 +6,9 @@ import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import { RouterProvider } from 'react-router-dom';
 
-import { router } from './router';
+import { router } from './misc/router';
 
-import './index.css';
+import './misc/index.css';
 
 const queryClient = new QueryClient();
 

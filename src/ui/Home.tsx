@@ -1,4 +1,4 @@
-import Filters from '@/components/Filters';
+import Filters from '@/components/Filters/Filters';
 import GameCard from '@/components/GameCard';
 import Loader from '@/components/Loader';
 import Nav from '@/components/Nav';

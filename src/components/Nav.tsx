@@ -5,7 +5,7 @@ import { LogOut } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useUserStore } from '@/store/userStore';
 
-import AddGameModal from './AddGameModal';
+import AddGameModal from './AddGameModal/AddGameModal';
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);

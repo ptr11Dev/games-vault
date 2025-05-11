@@ -1,4 +1,4 @@
-import { GameApi } from '@/types';
+import { GameApi } from '@/misc/types';
 
 type GameCardMiniProps = {
   game: GameApi;

@@ -1,8 +1,8 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { RawgGame } from '@/RawgTypes';
-import { GameApi } from '@/types';
+import { RawgGame } from '@/misc/RawgTypes';
+import { GameApi } from '@/misc/types';
 import { convertRawgGameToApi } from '@/utils/convertRawgGameToApi';
 
 export const useSearchGamesInRawgQuery = (search: string) => {

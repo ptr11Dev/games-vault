@@ -1,9 +1,9 @@
 import Loader from './components/Loader';
 import { useInitiateUser } from './hooks/useInitiateUser';
 import { useUserQuery } from './hooks/useUserQuery';
-import Home from './pages/Home';
-import Login from './pages/Login';
 import { useUserStore } from './store/userStore';
+import Home from './ui/Home';
+import Login from './ui/Login';
 
 const App = () => {
   const session = useUserStore((state) => state.session);

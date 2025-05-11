@@ -1,17 +1,16 @@
 import { useState } from 'react';
 
-import { CircleX } from 'lucide-react';
+import { CircleX, Loader } from 'lucide-react';
 
 import { useAddGameToLibraryMutation } from '@/hooks/useAddGameToLibraryMutation';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
 import { useSearchGamesInRawgQuery } from '@/hooks/useSearchGamesInRawgQuery';
+import { GameApi } from '@/misc/types';
 import { useUserStore } from '@/store/userStore';
-import { GameApi } from '@/types';
 
 import GameCardMini from './GameCardMini';
-import Loader from './Loader';
 
 type AddGameModalProps = {
   onClose: () => void;
