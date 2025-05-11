@@ -1,5 +1,5 @@
 import Filters from '@/components/Filters/Filters';
-import GameCard from '@/components/GameCard';
+import GameCard from '@/components/GameCard/GameCard';
 import Loader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';

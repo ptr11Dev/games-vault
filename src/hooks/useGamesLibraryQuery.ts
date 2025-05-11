@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { axiosInstance } from '@/lib/axios';
 import { GameInLibrary } from '@/misc/types';
@@ -22,5 +22,6 @@ export const useGamesLibraryQuery = (
     staleTime: 1000 * 60 * 5,
     retry: false,
     refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData,
   });
 };

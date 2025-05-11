@@ -6,11 +6,12 @@ import { useSearchParams } from 'react-router-dom';
 import { useRemoveGameFromLibraryMutation } from '@/hooks/useRemoveGameFromLibraryMutation';
 import { useUpdateGameStatusInLibraryMutation } from '@/hooks/useUpdateGameStatusInLibraryMutation';
 import { cn } from '@/lib/utils';
+import { ABANDON_STATUS_MAP, NEXT_STATUS_MAP } from '@/misc/consts';
 import { GameInLibrary, GameInLibraryStatus } from '@/misc/types';
 import { useUserStore } from '@/store/userStore';
 
-import Loader from './Loader';
-import MetascoreBadge from './MetascoreBadge';
+import Loader from '../Loader';
+import MetascoreBadge from '../MetascoreBadge';
 
 type GameCardProps = {
   game: GameInLibrary;
@@ -38,46 +39,27 @@ const GameCard = ({ game }: GameCardProps) => {
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
 
   const handleCompleteClick = () => {
-    if (game.userStatus === 'playing') {
-      setShowBadge('completed');
-      updateStatus({
-        userId: user?.id ?? '',
-        gameId: game.id,
-        userStatus: 'completed',
-      });
-    } else if (game.userStatus === 'abandoned') {
-      setShowBadge('none');
-      updateStatus({
-        userId: user?.id ?? '',
-        gameId: game.id,
-        userStatus: 'wishlisted',
-      });
-    } else if (game.userStatus === 'completed') {
-      setShowBadge('platinum');
-      updateStatus({
-        userId: user?.id ?? '',
-        gameId: game.id,
-        userStatus: 'platinum',
-      });
-    } else if (game.userStatus === 'wishlisted') {
-      setShowBadge('playing');
-      updateStatus({
-        userId: user?.id ?? '',
-        gameId: game.id,
-        userStatus: 'playing',
-      });
-    }
+    const nextStatus = NEXT_STATUS_MAP[game.userStatus];
+    if (!nextStatus) return;
+
+    setShowBadge(nextStatus === 'wishlisted' ? 'none' : nextStatus);
+    updateStatus({
+      userId: user?.id ?? '',
+      gameId: game.id,
+      userStatus: nextStatus,
+    });
   };
 
   const handleAbandonClick = () => {
-    if (game.userStatus === 'wishlisted' || game.userStatus === 'playing') {
-      setShowBadge('abandoned');
-      updateStatus({
-        userId: user?.id ?? '',
-        gameId: game.id,
-        userStatus: 'abandoned',
-      });
-    }
+    const nextStatus = ABANDON_STATUS_MAP[game.userStatus];
+    if (!nextStatus) return;
+
+    setShowBadge(nextStatus);
+    updateStatus({
+      userId: user?.id ?? '',
+      gameId: game.id,
+      userStatus: nextStatus,
+    });
   };
 
   const handleReset = () => {
