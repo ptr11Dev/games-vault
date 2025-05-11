@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react';
 import { CircleX, RotateCcw } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
-import { BurnCanvas } from '@/effects/BurnCardEffect';
 import { useRemoveGameFromLibraryMutation } from '@/hooks/useRemoveGameFromLibraryMutation';
 import { useUpdateGameStatusInLibraryMutation } from '@/hooks/useUpdateGameStatusInLibraryMutation';
 import { cn } from '@/lib/utils';
+import { GameInLibrary, GameInLibraryStatus } from '@/misc/types';
 import { useUserStore } from '@/store/userStore';
-import { GameInLibrary, GameInLibraryStatus } from '@/types';
 
 import Loader from './Loader';
 import MetascoreBadge from './MetascoreBadge';
@@ -18,9 +17,6 @@ type GameCardProps = {
 };
 
 const GameCard = ({ game }: GameCardProps) => {
-  const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(
-    game.userStatus === 'abandoned' ? 'burn' : null,
-  );
   const [showBadge, setShowBadge] = useState<GameInLibraryStatus | 'none'>(
     'none',
   );
@@ -50,7 +46,6 @@ const GameCard = ({ game }: GameCardProps) => {
         userStatus: 'completed',
       });
     } else if (game.userStatus === 'abandoned') {
-      setEffectType('unburn');
       setShowBadge('none');
       updateStatus({
         userId: user?.id ?? '',
@@ -76,7 +71,6 @@ const GameCard = ({ game }: GameCardProps) => {
 
   const handleAbandonClick = () => {
     if (game.userStatus === 'wishlisted' || game.userStatus === 'playing') {
-      setEffectType('burn');
       setShowBadge('abandoned');
       updateStatus({
         userId: user?.id ?? '',
@@ -87,7 +81,6 @@ const GameCard = ({ game }: GameCardProps) => {
   };
 
   const handleReset = () => {
-    setEffectType('unburn');
     setShowBadge('none');
     updateStatus({
       userId: user?.id ?? '',
@@ -123,17 +116,11 @@ const GameCard = ({ game }: GameCardProps) => {
             transform: 'translateZ(0)',
           }}
         />
-        {effectType ? (
-          <div className="absolute inset-0 z-20 bg-transparent will-change-transform">
-            <BurnCanvas type={effectType} />
-          </div>
-        ) : (
-          !currentStatusFilter &&
+        {!currentStatusFilter &&
           game.userStatus !== 'wishlisted' &&
           game.userStatus !== 'playing' && (
             <div className="absolute inset-0 z-10 bg-black/60 transition-[background] duration-1000 will-change-transform group-hover:bg-transparent" />
-          )
-        )}
+          )}
       </div>
 
       {game.userStatus !== 'platinum' && (
