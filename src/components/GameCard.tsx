@@ -8,20 +8,22 @@ import { useRemoveUserGameMutation } from '@/hooks/useRemoveUserGameMutation';
 import { useUpdateUserGameStatusMutation } from '@/hooks/useUpdateUserGameStatusMutation';
 import { cn } from '@/lib/utils';
 import { useUserStore } from '@/store/userStore';
-import { GameUserStatus, UserGame } from '@/types';
+import { GameInLibrary, GameInLibraryStatus } from '@/types';
 
 import Loader from './Loader';
 import MetascoreBadge from './MetascoreBadge';
 
 type GameCardProps = {
-  game: UserGame;
+  game: GameInLibrary;
 };
 
 const GameCard = ({ game }: GameCardProps) => {
   const [effectType, setEffectType] = useState<'burn' | 'unburn' | null>(
     game.userStatus === 'abandoned' ? 'burn' : null,
   );
-  const [showBadge, setShowBadge] = useState<GameUserStatus | 'none'>('none');
+  const [showBadge, setShowBadge] = useState<GameInLibraryStatus | 'none'>(
+    'none',
+  );
   const user = useUserStore((state) => state.user);
   const [searchParams] = useSearchParams();
   const currentStatusFilter = searchParams.get('status');

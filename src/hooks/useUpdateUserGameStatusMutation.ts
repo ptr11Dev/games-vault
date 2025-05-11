@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { axiosInstance } from '@/lib/axios';
-import { GameUserStatus } from '@/types';
+import { GameInLibraryStatus } from '@/types';
 
 type UpdateStatusPayload = {
   userId: string;
   gameId: number;
-  userStatus: GameUserStatus;
+  userStatus: GameInLibraryStatus;
 };
 
 export const useUpdateUserGameStatusMutation = () => {

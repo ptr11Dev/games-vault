@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { axiosInstance } from '@/lib/axios';
-import { GameUserStatus, UserGame } from '@/types';
+import { GameInLibrary, GameInLibraryStatus } from '@/types';
 
 export type UserGamesFilters = {
-  status?: GameUserStatus;
+  status?: GameInLibraryStatus;
   name?: string;
   metacriticMin?: number;
   sort?: 'name' | 'released' | 'updatedAt' | 'metacritic' | 'status';
@@ -15,7 +15,7 @@ export const useUserGamesQuery = (
   userId: string | null,
   searchParams: URLSearchParams,
 ) => {
-  return useQuery<UserGame[]>({
+  return useQuery<GameInLibrary[]>({
     queryKey: ['userGames', userId, Object.fromEntries(searchParams)],
     queryFn: async () => {
       if (!userId) return [];

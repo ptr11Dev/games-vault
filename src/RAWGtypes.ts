@@ -62,7 +62,7 @@ export type RawgGame = {
   dominant_color?: string | null;
 };
 
-export type MetacriticPlatform = {
+type MetacriticPlatform = {
   metascore: number;
   url: string;
   platform: {
@@ -74,14 +74,14 @@ export type MetacriticPlatform = {
   };
 };
 
-export type Rating = {
+type Rating = {
   id: number;
   title: string;
   count: number;
   percent: number;
 };
 
-export type AddedByStatus = {
+type AddedByStatus = {
   yet?: number;
   owned?: number;
   beaten?: number;
@@ -90,13 +90,13 @@ export type AddedByStatus = {
   playing?: number;
 };
 
-export type EsrbRating = {
+type EsrbRating = {
   id: number;
   slug: string;
   name: string;
 };
 
-export type ParentPlatform = {
+type ParentPlatform = {
   platform: {
     id: number;
     name: string;
@@ -104,7 +104,7 @@ export type ParentPlatform = {
   };
 };
 
-export type PlatformInfo = {
+type PlatformInfo = {
   platform: {
     id: number;
     name: string;
@@ -130,7 +130,7 @@ export type PlatformInfo = {
   } | null;
 };
 
-export type StoreInfo = {
+type StoreInfo = {
   id: number;
   url?: string;
   store: {
@@ -143,7 +143,7 @@ export type StoreInfo = {
   };
 };
 
-export type Developer = {
+type Developer = {
   id: number;
   name: string;
   slug: string;
@@ -151,7 +151,7 @@ export type Developer = {
   image_background: string;
 };
 
-export type Publisher = {
+type Publisher = {
   id: number;
   name: string;
   slug: string;
@@ -159,7 +159,7 @@ export type Publisher = {
   image_background: string;
 };
 
-export type Genre = {
+type Genre = {
   id: number;
   name: string;
   slug: string;
@@ -167,7 +167,7 @@ export type Genre = {
   image_background: string;
 };
 
-export type Tag = {
+type Tag = {
   id: number;
   name: string;
   slug: string;
@@ -176,12 +176,12 @@ export type Tag = {
   image_background: string;
 };
 
-export type Screenshot = {
+type Screenshot = {
   id: number;
   image: string;
 };
 
-export type Movie = {
+type Movie = {
   id: number;
   name: string;
   preview: string;
@@ -191,7 +191,7 @@ export type Movie = {
   };
 };
 
-export type Clip = {
+type Clip = {
   clip: string;
   clips: {
     320: string;
@@ -201,7 +201,7 @@ export type Clip = {
   preview: string;
 };
 
-export type ShortScreenshot = {
+type ShortScreenshot = {
   id: number;
   image: string;
 };

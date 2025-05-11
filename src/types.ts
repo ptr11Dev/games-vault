@@ -1,4 +1,4 @@
-export type GameUserStatus =
+export type GameInLibraryStatus =
   | 'wishlisted'
   | 'completed'
   | 'platinum'
@@ -28,22 +28,13 @@ export type GameApi = {
   platforms: AvailablePlatforms[] | null;
 };
 
-export type UserGames = {
-  id: string;
-  userId: string;
-  gameId: number;
-  userStatus: GameUserStatus;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UserGame = GameApi & {
-  userStatus: GameUserStatus;
+export type GameInLibrary = GameApi & {
+  userStatus: GameInLibraryStatus;
   createdAt: string;
   updatedAt: string;
 };
 
 export type UserWithGames = {
   userId: string;
-  games: UserGame[];
+  games: GameInLibrary[];
 };

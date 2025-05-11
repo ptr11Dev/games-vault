@@ -1,9 +1,9 @@
 import { ArrowDown, ArrowUp, Gauge, RefreshCw, Search } from 'lucide-react';
 
 import { UserGamesFilters } from '@/hooks/useUserGamesQuery';
-import { GameUserStatus } from '@/types';
+import { GameInLibraryStatus } from '@/types';
 
-const statusOptions: GameUserStatus[] = [
+const statusOptions: GameInLibraryStatus[] = [
   'wishlisted',
   'abandoned',
   'completed',

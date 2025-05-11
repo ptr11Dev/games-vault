@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 
+/* TODO */
 @theme {
   --color-primary: #111827;
   --color-primary-lighter: #1f2937;
@@ -11,6 +12,7 @@
   --color-border: #374151;
 }
 
+/* TODO */
 @layer base {
   html {
     @apply bg-primary text-text-primary antialiased;
@@ -25,24 +27,55 @@
   }
 }
 
-/* Custom utilities for card flip effect */
-.backface-hidden {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+/* Remove arrows for input type=number in Chrome, Safari */
+.custom-number-input::-webkit-inner-spin-button,
+.custom-number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.custom-number-input {
+  -moz-appearance: textfield;
 }
 
-.rotate-y-180 {
-  transform: rotateY(180deg);
+/* Custom select */
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.custom-number-input::-webkit-inner-spin-button,
+.custom-number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.custom-number-input {
+  -moz-appearance: textfield;
 }
 
-.preserve-3d {
-  transform-style: preserve-3d;
+/* Nav username glow */
+@layer utilities {
+  @keyframes glow {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 2px #22d3ee) drop-shadow(0 0 4px #6366f1);
+    }
+    50% {
+      filter: drop-shadow(0 0 4px #22d3ee) drop-shadow(0 0 6px #6366f1);
+    }
+  }
+
+  .animate-glow {
+    animation: glow 2.5s ease-in-out infinite;
+  }
+
+  .animated-username {
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
-.perspective {
-  perspective: 1000px;
-}
-
+/* GameCard platinum badge shine effect */
 @layer utilities {
   @keyframes shine {
     0% {
@@ -77,55 +110,7 @@
   }
 }
 
-/* Remove arrows for input type=number w Chrome, Safari */
-.custom-number-input::-webkit-inner-spin-button,
-.custom-number-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.custom-number-input {
-  -moz-appearance: textfield;
-}
-
-/* Custom select */
-.custom-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-.custom-number-input::-webkit-inner-spin-button,
-.custom-number-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.custom-number-input {
-  -moz-appearance: textfield;
-}
-
-/* Username glow */
-@layer utilities {
-  @keyframes glow {
-    0%,
-    100% {
-      filter: drop-shadow(0 0 2px #22d3ee) drop-shadow(0 0 4px #6366f1);
-    }
-    50% {
-      filter: drop-shadow(0 0 4px #22d3ee) drop-shadow(0 0 6px #6366f1);
-    }
-  }
-
-  .animate-glow {
-    animation: glow 2.5s ease-in-out infinite;
-  }
-
-  .animated-username {
-    background-size: 200% 200%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-}
-
-/* GameCard playing badge wiggle */
+/* GameCard playing badge wiggle effect */
 @layer utilities {
   @keyframes wiggle {
     0% {
