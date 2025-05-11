@@ -18,9 +18,11 @@ const GameCardMini = ({
         className="h-32 w-full bg-cover bg-center"
         style={{ backgroundImage: `url(${game.background_image})` }}
       />
-      {/* Content */}
+      {/* Card content */}
       <div className="flex flex-col gap-2 p-2 text-white">
+        {/* Name */}
         <div className="truncate text-sm font-semibold">{game.name}</div>
+        {/* Button */}
         {onAddClick &&
           (isGameInLibrary ? (
             <button

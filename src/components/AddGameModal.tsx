@@ -43,16 +43,20 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
   };
 
   return (
+    /* Modal overlay */
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+      {/* Modal container */}
       <div
         ref={modalRef}
         className="relative max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-lg bg-gray-900 p-6 text-white"
       >
+        {/* Loader */}
         {isAdding && (
           <div className="absolute inset-0 z-50 bg-gray-900/50 backdrop-blur-sm">
             <Loader size="medium" className="h-full" />
           </div>
         )}
+        {/* Header */}
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-bold">Search Game</h2>
           <button
@@ -62,6 +66,7 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
             <CircleX />
           </button>
         </div>
+        {/* Input */}
         <input
           type="text"
           value={searchTerm}
@@ -69,6 +74,7 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
           placeholder="Type game title..."
           className="mb-4 w-full rounded border border-gray-600 bg-gray-800 p-2 text-white placeholder-gray-400"
         />
+        {/* Games list */}
         {isSearching ? (
           <div className="flex min-h-[200px] items-center justify-center">
             <Loader size="medium" />
