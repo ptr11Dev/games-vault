@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { CircleX, RotateCcw } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useRemoveGameFromLibraryMutation } from '@/hooks/useRemoveGameFromLibraryMutation';
@@ -12,6 +11,8 @@ import { useUserStore } from '@/store/userStore';
 
 import Loader from '../Loader';
 import MetascoreBadge from '../MetascoreBadge';
+import Actions from './components/Actions';
+import Footer from './components/Footer';
 import PlatinumBadge from './components/PlatinumBadge';
 import StatusBadge from './components/StatusBadge';
 
@@ -33,8 +34,7 @@ const GameCard = ({ game }: GameCardProps) => {
     useRemoveGameFromLibraryMutation();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowBadge(game.userStatus), 100);
-    return () => clearTimeout(timer);
+    setShowBadge(game.userStatus);
   }, [game.userStatus]);
 
   const isReleased =
@@ -77,6 +77,11 @@ const GameCard = ({ game }: GameCardProps) => {
     removeUserGame({ userId: user!.id, gameId: game.id });
   };
 
+  const isOverlayVisible =
+    !currentStatusFilter &&
+    game.userStatus !== 'wishlisted' &&
+    game.userStatus !== 'playing';
+
   return (
     <div
       className={cn(
@@ -86,12 +91,13 @@ const GameCard = ({ game }: GameCardProps) => {
           : '',
       )}
     >
+      {/* Loader */}
       {(isUpdating || isRemoving) && (
         <div className="absolute inset-0 z-50 bg-black/50 backdrop-blur-sm">
           <Loader size="small" className="h-full" />
         </div>
       )}
-
+      {/* Overlay */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center will-change-transform"
@@ -100,27 +106,17 @@ const GameCard = ({ game }: GameCardProps) => {
             transform: 'translateZ(0)',
           }}
         />
-        {!currentStatusFilter &&
-          game.userStatus !== 'wishlisted' &&
-          game.userStatus !== 'playing' && (
-            <div className="absolute inset-0 z-10 bg-black/60 transition-[background] duration-1000 will-change-transform group-hover:bg-transparent" />
-          )}
+        {isOverlayVisible && (
+          <div className="absolute inset-0 z-10 bg-black/60 transition-[background] duration-1000 will-change-transform group-hover:bg-transparent" />
+        )}
       </div>
-
-      {game.userStatus !== 'platinum' && (
-        <div
-          onClick={handleCompleteClick}
-          className="absolute top-1/2 right-0 z-50 flex h-1/2 w-0 translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-l-full bg-green-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
-        />
-      )}
-
-      {(game.userStatus === 'wishlisted' || game.userStatus === 'playing') && (
-        <div
-          onClick={handleAbandonClick}
-          className="absolute top-1/2 left-0 z-50 flex h-1/2 w-0 -translate-x-5 translate-y-[-50%] cursor-pointer items-center justify-center overflow-hidden rounded-r-full bg-red-500/80 transition-all duration-300 group-hover:w-8 group-hover:translate-x-0 group-hover:opacity-100"
-        />
-      )}
-
+      {/* Action buttons */}
+      <Actions
+        status={game.userStatus}
+        onComplete={handleCompleteClick}
+        onAbandon={handleAbandonClick}
+      />
+      {/* Metacritic badge */}
       <div className="flex justify-between p-2">
         {!isReleased && (
           <p className="flex h-1/2 items-center rounded bg-white px-2 py-1 text-xs font-bold text-black">
@@ -142,27 +138,8 @@ const GameCard = ({ game }: GameCardProps) => {
       {currentStatusFilter !== 'platinum' && game.userStatus === 'platinum' && (
         <PlatinumBadge visible={showBadge === 'platinum'} />
       )}
-
-      <div className="mt-auto flex w-full items-center justify-between gap-3 bg-black/70 p-2">
-        <p
-          title={game.name}
-          className="max-w-[250px] truncate text-sm font-bold text-white"
-        >
-          {game.name}
-        </p>
-        <button
-          onClick={handleReset}
-          className="ml-auto cursor-pointer rounded-full p-1 transition-all duration-300 hover:bg-white/40"
-        >
-          <RotateCcw className="h-4 w-4 text-white" />
-        </button>
-        <button
-          onClick={handleDelete}
-          className="cursor-pointer rounded-full p-1 transition-all duration-300 hover:bg-white/40"
-        >
-          <CircleX className="h-4 w-4 text-red-500" />
-        </button>
-      </div>
+      {/* Footer */}
+      <Footer name={game.name} onReset={handleReset} onDelete={handleDelete} />
     </div>
   );
 };
