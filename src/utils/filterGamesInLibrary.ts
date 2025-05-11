@@ -22,5 +22,5 @@ export const filterGamesInLibrary = (
     return aDate - bDate;
   });
 
-  return params?.get('direction') === 'desc' ? sorted.reverse() : sorted;
+  return params?.get('direction') === 'asc' ? sorted.reverse() : sorted;
 };
