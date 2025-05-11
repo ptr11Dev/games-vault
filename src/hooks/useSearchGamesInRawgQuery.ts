@@ -5,7 +5,7 @@ import { RawgGame } from '@/RawgTypes';
 import { GameApi } from '@/types';
 import { convertRawgGameToApi } from '@/utils/convertRawgGameToApi';
 
-export const useSearchGamesQuery = (search: string) => {
+export const useSearchGamesInRawgQuery = (search: string) => {
   return useQuery<GameApi[]>({
     queryKey: ['games', search],
     queryFn: async () => {

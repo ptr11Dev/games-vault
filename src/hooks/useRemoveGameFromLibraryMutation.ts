@@ -2,16 +2,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { axiosInstance } from '@/lib/axios';
 
-type RemoveUserGamePayload = {
+type RemoveGameFromLibraryPayload = {
   userId: string;
   gameId: number;
 };
 
-export const useRemoveUserGameMutation = () => {
+export const useRemoveGameFromLibraryMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ userId, gameId }: RemoveUserGamePayload) => {
+    mutationFn: async ({ userId, gameId }: RemoveGameFromLibraryPayload) => {
       const { data } = await axiosInstance.delete(
         `/user-games/${userId}/${gameId}`,
       );

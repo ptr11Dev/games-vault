@@ -3,17 +3,21 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosInstance } from '@/lib/axios';
 import { GameInLibraryStatus } from '@/types';
 
-type UpdateStatusPayload = {
+type UpdateGameStatusInLibraryPayload = {
   userId: string;
   gameId: number;
   userStatus: GameInLibraryStatus;
 };
 
-export const useUpdateUserGameStatusMutation = () => {
+export const useUpdateGameStatusInLibraryMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ userId, gameId, userStatus }: UpdateStatusPayload) => {
+    mutationFn: async ({
+      userId,
+      gameId,
+      userStatus,
+    }: UpdateGameStatusInLibraryPayload) => {
       const { data } = await axiosInstance.patch(
         `/user-games/${userId}/${gameId}/status/${userStatus}`,
       );

@@ -4,8 +4,8 @@ import { CircleX, RotateCcw } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 import { BurnCanvas } from '@/effects/BurnCardEffect';
-import { useRemoveUserGameMutation } from '@/hooks/useRemoveUserGameMutation';
-import { useUpdateUserGameStatusMutation } from '@/hooks/useUpdateUserGameStatusMutation';
+import { useRemoveGameFromLibraryMutation } from '@/hooks/useRemoveGameFromLibraryMutation';
+import { useUpdateGameStatusInLibraryMutation } from '@/hooks/useUpdateGameStatusInLibraryMutation';
 import { cn } from '@/lib/utils';
 import { useUserStore } from '@/store/userStore';
 import { GameInLibrary, GameInLibraryStatus } from '@/types';
@@ -29,9 +29,9 @@ const GameCard = ({ game }: GameCardProps) => {
   const currentStatusFilter = searchParams.get('status');
 
   const { mutate: updateStatus, isPending: isUpdating } =
-    useUpdateUserGameStatusMutation();
+    useUpdateGameStatusInLibraryMutation();
   const { mutate: removeUserGame, isPending: isRemoving } =
-    useRemoveUserGameMutation();
+    useRemoveGameFromLibraryMutation();
 
   useEffect(() => {
     const timer = setTimeout(() => setShowBadge(game.userStatus), 100);

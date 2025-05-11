@@ -1,5 +1,5 @@
 import Loader from './components/Loader';
-import useInitiateUser from './hooks/useInitiateUser';
+import { useInitiateUser } from './hooks/useInitiateUser';
 import { useUserQuery } from './hooks/useUserQuery';
 import Home from './pages/Home';
 import Login from './pages/Login';

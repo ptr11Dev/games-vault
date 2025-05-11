@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '@/lib/axios';
 import { GameInLibrary, GameInLibraryStatus } from '@/types';
 
-export type UserGamesFilters = {
+export type GamesLibraryFilters = {
   status?: GameInLibraryStatus;
   name?: string;
   metacriticMin?: number;
@@ -11,7 +11,7 @@ export type UserGamesFilters = {
   direction?: 'asc' | 'desc';
 };
 
-export const useUserGamesQuery = (
+export const useGamesLibraryQuery = (
   userId: string | null,
   searchParams: URLSearchParams,
 ) => {

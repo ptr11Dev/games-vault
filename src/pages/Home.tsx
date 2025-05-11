@@ -5,7 +5,7 @@ import Filters from '@/components/Filters';
 import GameCard from '@/components/GameCard';
 import Loader from '@/components/Loader';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
-import { useUserGamesQuery } from '@/hooks/useUserGamesQuery';
+import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
 import { supabase } from '@/lib/supabase';
 import { useUserStore } from '@/store/userStore';
 
@@ -20,7 +20,7 @@ const Home = () => {
     data: games,
     isLoading,
     error,
-  } = useUserGamesQuery(user?.id ?? null, debouncedParams);
+  } = useGamesLibraryQuery(user?.id ?? null, debouncedParams);
 
   const filterGames = () => {
     const statusOrder = [

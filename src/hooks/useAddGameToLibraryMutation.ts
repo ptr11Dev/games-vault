@@ -3,15 +3,15 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosInstance } from '@/lib/axios';
 import { GameApi } from '@/types';
 
-type AddUserGamePayload = GameApi & {
+type AddGameToLibraryPayload = GameApi & {
   userId: string;
 };
 
-export const useAddUserGameMutation = () => {
+export const useAddGameToLibraryMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (payload: AddUserGamePayload) => {
+    mutationFn: async (payload: AddGameToLibraryPayload) => {
       const { data } = await axiosInstance.post('/user-games', payload);
       return data;
     },

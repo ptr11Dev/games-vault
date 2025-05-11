@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowUp, Gauge, RefreshCw, Search } from 'lucide-react';
 
-import { UserGamesFilters } from '@/hooks/useUserGamesQuery';
+import { GamesLibraryFilters } from '@/hooks/useGamesLibraryQuery';
 import { GameInLibraryStatus } from '@/types';
 
 const statusOptions: GameInLibraryStatus[] = [
@@ -11,7 +11,7 @@ const statusOptions: GameInLibraryStatus[] = [
   'playing',
 ];
 
-const sortOptions: { value: UserGamesFilters['sort']; label: string }[] = [
+const sortOptions: { value: GamesLibraryFilters['sort']; label: string }[] = [
   { value: 'status', label: 'Status' },
   { value: 'name', label: 'Name' },
   { value: 'released', label: 'Release Date' },

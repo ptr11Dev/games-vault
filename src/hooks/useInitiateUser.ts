@@ -4,7 +4,7 @@ import { Session } from '@supabase/supabase-js';
 
 import { useUserStore } from '@/store/userStore';
 
-const useInitiateUser = (
+export const useInitiateUser = (
   userInstance: {
     session: Session;
   } | null,
@@ -22,5 +22,3 @@ const useInitiateUser = (
     }
   }, [userInstance, setUser, setSession]);
 };
-
-export default useInitiateUser;

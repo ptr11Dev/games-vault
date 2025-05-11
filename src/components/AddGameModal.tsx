@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import { CircleX } from 'lucide-react';
 
-import { useAddUserGameMutation } from '@/hooks/useAddUserGameMutation';
+import { useAddGameToLibraryMutation } from '@/hooks/useAddGameToLibraryMutation';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useDebounce } from '@/hooks/useDebounce';
-import { useSearchGamesQuery } from '@/hooks/useSearchGamesQuery';
-import { useUserGamesQuery } from '@/hooks/useUserGamesQuery';
+import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
+import { useSearchGamesInRawgQuery } from '@/hooks/useSearchGamesInRawgQuery';
 import { useUserStore } from '@/store/userStore';
 import { GameApi } from '@/types';
 
@@ -24,12 +24,13 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
   const modalRef = useClickOutside(onClose);
 
   const { data: searchedGames, isLoading: isSearching } =
-    useSearchGamesQuery(debouncedSearch);
-  const { data: userGames } = useUserGamesQuery(
+    useSearchGamesInRawgQuery(debouncedSearch);
+  const { data: userGames } = useGamesLibraryQuery(
     user!.id,
     new URLSearchParams(),
   );
-  const { mutate: addUserGame, isPending: isAdding } = useAddUserGameMutation();
+  const { mutate: addUserGame, isPending: isAdding } =
+    useAddGameToLibraryMutation();
 
   const isGameInLibrary = (game: GameApi) =>
     userGames?.some((userGame) => userGame.id === game.id) ?? false;
