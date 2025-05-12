@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { CircleX, Loader } from 'lucide-react';
+import { CircleX } from 'lucide-react';
 
 import { useAddGameToLibraryMutation } from '@/hooks/useAddGameToLibraryMutation';
 import { useClickOutside } from '@/hooks/useClickOutside';
@@ -10,6 +10,7 @@ import { useSearchGamesInRawgQuery } from '@/hooks/useSearchGamesInRawgQuery';
 import { GameApi } from '@/misc/types';
 import { useUserStore } from '@/store/userStore';
 
+import Loader from '../Loader';
 import GameCardMini from './GameCardMini';
 
 type AddGameModalProps = {

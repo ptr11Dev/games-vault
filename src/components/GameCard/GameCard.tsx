@@ -105,9 +105,12 @@ const GameCard = ({ game }: GameCardProps) => {
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center will-change-transform"
+          className={cn(
+            'absolute inset-0 bg-center will-change-transform',
+            game.background_image ? 'bg-cover' : 'bg-contain bg-no-repeat',
+          )}
           style={{
-            backgroundImage: `url(${game.background_image})`,
+            backgroundImage: `url(${game.background_image ?? '/no_image.png'})`,
             transform: 'translateZ(0)',
           }}
         />

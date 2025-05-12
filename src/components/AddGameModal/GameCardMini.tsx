@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { GameApi } from '@/misc/types';
 
 type GameCardMiniProps = {
@@ -15,8 +16,13 @@ const GameCardMini = ({
     <div className="relative flex flex-col overflow-hidden rounded-lg bg-gray-900 shadow transition hover:shadow-lg">
       {/* Background */}
       <div
-        className="h-32 w-full bg-cover bg-center"
-        style={{ backgroundImage: `url(${game.background_image})` }}
+        className={cn(
+          'h-32 w-full bg-center',
+          game.background_image ? 'bg-cover' : 'bg-contain bg-no-repeat',
+        )}
+        style={{
+          backgroundImage: `url(${game.background_image ?? '/no_image.png'})`,
+        }}
       />
       {/* Card content */}
       <div className="flex flex-col gap-2 p-2 text-white">
