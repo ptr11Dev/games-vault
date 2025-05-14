@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { TEXTS } from '@/misc/texts';
 import { GameApi } from '@/misc/types';
 
 type GameCardMiniProps = {
@@ -6,6 +7,8 @@ type GameCardMiniProps = {
   onAddClick: () => void;
   isGameInLibrary: boolean;
 };
+
+const { ADD, IN_LIBRARY } = TEXTS.GAME_CARD.MINI;
 
 const GameCardMini = ({
   game,
@@ -35,14 +38,14 @@ const GameCardMini = ({
               disabled
               className="mt-2 cursor-not-allowed rounded bg-gray-600 px-2 py-1 text-xs font-bold text-gray-300"
             >
-              In Library
+              {IN_LIBRARY}
             </button>
           ) : (
             <button
               onClick={onAddClick}
               className="mt-2 cursor-pointer rounded bg-blue-600 px-2 py-1 text-xs font-bold text-white hover:bg-blue-700"
             >
-              Add
+              {ADD}
             </button>
           ))}
       </div>

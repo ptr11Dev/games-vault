@@ -4,9 +4,12 @@ import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { supabase } from '@/lib/supabase';
+import { TEXTS } from '@/misc/texts';
 import { useUserStore } from '@/store/userStore';
 
 import AddGameModal from './AddGameModal/AddGameModal';
+
+const { ADD_GAME_BUTTON, SIGN_OUT } = TEXTS.NAV;
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +34,7 @@ const Nav = () => {
         aria-label="Logout"
         className="flex cursor-pointer items-center gap-2 rounded-md border border-gray-600 px-3 py-1.5 text-sm text-gray-400 transition-colors hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
       >
-        <span>Sign out</span>
+        <span>{SIGN_OUT}</span>
         <LogOut size={16} />
       </button>
       {/* Username */}
@@ -43,7 +46,7 @@ const Nav = () => {
         className="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         onClick={() => setIsOpen(true)}
       >
-        Add Game
+        {ADD_GAME_BUTTON}
       </button>
       {/* Add game modal */}
       {isOpen && <AddGameModal onClose={() => setIsOpen(false)} />}

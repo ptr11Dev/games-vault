@@ -4,8 +4,11 @@ import Loader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
 import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
+import { TEXTS } from '@/misc/texts';
 import { useUserStore } from '@/store/userStore';
 import { filterGamesInLibrary } from '@/utils/filterGamesInLibrary';
+
+const { ERROR, NO_GAMES } = TEXTS.HOME;
 
 const Home = () => {
   const { searchParams, setSearchParams, debouncedParams } =
@@ -29,14 +32,14 @@ const Home = () => {
     if (error)
       return (
         <div className="mt-6 flex min-h-[400px] items-center justify-center">
-          <p className="text-red-500">Failed to load games</p>
+          <p className="text-red-500">{ERROR}</p>
         </div>
       );
 
     if (!games?.length)
       return (
         <div className="mt-6 flex min-h-[400px] items-center justify-center">
-          <p className="text-text-secondary">No games found</p>
+          <p className="text-text-secondary">{NO_GAMES}</p>
         </div>
       );
 

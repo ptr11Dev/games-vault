@@ -1,4 +1,5 @@
 import { STATUS_OPTIONS } from '@/misc/consts';
+import { TEXTS } from '@/misc/texts';
 import { GamesLibraryFilters } from '@/misc/types';
 
 type StatusSelectProps = {
@@ -6,13 +7,15 @@ type StatusSelectProps = {
   onChange: (value: GamesLibraryFilters['status'] | '') => void;
 };
 
+const { ALL } = TEXTS.FILTERS.STATUSES;
+
 const StatusSelect = ({ value, onChange }: StatusSelectProps) => (
   <select
     value={value}
     onChange={(e) => onChange(e.target.value as GamesLibraryFilters['status'])}
     className="custom-select border-border/40 bg-primary h-9 w-36 appearance-none rounded border bg-[url('/icons/chevron-down.svg')] bg-[length:16px_16px] bg-[right_0.75rem_center] bg-no-repeat px-2 pr-8 text-sm text-white focus:ring-1 focus:ring-blue-600 focus:outline-none"
   >
-    <option value="">All Statuses</option>
+    <option value="">{ALL}</option>
     {STATUS_OPTIONS.map((s) => (
       <option key={s} value={s}>
         {s.charAt(0).toUpperCase() + s.slice(1)}

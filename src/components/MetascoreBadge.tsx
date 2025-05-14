@@ -1,6 +1,10 @@
+import { TEXTS } from '@/misc/texts';
+
 type MetascoreBadgeProps = {
-  score?: number | null;
+  score: number | null;
 };
+
+const { TBA } = TEXTS.METACRITIC;
 
 const getMetascoreColor = (score: number): string => {
   if (score >= 90) return 'bg-green-500';
@@ -14,7 +18,7 @@ const MetascoreBadge = ({ score }: MetascoreBadgeProps) => {
   if (score === null || score === undefined) {
     return (
       <div className="z-20 ml-auto flex h-8 w-8 items-center justify-center rounded border border-gray-500 bg-white text-lg font-bold text-black shadow">
-        tba
+        {TBA}
       </div>
     );
   }

@@ -7,6 +7,7 @@ import { useClickOutside } from '@/hooks/useClickOutside';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
 import { useSearchGamesInRawgQuery } from '@/hooks/useSearchGamesInRawgQuery';
+import { TEXTS } from '@/misc/texts';
 import { GameApi } from '@/misc/types';
 import { useUserStore } from '@/store/userStore';
 
@@ -16,6 +17,8 @@ import GameCardMini from './GameCardMini';
 type AddGameModalProps = {
   onClose: () => void;
 };
+
+const { INPUT_PLACEHOLDER, TITLE } = TEXTS.ADD_GAME_MODAL;
 
 const AddGameModal = ({ onClose }: AddGameModalProps) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -58,7 +61,7 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
         )}
         {/* Header */}
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold">Search Game</h2>
+          <h2 className="text-xl font-bold">{TITLE}</h2>
           <button
             onClick={onClose}
             className="cursor-pointer text-gray-400 hover:text-white"
@@ -71,7 +74,7 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Type game title..."
+          placeholder={INPUT_PLACEHOLDER}
           className="mb-4 w-full rounded border border-gray-600 bg-gray-800 p-2 text-white placeholder-gray-400"
         />
         {/* Games list */}

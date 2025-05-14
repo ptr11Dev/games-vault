@@ -6,6 +6,7 @@ import { useRemoveGameFromLibraryMutation } from '@/hooks/useRemoveGameFromLibra
 import { useUpdateGameStatusInLibraryMutation } from '@/hooks/useUpdateGameStatusInLibraryMutation';
 import { cn } from '@/lib/utils';
 import { ABANDON_STATUS_MAP, NEXT_STATUS_MAP } from '@/misc/consts';
+import { TEXTS } from '@/misc/texts';
 import { GameInLibrary, GameInLibraryStatus } from '@/misc/types';
 import { useUserStore } from '@/store/userStore';
 
@@ -19,6 +20,8 @@ import StatusBadge from './components/StatusBadge';
 type GameCardProps = {
   game: GameInLibrary;
 };
+
+const { COMING, TBA } = TEXTS.METACRITIC;
 
 const GameCard = ({ game }: GameCardProps) => {
   const [showBadge, setShowBadge] = useState<GameInLibraryStatus | 'none'>(
@@ -128,7 +131,7 @@ const GameCard = ({ game }: GameCardProps) => {
       <div className="flex justify-between p-2">
         {!isReleased && (
           <p className="flex h-1/2 items-center rounded bg-white px-2 py-1 text-xs font-bold text-black">
-            Coming: {game.released ?? 'TBA'}
+            {`${COMING} ${game.released ?? TBA}`}
           </p>
         )}
         <MetascoreBadge score={game.metacritic} />

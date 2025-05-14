@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { TEXTS } from '@/misc/texts';
 import { GameInLibraryStatus } from '@/misc/types';
 
 type StatusBadgeProps = {
@@ -6,19 +7,21 @@ type StatusBadgeProps = {
   visible: boolean;
 };
 
+const { ABANDONED, COMPLETED, PLAYING } = TEXTS.GAME_CARD.BADGES;
+
 const BADGE_STYLE_MAP: Partial<
   Record<GameInLibraryStatus, { text: string; className: string }>
 > = {
   abandoned: {
-    text: 'ABANDONED',
+    text: ABANDONED,
     className: 'top-18 left-22 bg-red-700/90 ring-red-900 rotate-[-15deg]',
   },
   playing: {
-    text: 'PLAYING',
+    text: PLAYING,
     className: 'top-18 left-22 bg-blue-600/90 ring-sky-300 animate-wiggle',
   },
   completed: {
-    text: 'COMPLETED',
+    text: COMPLETED,
     className: 'top-18 left-22 bg-yellow-500/90 ring-yellow-700',
   },
 };

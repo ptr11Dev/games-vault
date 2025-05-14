@@ -1,4 +1,8 @@
+import { TEXTS } from './texts';
 import { GameInLibraryStatus, GamesLibraryFilters } from './types';
+
+const { DEFAULT, LAST_UPDATED, METACRITIC, NAME, RELEASE_DATE, STATUS } =
+  TEXTS.FILTERS.SORT_BY;
 
 export const STATUS_OPTIONS: GameInLibraryStatus[] = [
   'wishlisted',
@@ -12,12 +16,12 @@ export const SORTING_OPTIONS: {
   value: GamesLibraryFilters['sort'];
   label: string;
 }[] = [
-  { value: 'none', label: 'Default Order' },
-  { value: 'status', label: 'Status' },
-  { value: 'name', label: 'Name' },
-  { value: 'released', label: 'Release Date' },
-  { value: 'updatedAt', label: 'Last Updated' },
-  { value: 'metacritic', label: 'Metacritic' },
+  { value: 'none', label: DEFAULT },
+  { value: 'status', label: STATUS },
+  { value: 'name', label: NAME },
+  { value: 'released', label: RELEASE_DATE },
+  { value: 'updatedAt', label: LAST_UPDATED },
+  { value: 'metacritic', label: METACRITIC },
 ];
 
 export const NEXT_STATUS_MAP: Record<
