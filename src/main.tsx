@@ -8,7 +8,7 @@ import { RouterProvider } from 'react-router-dom';
 
 import { router } from './misc/router';
 
-import './misc/index.css';
+import './styles/index.css';
 
 const queryClient = new QueryClient();
 
