@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,7 @@ const { ADD_GAME_BUTTON, SIGN_OUT } = TEXTS.NAV;
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('dark');
 
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
@@ -26,19 +27,46 @@ const Nav = () => {
     navigate('/');
   };
 
+  const handleThemeChange = (theme: string) => {
+    setCurrentTheme(theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  };
+
+  useEffect(() => {
+    handleThemeChange(currentTheme);
+  }, []);
+
   return (
-    <header className="mb-8 flex items-center justify-between rounded-lg bg-gray-800/50 p-4 shadow-lg">
-      {/* Logout button */}
-      <button
-        onClick={handleLogout}
-        aria-label="Logout"
-        className="flex cursor-pointer items-center gap-2 rounded-md border border-gray-600 px-3 py-1.5 text-sm text-gray-400 transition-colors hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
-      >
-        <span>{SIGN_OUT}</span>
-        <LogOut size={16} />
-      </button>
+    <header className="bg-lighter mb-8 flex items-center justify-between rounded-lg p-4 shadow-lg">
+      <div className="flex items-center gap-4">
+        {/* Logout button */}
+        <button
+          onClick={handleLogout}
+          aria-label="Logout"
+          className="border-theme text-secondary flex cursor-pointer items-center gap-2 rounded-md border px-3 py-1.5 text-sm transition-colors hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
+        >
+          <span>{SIGN_OUT}</span>
+          <LogOut size={16} />
+        </button>
+        {/* Theme selector */}
+        <select
+          value={currentTheme}
+          onChange={(e) => handleThemeChange(e.target.value)}
+          className="border-theme bg-lighter text-secondary rounded-md border px-3 py-1.5 text-sm"
+        >
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+          <option value="cyberpunk">Cyberpunk</option>
+          <option value="forest">Forest</option>
+        </select>
+      </div>
       {/* Username */}
-      <span className="animated-username animate-glow bg-gradient-to-r from-[#6EFB5D] to-[#0A481E] bg-clip-text text-lg font-medium tracking-widest text-transparent">
+      <span
+        className="animated-username animate-glow bg-gradient-to-r text-lg font-medium tracking-widest text-transparent"
+        style={{
+          backgroundImage: `linear-gradient(to right, var(--username-gradient-from), var(--username-gradient-to))`,
+        }}
+      >
         {user?.email?.toUpperCase().replace(/@.*$/, '')}
       </span>
       {/* Add game button */}

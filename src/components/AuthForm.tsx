@@ -27,15 +27,15 @@ const AuthForm = () => {
         },
         className: {
           container: 'w-full space-y-4',
-          divider: 'bg-border my-4',
-          input: 'bg-primary-lighter border-border w-full px-4 py-2',
-          label: 'text-text-secondary block mb-1',
+          divider: 'bg-theme my-4',
+          input: 'bg-lighter border-theme w-full px-4 py-2',
+          label: 'text-secondary block mb-1',
           loader: 'text-blue-600',
           anchor:
             'text-blue-600 hover:text-blue-300 transition-colors duration-200',
         },
         style: {
-          input: { color: 'white' },
+          input: { color: 'var(--text-primary)' },
         },
       }}
       providers={['google']}
