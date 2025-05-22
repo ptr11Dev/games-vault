@@ -5,7 +5,6 @@ import Nav from '@/components/Nav';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
 import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
 import { TEXTS } from '@/misc/texts';
-import { useUserStore } from '@/store/userStore';
 import { filterGamesInLibrary } from '@/utils/filterGamesInLibrary';
 
 const { ERROR, NO_GAMES } = TEXTS.HOME;
@@ -13,13 +12,12 @@ const { ERROR, NO_GAMES } = TEXTS.HOME;
 const Home = () => {
   const { searchParams, setSearchParams, debouncedParams } =
     useDebounceSearchParams(400);
-  const userId = useUserStore((state) => state.user?.id ?? null);
 
   const {
     data: games,
     isLoading,
     error,
-  } = useGamesLibraryQuery(userId, debouncedParams);
+  } = useGamesLibraryQuery(debouncedParams);
 
   const renderGamesLibrary = () => {
     if (isLoading)

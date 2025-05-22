@@ -4,7 +4,6 @@ import { axiosInstance } from '@/lib/axios';
 import { GameInLibraryStatus } from '@/misc/types';
 
 type UpdateGameStatusInLibraryPayload = {
-  userId: string;
   gameId: number;
   userStatus: GameInLibraryStatus;
 };
@@ -14,17 +13,16 @@ export const useUpdateGameStatusInLibraryMutation = () => {
 
   return useMutation({
     mutationFn: async ({
-      userId,
       gameId,
       userStatus,
     }: UpdateGameStatusInLibraryPayload) => {
       const { data } = await axiosInstance.patch(
-        `/user-games/${userId}/${gameId}/status/${userStatus}`,
+        `/user-games/${gameId}/status/${userStatus}`,
       );
       return data;
     },
-    onSuccess: (_, { userId }) => {
-      queryClient.invalidateQueries({ queryKey: ['userGames', userId] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userGames'] });
     },
   });
 };

@@ -11,8 +11,9 @@ axiosInstance.interceptors.request.use(async (config) => {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (session) {
-    config.headers.Authorization = `Bearer ${session.access_token}`;
+  const token = session?.access_token;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;

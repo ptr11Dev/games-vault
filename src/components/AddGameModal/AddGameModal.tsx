@@ -9,7 +9,6 @@ import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
 import { useSearchGamesInRawgQuery } from '@/hooks/useSearchGamesInRawgQuery';
 import { TEXTS } from '@/misc/texts';
 import { GameApi } from '@/misc/types';
-import { useUserStore } from '@/store/userStore';
 
 import Loader from '../Loader';
 import GameCardMini from './GameCardMini';
@@ -23,15 +22,11 @@ const { INPUT_PLACEHOLDER, TITLE } = TEXTS.ADD_GAME_MODAL;
 const AddGameModal = ({ onClose }: AddGameModalProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 600);
-  const user = useUserStore((state) => state.user);
   const modalRef = useClickOutside(onClose);
 
   const { data: searchedGames, isLoading: isSearching } =
     useSearchGamesInRawgQuery(debouncedSearch);
-  const { data: userGames } = useGamesLibraryQuery(
-    user!.id,
-    new URLSearchParams(),
-  );
+  const { data: userGames } = useGamesLibraryQuery(new URLSearchParams());
   const { mutate: addUserGame, isPending: isAdding } =
     useAddGameToLibraryMutation();
 
@@ -41,7 +36,6 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
   const handleAdd = (game: GameApi) => {
     addUserGame({
       ...game,
-      userId: user?.id ?? '',
     });
   };
 

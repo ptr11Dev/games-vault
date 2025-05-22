@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils';
 import { ABANDON_STATUS_MAP, NEXT_STATUS_MAP } from '@/misc/consts';
 import { TEXTS } from '@/misc/texts';
 import { GameInLibrary, GameInLibraryStatus } from '@/misc/types';
-import { useUserStore } from '@/store/userStore';
 
 import Loader from '../Loader';
 import MetascoreBadge from '../MetascoreBadge';
@@ -27,7 +26,6 @@ const GameCard = ({ game }: GameCardProps) => {
   const [showBadge, setShowBadge] = useState<GameInLibraryStatus | 'none'>(
     'none',
   );
-  const userId = useUserStore((state) => state.user?.id ?? '');
   const [searchParams] = useSearchParams();
   const currentStatusFilter = searchParams.get('status');
 
@@ -54,7 +52,6 @@ const GameCard = ({ game }: GameCardProps) => {
     );
 
     updateStatus({
-      userId,
       gameId: game.id,
       userStatus: nextStatus,
     });
@@ -67,7 +64,6 @@ const GameCard = ({ game }: GameCardProps) => {
     setShowBadge(currentStatusFilter ? 'none' : nextStatus);
 
     updateStatus({
-      userId,
       gameId: game.id,
       userStatus: nextStatus,
     });
@@ -76,14 +72,13 @@ const GameCard = ({ game }: GameCardProps) => {
   const handleReset = () => {
     setShowBadge('none');
     updateStatus({
-      userId,
       gameId: game.id,
       userStatus: 'wishlisted',
     });
   };
 
   const handleDelete = () => {
-    removeUserGame({ userId, gameId: game.id });
+    removeUserGame({ gameId: game.id });
   };
 
   const isOverlayVisible =

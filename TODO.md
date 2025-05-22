@@ -23,12 +23,11 @@ https://rawg.io/@kaczmar11/apikey
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
 
-1. wprowadzic motywy, tj. wyciagnac wszystkie zmienne do jakiegos pliku (przy tym ogarnac index.css - z oznaczeniem TODO) - font tez powinien byc uzywany jeden dla calej apki (chyba, a moze badge maja miec inny font)
-2. ogarnac jakiegos scrappera na metacritic
-3. lepiej ogarnac stylowanie karty z gra - glownie chodzi tutaj o przyciski resetowania stanu i usuwania karty z biblioteki
-4. ogarnac jakie gry gralem na PS i dodac do biblioteki
-5. napisac testy be
-6. napisac testy fe
-7. hostowac backend
-8. hostowac frontend
-9. ogarnac wysylanie zapytania do api po zmianie karty --- jakos tak, zeby te karty nie skakaly - nie mam pomyslu jak to powinno dzialac, ale obecnie jest to troche problematyczne :/ najlepiej wpisac w filtrach 'marvel' i zobaczyc jak to dziala jak dla jednej karty zmieniasz status
+1. ogarnac jakiegos scrappera na metacritic
+2. lepiej ogarnac stylowanie karty z gra - glownie chodzi tutaj o przyciski resetowania stanu i usuwania karty z biblioteki
+3. ogarnac jakie gry gralem na PS i dodac do biblioteki
+4. napisac testy be
+5. napisac testy fe
+6. hostowac backend
+7. hostowac frontend
+8. ogarnac wysylanie zapytania do api po zmianie karty --- jakos tak, zeby te karty nie skakaly - nie mam pomyslu jak to powinno dzialac, ale obecnie jest to troche problematyczne :/ najlepiej wpisac w filtrach 'marvel' i zobaczyc jak to dziala jak dla jednej karty zmieniasz status
