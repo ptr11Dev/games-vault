@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import { CircleX } from 'lucide-react';
 
-import { useAddGameToLibraryMutation } from '@/hooks/useAddGameToLibraryMutation';
+import { useAddGameToLibraryMutation } from '@/hooks/mutation/useAddGameToLibraryMutation';
+import { useGamesLibraryQuery } from '@/hooks/query/useGamesLibraryQuery';
+import { useSearchGamesInRawgQuery } from '@/hooks/query/useSearchGamesInRawgQuery';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useDebounce } from '@/hooks/useDebounce';
-import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
-import { useSearchGamesInRawgQuery } from '@/hooks/useSearchGamesInRawgQuery';
 import { TEXTS } from '@/misc/texts';
 import { GameApi } from '@/misc/types';
 

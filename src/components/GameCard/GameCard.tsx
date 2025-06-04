@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { useRemoveGameFromLibraryMutation } from '@/hooks/useRemoveGameFromLibraryMutation';
-import { useUpdateGameStatusInLibraryMutation } from '@/hooks/useUpdateGameStatusInLibraryMutation';
+import { useRemoveGameFromLibraryMutation } from '@/hooks/mutation/useRemoveGameFromLibraryMutation';
+import { useUpdateGameStatusInLibraryMutation } from '@/hooks/mutation/useUpdateGameStatusInLibraryMutation';
 import { cn } from '@/lib/utils';
 import { ABANDON_STATUS_MAP, NEXT_STATUS_MAP } from '@/misc/consts';
 import { TEXTS } from '@/misc/texts';

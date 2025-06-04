@@ -1,6 +1,6 @@
 import Loader from './components/Loader';
+import { useUserQuery } from './hooks/query/useUserQuery';
 import { useInitiateUser } from './hooks/useInitiateUser';
-import { useUserQuery } from './hooks/useUserQuery';
 import { useUserStore } from './store/userStore';
 import Home from './ui/Home';
 import Login from './ui/Login';

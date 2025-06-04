@@ -2,8 +2,8 @@ import Filters from '@/components/Filters/Filters';
 import GameCard from '@/components/GameCard/GameCard';
 import Loader from '@/components/Loader';
 import Nav from '@/components/Nav';
+import { useGamesLibraryQuery } from '@/hooks/query/useGamesLibraryQuery';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
-import { useGamesLibraryQuery } from '@/hooks/useGamesLibraryQuery';
 import { TEXTS } from '@/misc/texts';
 import { filterGamesInLibrary } from '@/utils/filterGamesInLibrary';
 

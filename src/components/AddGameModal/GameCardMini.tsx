@@ -30,7 +30,7 @@ const GameCardMini = ({
       {/* Card content */}
       <div className="flex flex-col gap-2 p-2 text-white">
         {/* Name */}
-        <div className="truncate text-sm font-semibold">{game.name}</div>
+        <div className="text-sm font-semibold">{game.name}</div>
         {/* Button */}
         {onAddClick &&
           (isGameInLibrary ? (
