@@ -7,7 +7,7 @@ import { convertRawgGameToApi } from '@/utils/convertRawgGameToApi';
 
 export const useSearchGamesInRawgQuery = (search: string) => {
   return useQuery<GameApi[]>({
-    queryKey: ['games', search],
+    queryKey: ['rawg-games', search],
     queryFn: async () => {
       if (!search) return [];
 

@@ -3,6 +3,7 @@ import GameCard from '@/components/GameCard/GameCard';
 import Loader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import { useGamesLibraryQuery } from '@/hooks/query/useGamesLibraryQuery';
+import { useGamesQuery } from '@/hooks/query/useGamesQuery';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
 import { TEXTS } from '@/misc/texts';
 import { filterGamesInLibrary } from '@/utils/filterGamesInLibrary';
@@ -18,6 +19,10 @@ const Home = () => {
     isLoading,
     error,
   } = useGamesLibraryQuery(debouncedParams);
+
+  const { data } = useGamesQuery();
+
+  console.log('data', data);
 
   const renderGamesLibrary = () => {
     if (isLoading)
