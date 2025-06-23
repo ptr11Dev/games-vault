@@ -1,20 +1,14 @@
-import { useEffect, useState } from 'react';
-
-import { useSearchParams } from 'react-router-dom';
-
 import { useRemoveGameFromLibraryMutation } from '@/hooks/mutation/useRemoveGameFromLibraryMutation';
 import { useUpdateGameStatusInLibraryMutation } from '@/hooks/mutation/useUpdateGameStatusInLibraryMutation';
 import { cn } from '@/lib/utils';
 import { ABANDON_STATUS_MAP, NEXT_STATUS_MAP } from '@/misc/consts';
 import { TEXTS } from '@/misc/texts';
-import { GameInLibrary, GameInLibraryStatus } from '@/misc/types';
+import { GameInLibrary } from '@/misc/types';
 
 import Loader from '../Loader';
 import MetascoreBadge from '../MetascoreBadge';
 import Actions from './components/Actions';
 import Footer from './components/Footer';
-import PlatinumBadge from './components/PlatinumBadge';
-import StatusBadge from './components/StatusBadge';
 
 type GameCardProps = {
   game: GameInLibrary;
@@ -23,12 +17,6 @@ type GameCardProps = {
 const { COMING, TBA } = TEXTS.METACRITIC;
 
 const GameCard = ({ game }: GameCardProps) => {
-  const [showBadge, setShowBadge] = useState<GameInLibraryStatus | 'none'>(
-    'none',
-  );
-  const [searchParams] = useSearchParams();
-  const currentStatusFilter = searchParams.get('status');
-
   const { mutate: updateStatus, isPending: isUpdating } =
     useUpdateGameStatusInLibraryMutation();
   const { mutate: removeUserGame, isPending: isRemoving } =
@@ -37,19 +25,9 @@ const GameCard = ({ game }: GameCardProps) => {
   const isReleased =
     new Date(game.released ?? '9999-12-31') <= new Date() && !game.tba;
 
-  useEffect(() => {
-    if (!currentStatusFilter) {
-      setShowBadge(game.userStatus);
-    }
-  }, []);
-
   const handleCompleteClick = () => {
     const nextStatus = NEXT_STATUS_MAP[game.userStatus];
     if (!nextStatus) return;
-
-    setShowBadge(
-      nextStatus === 'wishlisted' || currentStatusFilter ? 'none' : nextStatus,
-    );
 
     updateStatus({
       gameId: game.id,
@@ -61,8 +39,6 @@ const GameCard = ({ game }: GameCardProps) => {
     const nextStatus = ABANDON_STATUS_MAP[game.userStatus];
     if (!nextStatus) return;
 
-    setShowBadge(currentStatusFilter ? 'none' : nextStatus);
-
     updateStatus({
       gameId: game.id,
       userStatus: nextStatus,
@@ -70,7 +46,6 @@ const GameCard = ({ game }: GameCardProps) => {
   };
 
   const handleReset = () => {
-    setShowBadge('none');
     updateStatus({
       gameId: game.id,
       userStatus: 'wishlisted',
@@ -80,12 +55,6 @@ const GameCard = ({ game }: GameCardProps) => {
   const handleDelete = () => {
     removeUserGame({ gameId: game.id });
   };
-
-  const isOverlayVisible =
-    !currentStatusFilter &&
-    showBadge !== 'none' &&
-    showBadge !== 'wishlisted' &&
-    showBadge !== 'playing';
 
   return (
     <div
@@ -111,9 +80,6 @@ const GameCard = ({ game }: GameCardProps) => {
             transform: 'translateZ(0)',
           }}
         />
-        {isOverlayVisible && (
-          <div className="absolute inset-0 z-10 bg-black/60 transition-[background] duration-1000 will-change-transform group-hover:bg-transparent" />
-        )}
       </div>
       {/* Actions */}
       <Actions
@@ -130,19 +96,6 @@ const GameCard = ({ game }: GameCardProps) => {
         )}
         <MetascoreBadge score={game.metacritic} />
       </div>
-      {/* Status badges */}
-      {(['abandoned', 'playing', 'completed'] as const).map((status) =>
-        currentStatusFilter !== status && game.userStatus === status ? (
-          <StatusBadge
-            key={status}
-            status={status}
-            visible={showBadge === status}
-          />
-        ) : null,
-      )}
-      {currentStatusFilter !== 'platinum' && game.userStatus === 'platinum' && (
-        <PlatinumBadge visible={showBadge === 'platinum'} />
-      )}
       {/* Footer */}
       <Footer name={game.name} onReset={handleReset} onDelete={handleDelete} />
     </div>

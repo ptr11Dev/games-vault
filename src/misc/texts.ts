@@ -35,13 +35,6 @@ export const TEXTS = {
     COMING: 'Coming:',
   },
   GAME_CARD: {
-    BADGES: {
-      ABANDONED: 'ABANDONED',
-      COMPLETED: 'COMPLETED',
-      PLAYING: 'PLAYING',
-      PLATINUM: 'PLATINUM',
-      PLATINUM_IMG_ALT: 'Platinum Trophy',
-    },
     MINI: {
       ADD: 'Add',
       IN_LIBRARY: 'In Library',
