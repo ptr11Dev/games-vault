@@ -116,10 +116,3 @@
     animation: wiggle 5s ease-in-out infinite;
   }
 }
-
-/* GameCard glow */
-@layer utilities {
-  .glow-card {
-    filter: drop-shadow(0 0 11px #6efb5d);
-  }
-}

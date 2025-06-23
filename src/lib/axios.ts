@@ -3,7 +3,9 @@ import axios from 'axios';
 import { supabase } from '@/lib/supabase';
 
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001',
+  baseURL: window.location.href.includes('localhost')
+    ? 'http://localhost:3001'
+    : import.meta.env.VITE_API_URL,
 });
 
 axiosInstance.interceptors.request.use(async (config) => {

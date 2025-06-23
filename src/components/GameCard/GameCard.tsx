@@ -91,7 +91,6 @@ const GameCard = ({ game }: GameCardProps) => {
     <div
       className={cn(
         'group relative flex h-[200px] w-[300px] flex-col justify-around overflow-hidden rounded-xl transition-shadow duration-500',
-        game.userStatus === 'playing' && showBadge === 'playing' && 'glow-card',
       )}
     >
       {/* Loader */}

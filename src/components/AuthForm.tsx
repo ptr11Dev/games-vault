@@ -1,45 +1,29 @@
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
-
 import { supabase } from '@/lib/supabase';
 
 const AuthForm = () => {
+  const handleLogin = () => {
+    supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+  };
+
   return (
-    <Auth
-      supabaseClient={supabase}
-      appearance={{
-        theme: ThemeSupa,
-        variables: {
-          default: {
-            colors: {
-              brand: 'rgb(99 102 241)',
-            },
-            borderWidths: {
-              buttonBorderWidth: '0px',
-              inputBorderWidth: '1px',
-            },
-            radii: {
-              borderRadiusButton: '8px',
-              buttonBorderRadius: '8px',
-              inputBorderRadius: '8px',
-            },
-          },
-        },
-        className: {
-          container: 'w-full space-y-4',
-          divider: 'bg-theme my-4',
-          input: 'bg-lighter border-theme w-full px-4 py-2',
-          label: 'text-secondary block mb-1',
-          loader: 'text-blue-600',
-          anchor:
-            'text-blue-600 hover:text-blue-300 transition-colors duration-200',
-        },
-        style: {
-          input: { color: 'var(--text-primary)' },
-        },
-      }}
-      providers={['google']}
-    />
+    <div className="flex items-center justify-center">
+      <button
+        onClick={handleLogin}
+        className="flex items-center justify-center gap-3 rounded border border-gray-600 bg-[#1a1a1a] px-5 py-2 text-sm font-medium text-gray-200 shadow transition hover:bg-[#2a2a2a]"
+      >
+        <img
+          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+          alt="Google"
+          className="h-5 w-5"
+        />
+        Zaloguj się przez Google
+      </button>
+    </div>
   );
 };
 
