@@ -45,3 +45,19 @@ export const ABANDON_STATUS_MAP: Record<
   platinum: null,
   abandoned: null,
 };
+
+export const STATUS_ORDER: GameInLibraryStatus[] = [
+  'playing',
+  'wishlisted',
+  'completed',
+  'platinum',
+  'abandoned',
+];
+
+export const STATUS_LABELS: Record<GameInLibraryStatus, string> = {
+  playing: 'Currently Playing',
+  wishlisted: 'Wishlisted',
+  completed: 'Completed',
+  platinum: 'Platinum',
+  abandoned: 'Abandoned',
+};

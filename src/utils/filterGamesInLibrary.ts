@@ -1,60 +1,33 @@
-import { GameInLibrary, GameInLibraryStatus } from '@/misc/types';
+import { STATUS_LABELS, STATUS_ORDER } from '@/misc/consts';
+import { GameInLibrary, GroupedGames } from '@/misc/types';
 
-const statusOrder: GameInLibraryStatus[] = [
-  'playing',
-  'wishlisted',
-  'completed',
-  'platinum',
-  'abandoned',
-];
-
-const statusLabels: Record<GameInLibraryStatus, string> = {
-  playing: 'Currently Playing',
-  wishlisted: 'Wishlisted',
-  completed: 'Completed',
-  platinum: 'Platinum',
-  abandoned: 'Abandoned',
-};
-
-export type GroupedGames = {
-  status: GameInLibraryStatus;
-  label: string;
-  games: GameInLibrary[];
-}[];
+import { applyGameFilters } from './applyGameFilters';
+import { groupGamesByStatus } from './groupGamesByStatus';
+import { parseFiltersFromParams } from './parseFiltersFromParams';
 
 export const filterGamesInLibrary = (
   games: GameInLibrary[],
   params?: URLSearchParams,
 ): GroupedGames => {
-  const gamesGroupedByStatus = games.reduce<
-    Record<GameInLibraryStatus, GameInLibrary[]>
-  >(
-    (acc, game) => {
-      acc[game.userStatus] = [...(acc[game.userStatus] || []), game];
-      return acc;
-    },
-    {
-      playing: [],
-      wishlisted: [],
-      completed: [],
-      platinum: [],
-      abandoned: [],
-    },
-  );
+  const filters = parseFiltersFromParams(params);
+  const gamesGroupedByStatus = groupGamesByStatus(games);
 
-  const direction = params?.get('direction');
+  const statusesToShow = filters.status
+    ? STATUS_ORDER.filter((status) => status === filters.status)
+    : STATUS_ORDER;
 
-  const groupedResult: GroupedGames = statusOrder
-    .map((status) => ({
-      status,
-      label: statusLabels[status],
-      games: gamesGroupedByStatus[status] || [],
-    }))
+  const groupedResult: GroupedGames = statusesToShow
+    .map((status) => {
+      const statusGames = gamesGroupedByStatus[status] || [];
+      const filteredGames = applyGameFilters(statusGames, filters);
+
+      return {
+        status,
+        label: STATUS_LABELS[status],
+        games: filteredGames,
+      };
+    })
     .filter((group) => group.games.length > 0);
 
-  if (direction === 'asc') {
-    return groupedResult.reverse();
-  }
-
-  return groupedResult;
+  return filters.direction === 'asc' ? groupedResult.reverse() : groupedResult;
 };

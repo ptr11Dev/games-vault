@@ -54,3 +54,16 @@ export type PossibleFilters =
   | 'metacriticMin'
   | 'sort'
   | 'direction';
+
+export type GroupedGames = {
+  status: GameInLibraryStatus;
+  label: string;
+  games: GameInLibrary[];
+}[];
+
+export type FilterParams = {
+  name?: string;
+  status?: GameInLibraryStatus;
+  metacriticMin?: number;
+  direction?: 'asc' | 'desc';
+};
