@@ -1,10 +1,18 @@
+<!-- Nioh 3 -->
+<!-- LuoYang -->
+<!-- daba land of water scar -->
+<!-- project m -->
+<!-- abyss world apocalypse -->
+<!-- the duskbloots -->
+
 APIs:
 https://api.rawg.io/docs/?format=openapi
+
+- to check in the future: https://www.igdb.com/api
 
 - currently used: https://rawg.io/apidocs
 - https://api.rawg.io/docs/
 - to check in the future: https://www.freetogame.com/api-doc
-- to check in the future: https://www.igdb.com/api
 
 API Key:
 https://rawg.io/@kaczmar11/apikey
@@ -23,11 +31,161 @@ https://rawg.io/@kaczmar11/apikey
 --- ogarnac zmiany configu z pliku tailwind.config.js na css
 tailwindscss.com/blog/tailwindcss-v4
 
-1. ogarnac jakiegos scrappera na metacritic
-2. lepiej ogarnac stylowanie karty z gra - glownie chodzi tutaj o przyciski resetowania stanu i usuwania karty z biblioteki
-3. ogarnac jakie gry gralem na PS i dodac do biblioteki
-4. napisac testy be
-5. napisac testy fe
-6. hostowac backend
-7. hostowac frontend
-8. ogarnac wysylanie zapytania do api po zmianie karty --- jakos tak, zeby te karty nie skakaly - nie mam pomyslu jak to powinno dzialac, ale obecnie jest to troche problematyczne :/ najlepiej wpisac w filtrach 'marvel' i zobaczyc jak to dziala jak dla jednej karty zmieniasz status
+1. przykleic nawigacje i wyszukiwarke do top
+2. zdjecia maja pobierac sie jeden raz i sie cache'owac, a nie pobieraja sie za kazdym razem !!!
+3. lepiej ogarnac stylowanie karty z gra
+   - przyciski resetowania stanu i usuwania karty z biblioteki
+   - przyciski pchania karty na kolejny status
+   - nazwy gier
+4. stylowanie podczas dodawanie gry
+   - dlugi tytul rozjezdza widok
+5. napisac testy be
+6. napisac testy fe
+7. ogarnac wysylanie zapytania do api po zmianie karty --- jakos tak, zeby te karty nie skakaly - nie mam pomyslu jak to powinno dzialac, ale obecnie jest to troche problematyczne :/ najlepiej wpisac w filtrach 'marvel' i zobaczyc jak to dziala jak dla jednej karty zmieniasz status
+8. dodac favicon
+9. dodac mozliwosc dodawania wlasnych notatek, np. na gry, ktorych nie ma jeszcze w RAWG
+10. dodac infinity scroll, zeby ladowalo karty dopiero po scrollowaniu, a nie wszystko na start
+
+sprawdzic mikr.us
+
+1. dodac infinity scrolla do listy gier przy dodawaniu
+2. dodawanie gry przeniesc na osobna zakladke
+3. redirect do metacritica
+4. modal do usuwania gry
+5. dodac piny do gier (ostatnio ogladane!) - dodac tab na wszystko i tab z podzialem
+6. przebudowac karte na wersje z 3 kropkami
+7. tiny jpg
+8. dodac storage
+
+<!-- TOP PRIO -->
+
+1. dodac status owned
+2. zrezygnowac z sortowania be i zrobic sortowanie po froncie
+3. dodac style od ryska
+4. recznie sobie sprawdzac, ktore gry maja juz odpowiednio male i dobre webp
+   [
+   "007 First Light",
+   "A Plague Tale: Innocence",
+   "A Plague Tale: Requiem",
+   "AI Limit",
+   "ArcheAge: Unchained",
+   "Ashen",
+   "Assassin's Creed Odyssey",
+   "Assassin's Creed Origins",
+   "Assassin's Creed Valhalla",
+   "Astro's Playroom",
+   "Balatro",
+   "Baldur's Gate III",
+   "Ballad of Antara",
+   "Batman: Arkham Knight",
+   "Beast of Reincarnation",
+   "Beyond: Two Souls",
+   "Black Myth: Wukong",
+   "Blades of Fire",
+   "Bleak Faith: Forsaken",
+   "Bloodborne",
+   "Clair Obscur: Expedition 33",
+   "Commandos: Origins",
+   "Control",
+   "Crimson Desert",
+   "Cuphead: The Delicious Last Course",
+   "Cuphead",
+   "Cyberpunk 2077: Phantom Liberty",
+   "Cyberpunk 2077",
+   "Darksiders III",
+   "Days Gone",
+   "Detroit: Become Human",
+   "Devil May Cry 5",
+   "Diablo IV",
+   "Dragon Ball Z: Kakarot",
+   "DRAGON BALL: Sparking! ZERO",
+   "Dynasty Warriors: Origins",
+   "Echoes of Yi: Samsara",
+   "Elden Ring Nightreign",
+   "Elden Ring: Shadow of the Erdtree",
+   "Elden Ring",
+   "Evil West",
+   "Fable",
+   "Forspoken",
+   "Ghost of Tsushima Director's Cut",
+   "Ghost of Yotei",
+   "God of War (2018)",
+   "God of War III Remastered",
+   "God of War: Ragnarök",
+   "Grand Theft Auto V",
+   "Grand Theft Auto VI",
+   "Grand Theft Auto",
+   "Hades II",
+   "Hades",
+   "Heavy Rain",
+   "Hell is Us"
+   "Hogwarts Legacy",
+   "Hollow Knight",
+   "Horizon Forbidden West",
+   "Horizon Zero Dawn",
+   "It Takes Two",
+   "Lies of P: Overture",
+   "Lies Of P",
+   "Mafia: Definitive Edition",
+   "Mandragora: Whispers of the Witch Tree",
+   "Marvel 1943: Rise of Hydra",
+   "Marvel’s Avengers",
+   "Marvel's Guardians of the Galaxy",
+   "Marvel's Spider-Man 2",
+   "Marvel's Spider-Man Remastered",
+   "Marvel's Spider-Man: Miles Morales",
+   "Marvel's Spider-Man",
+   "Marvel's Wolverine",
+   "Mass Effect 2",
+   "Mass Effect 3",
+   "Mass Effect: Legendary Edition",
+   "Mass Effect",
+   "MindsEye",
+   "Monster Energy Supercross - The Official Videogame",
+   "Monster Hunter Wilds",
+   "Monster Hunter: World",
+   "MUDANG: Two Hearts",
+   "Naruto Shippuden: Ultimate Ninja Storm 2",
+   "NARUTO SHIPPUDEN: Ultimate Ninja STORM 3 Full Burst",
+   "NARUTO SHIPPUDEN: Ultimate Ninja STORM 4",
+   "NARUTO: Ultimate Ninja Storm",
+   "Nazralath: The Fallen World",
+   "NieR:Automata",
+   "Nioh 2",
+   "Nioh",
+   "One Piece Odyssey",
+   "Onimusha: Way Of The Sword",
+   "Oninaki",
+   "Palworld",
+   "Persona 5",
+   "Phantom Blade Zero",
+   "Prince of Persia: The Lost Crown",
+   "Red Dead Redemption 2",
+   "Resonance: A Plague Tale Legacy",
+   "Rise of the Ronin",
+   "Sekiro: Shadows Die Twice",
+   "Shadow of the Colossus",
+   "Soulframe",
+   "Split Fiction",
+   "Stellar Blade",
+   "The First Berserker: Khazan",
+   "The Incredible Adventures of Van Helsing",
+   "The Last of Us Part I",
+   "The Last of Us Part II",
+   "The Relic: First Guardian",
+   "The Surge 2",
+   "The Surge",
+   "The Witcher 3: Wild Hunt",
+   "The Witcher",
+   "Thymesia",
+   "Titan Quest 2",
+   "Tom Clancy’s The Division 2",
+   "Tom Clancy’s The Division",
+   "Uncharted 2: Among Thieves",
+   "Uncharted 3: Drake's Deception",
+   "Uncharted 4: A Thief’s End",
+   "Uncharted: Drake's Fortune",
+   "Where Winds Meet",
+   "Wo Long: Fallen Dynasty",
+   "Wuchang: Fallen Feathers",
+   ]
