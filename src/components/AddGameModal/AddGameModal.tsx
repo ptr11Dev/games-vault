@@ -26,7 +26,7 @@ const AddGameModal = ({ onClose }: AddGameModalProps) => {
 
   const { data: searchedGames, isLoading: isSearching } =
     useSearchGamesInRawgQuery(debouncedSearch);
-  const { data: userGames } = useGamesLibraryQuery(new URLSearchParams());
+  const { data: userGames } = useGamesLibraryQuery();
   const { mutate: addUserGame, isPending: isAdding } =
     useAddGameToLibraryMutation();
 

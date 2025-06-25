@@ -14,7 +14,7 @@ const AuthForm = () => {
     <div className="flex items-center justify-center">
       <button
         onClick={handleLogin}
-        className="flex items-center justify-center gap-3 rounded border border-gray-600 bg-[#1a1a1a] px-5 py-2 text-sm font-medium text-gray-200 shadow transition hover:bg-[#2a2a2a]"
+        className="flex cursor-pointer items-center justify-center gap-3 rounded border border-gray-600 bg-[#1a1a1a] px-5 py-2 text-sm font-medium text-gray-200 shadow transition hover:bg-[#2a2a2a]"
       >
         <img
           src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"

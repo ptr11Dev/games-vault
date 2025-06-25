@@ -3,11 +3,11 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '@/lib/axios';
 import { GameInLibrary } from '@/misc/types';
 
-export const useGamesLibraryQuery = (searchParams: URLSearchParams) => {
+export const useGamesLibraryQuery = () => {
   return useQuery<GameInLibrary[]>({
-    queryKey: ['userGames', Object.fromEntries(searchParams)],
+    queryKey: ['userGames'],
     queryFn: async () => {
-      const url = `/user-games${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
+      const url = `/user-games`;
       const { data } = await axiosInstance.get(url);
       return data;
     },

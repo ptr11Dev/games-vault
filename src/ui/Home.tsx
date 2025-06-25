@@ -3,7 +3,6 @@ import GameCard from '@/components/GameCard/GameCard';
 import Loader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import { useGamesLibraryQuery } from '@/hooks/query/useGamesLibraryQuery';
-import { useGamesQuery } from '@/hooks/query/useGamesQuery';
 import { useDebounceSearchParams } from '@/hooks/useDebounceSearchParams';
 import { TEXTS } from '@/misc/texts';
 import { filterGamesInLibrary } from '@/utils/filterGamesInLibrary';
@@ -11,18 +10,9 @@ import { filterGamesInLibrary } from '@/utils/filterGamesInLibrary';
 const { ERROR, NO_GAMES } = TEXTS.HOME;
 
 const Home = () => {
-  const { searchParams, setSearchParams, debouncedParams } =
-    useDebounceSearchParams(400);
+  const { searchParams, setSearchParams } = useDebounceSearchParams(400);
 
-  const {
-    data: games,
-    isLoading,
-    error,
-  } = useGamesLibraryQuery(debouncedParams);
-
-  const { data } = useGamesQuery();
-
-  console.log('data', data);
+  const { data: games, isLoading, error } = useGamesLibraryQuery();
 
   const renderGamesLibrary = () => {
     if (isLoading)
@@ -46,12 +36,33 @@ const Home = () => {
         </div>
       );
 
+    const shouldUseGroupedDisplay =
+      searchParams.get('sort') === 'none' || !searchParams.get('sort');
+
+    if (shouldUseGroupedDisplay) {
+      const groupedGames = filterGamesInLibrary(games, searchParams);
+
+      return (
+        <div className="mt-6 space-y-8">
+          {groupedGames.map((group) => (
+            <div key={group.status} className="space-y-4">
+              <h2 className="text-text-primary border-border border-b pb-2 text-2xl font-bold">
+                {group.label}
+              </h2>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {group.games.map((game) => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
     return (
       <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {(searchParams.get('sort') === 'none' || !searchParams.get('sort')
-          ? filterGamesInLibrary(games, searchParams)
-          : games
-        ).map((game) => (
+        {games.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
       </div>
