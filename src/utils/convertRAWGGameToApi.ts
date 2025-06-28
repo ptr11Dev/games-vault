@@ -10,8 +10,6 @@ export const convertRawgGameToApi = (game: RawgGame): GameApi => {
     tba: game.tba,
     background_image: game.background_image ?? null,
     meta_url: null,
-    rawg_rating: game.rating,
-    rawg_ratings_count: game.ratings_count,
     metacritic: game.metacritic ?? null,
     updated: game.updated,
     platforms:

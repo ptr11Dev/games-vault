@@ -49,7 +49,12 @@ const Home = () => {
               <h2 className="text-text-primary border-border border-b pb-2 text-2xl font-bold">
                 {group.label}
               </h2>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div
+                className="grid justify-start gap-6"
+                style={{
+                  gridTemplateColumns: 'repeat(auto-fit, 300px)',
+                }}
+              >
                 {group.games.map((game) => (
                   <GameCard key={game.id} game={game} />
                 ))}
@@ -61,7 +66,10 @@ const Home = () => {
     }
 
     return (
-      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div
+        className="mt-6 grid justify-center gap-6"
+        style={{ gridTemplateColumns: 'repeat(auto-fit, 300px)' }}
+      >
         {games.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
